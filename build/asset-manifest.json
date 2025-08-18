@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Website-Mum/static/css/main.c3d0ac9d.css",
+    "main.js": "/Website-Mum/static/js/main.3a215cca.js",
+    "index.html": "/Website-Mum/index.html",
+    "main.c3d0ac9d.css.map": "/Website-Mum/static/css/main.c3d0ac9d.css.map",
+    "main.3a215cca.js.map": "/Website-Mum/static/js/main.3a215cca.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3d0ac9d.css",
+    "static/js/main.3a215cca.js"
+  ]
+}

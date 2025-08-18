@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /  # Erlaube Home (für Indexing)
+Allow: /services  # Erlaube Services
+Allow: /shop  # Erlaube Shop
+Allow: /about  # Erlaube About
+Allow: /contact  # Erlaube Contact
+Disallow: /  # Blockiere alles andere (z. B. interne Pfade)
+Sitemap: https://www.ursulaheinke.de/sitemap.xml

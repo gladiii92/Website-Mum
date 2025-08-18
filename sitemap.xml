@@ -1,0 +1,15 @@
+const fs = require('fs');
+const sitemap = require('sitemap');
+
+const smap = sitemap.createSitemap({
+  hostname: 'https://www.ursulaheinke.de',
+  urls: [
+    { url: '/', changefreq: 'daily', priority: 1.0 },
+    { url: '/services', changefreq: 'weekly', priority: 0.8 },
+    { url: '/shop', changefreq: 'weekly', priority: 0.8 },
+    { url: '/about', changefreq: 'monthly', priority: 0.7 },
+    { url: '/contact', changefreq: 'monthly', priority: 0.7 }
+  ]
+});
+
+fs.writeFileSync('public/sitemap.xml', smap.toString());

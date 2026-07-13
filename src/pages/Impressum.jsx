@@ -8,8 +8,8 @@ const translations = {
     address: "Gräfenthaler Straße 4, 96337 Ludwigsstadt, Deutschland",
     representative: "Eigentümer: Ursula Heinke",
     contact: "E-Mail: UrsulaHeinke@gmx.de",
-    register: "Amtsgericht Coburg, HRB noch nicht vorhanden",
-    vat: "USt-IdNr.: noch nicht vorhanden",
+    register: "Amtsgericht Coburg",
+    vat: "USt-IdNr.: DE344686792",
     dispute: "Verbraucherstreitbeilegung/Universalschlichtungsstelle: Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
     note: "Haftungsausschluss: Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links."
   }

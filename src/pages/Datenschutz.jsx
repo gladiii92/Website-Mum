@@ -5,7 +5,7 @@ const translations = {
   de: {
     title: "Datenschutzerklärung",
     intro: "Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Diese Datenschutzerklärung informiert Sie über die Art, den Umfang und Zweck der Erhebung und Verwendung personenbezogener Daten auf unserer Website. Die Website wird statisch über GitHub gehostet.",
-    responsable: "Verantwortlicher: Ursula Heinke, Krumbach 11, 96145 Seßlach, Deutschland, E-Mail: ",
+    responsable: "Verantwortlicher: Ursula Heinke, Gräfenthaler Straße 4, 96337 Ludwigsstadt, Deutschland, E-Mail: ",
     responsableEmail: "UrsulaHeinke@gmx.de",
     access: "Beim Aufruf der Website werden durch den Hosting-Anbieter (GitHub) automatische Logfiles erstellt, die Daten wie IP-Adresse, Datum und Uhrzeit des Zugriffs, Browsertyp und Referrer-URL enthalten können. Diese Daten dienen der technischen Bereitstellung der Website und werden nicht für Marketingzwecke genutzt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Funktionsfähigkeit der Website).",
     personal: "Wir erheben personenbezogene Daten (z.B. Name, E-Mail-Adresse) nur, wenn Sie uns diese freiwillig per E-Mail mitteilen, z.B. bei einer Anfrage oder Bestellung. Diese Daten werden ausschließlich zur Beantwortung Ihrer Anfrage oder zur Vertragserfüllung verwendet und nicht an Dritte weitergegeben. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung oder vorvertragliche Maßnahmen).",

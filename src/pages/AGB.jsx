@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 const translations = {
   de: {
     title: "Allgemeine Geschäftsbedingungen (AGB)",
-    intro: "Diese AGB gelten für alle Verträge mit NobleCutGems.",
+    intro: "Diese AGB gelten für alle Verträge mit Ursula Heinke - Lebensberatung.",
     payment: "Zahlung per Banküberweisung, Paypal. Lieferung innerhalb 7 Tage innerhalb Deutschlands & 30 Tage ins Ausland.",
     withdrawal: "Widerrufsrecht: 14 Tage ab Erhalt. Sie haben das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen (siehe Widerrufsbelehrung auf der Website).",
     liability: "Haftung beschränkt auf Vorsatz und grobe Fahrlässigkeit.",

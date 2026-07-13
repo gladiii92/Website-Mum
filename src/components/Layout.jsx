@@ -1,12 +1,12 @@
 
-
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "../utils"; // Relativer Pfad zu utils
 import { Home, ShoppingBag, Heart, User, Mail, Sparkles, Moon } from "lucide-react";
 
 export default function Layout({ children, currentPageName }) {
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State für Mobile Menü
   const navigation = [
     { name: "Startseite", href: createPageUrl("Home"), icon: Home },
     { name: "Shop", href: createPageUrl("Shop"), icon: ShoppingBag },
@@ -58,19 +58,23 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl("Home")} className="group">
               <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <Sparkles className="w-8 h-8 text-indigo-300 group-hover:text-white transition-colors duration-300" />
+                  <img 
+                    src="/images/logo.png"
+                    alt="Seelenwege Logo" 
+                    className="w-14 h-14 object-contain group-hover:scale-105 transition-transform duration-300" 
+                  />
                   <div className="absolute inset-0 animate-pulse bg-indigo-400/20 rounded-full blur-md"></div>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-200 to-indigo-300 bg-clip-text text-transparent">
-                    Seelenwege
+                  <h1 className="font-headline text-2xl font-bold bg-gradient-to-r from-blue-200 to-indigo-300 bg-clip-text text-transparent">
+                    Ursula Heinke
                   </h1>
-                  <p className="text-sm text-blue-300/70 font-medium">Lebensberatung & Coaching</p>
+                  <p className="font-headline text-sm text-blue-300/70 font-medium">Lebensberatung & Coaching</p>
                 </div>
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center space-x-1">
+            <nav className="font-headline hidden md:flex items-center space-x-0">
               {navigation.map((item) => {
                 const isActive = location.pathname === item.href;
                 const Icon = item.icon;
@@ -78,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`group relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    className={`group relative px-4 py-2 rounded-full text-l font-medium transition-all duration-300 ${
                       isActive
                         ? 'text-white action-gradient shadow-lg shadow-pink-500/20'
                         : 'text-blue-200 hover:text-white hover:bg-white/10'
@@ -98,12 +102,48 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <button className="p-2 rounded-lg text-purple-700 hover:bg-purple-50 transition-colors">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-lg text-purple-700 hover:bg-purple-50 transition-colors"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </button>
             </div>
+
+            {/* Mobile Menü */}
+            {mobileMenuOpen && (
+              <nav className="md:hidden bg-black/80 backdrop-blur-md absolute top-full left-0 w-full z-50 flex flex-col items-start px-6 py-4 space-y-2">
+                {navigation.map((item) => {
+                  const isActive = location.pathname === item.href;
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={() => setMobileMenuOpen(false)} // Menü schließen beim Klick
+                      className={`flex items-center w-full px-3 py-2 rounded-md transition-colors ${
+                        isActive ? "bg-indigo-700 text-white" : "text-blue-200 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 mr-2" />
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </nav>
+            )}
           </div>
         </div>
       </header>
@@ -125,35 +165,42 @@ export default function Layout({ children, currentPageName }) {
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <Sparkles className="w-6 h-6 text-indigo-300" />
-                <h3 className="text-xl font-bold text-white">Seelenwege</h3>
+                <h3 className="font-headline text-xl font-bold text-white">Ursula Heinke</h3>
               </div>
               <p className="text-blue-200/80 leading-relaxed">
-                Ihr Weg zu innerer Balance und spirituellem Wachstum. 
+                Dein Weg zu innerer Balance und spirituellem Wachstum. 
                 Authentische Lebensberatung mit Herz und Verstand.
               </p>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Kontakt</h4>
+              <h4 className="font-headline text-lg font-semibold mb-4 text-white">Kontakt</h4>
               <div className="space-y-2 text-blue-200/80">
-                <p>📧 info@seelenwege.de</p>
-                <p>📞 +49 (0) 123 456 789</p>
-                <p>📍 Musterstraße 123, 12345 Musterstadt</p>
+                <p>📧 Ursulaheinke@gmx.de</p>
+                <p>📍 Gräfenthaler Straße 4, 96337 Ludwigsstadt</p>
               </div>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Öffnungszeiten</h4>
+              <h4 className="font-headline text-lg font-semibold mb-4 text-white">Öffnungszeiten</h4>
               <div className="space-y-1 text-blue-200/80">
                 <p>Mo-Fr: 9:00 - 18:00 Uhr</p>
-                <p>Sa: 10:00 - 16:00 Uhr</p>
+                <p>Sa: 9:00 - 18:00 Uhr</p>
                 <p>So: Nach Vereinbarung</p>
               </div>
             </div>
           </div>
           
           <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-300">
-            <p>&copy; 2024 Seelenwege. Alle Rechte vorbehalten.</p>
+            <p>&copy;Alle Rechte vorbehalten.</p>
+            <p>*Alle Preise inkl. 19% Mwst. & zzgl. Versand</p>
+            <p className="mt-2 text-sm space-x-4">
+              <Link to={createPageUrl("AGB")} className="hover:text-white transition-colors">AGB</Link>
+              <span>|</span>
+              <Link to={createPageUrl("Impressum")} className="hover:text-white transition-colors">Impressum</Link>
+              <span>|</span>
+              <Link to={createPageUrl("Datenschutz")} className="hover:text-white transition-colors">Datenschutz</Link>
+            </p>
           </div>
         </div>
       </footer>

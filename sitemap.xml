@@ -1,15 +1,136 @@
-const fs = require('fs');
-const sitemap = require('sitemap');
-
-const smap = sitemap.createSitemap({
-  hostname: 'https://www.ursulaheinke.de',
-  urls: [
-    { url: '/', changefreq: 'daily', priority: 1.0 },
-    { url: '/services', changefreq: 'weekly', priority: 0.8 },
-    { url: '/shop', changefreq: 'weekly', priority: 0.8 },
-    { url: '/about', changefreq: 'monthly', priority: 0.7 },
-    { url: '/contact', changefreq: 'monthly', priority: 0.7 }
-  ]
-});
-
-fs.writeFileSync('public/sitemap.xml', smap.toString());
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Statische Seiten -->
+  <url>
+    <loc>https://www.ursulaheinke.de/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/services</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/shop</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/impressum</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/datenschutz</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/agb</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <!-- Dynamische Produkt-URLs (aus Product.jsx, nur aktive) -->
+  <url>
+    <loc>https://www.ursulaheinke.de/product/gelber-saphir</loc>
+    <lastmod>2024-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/blauer-spinell</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/kashmir-saphir</loc>
+    <lastmod>2025-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/anhaenger-heilige-maria</loc>
+    <lastmod>2025-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/anhaenger-heiliger-christopherus</loc>
+    <lastmod>2025-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/lapislazuli-wasserstein</loc>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/mondstein-wasserstein</loc>
+    <lastmod>2025-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/partnerhoroskop</loc>
+    <lastmod>2025-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/zukunfts-lebenshoroskop</loc>
+    <lastmod>2025-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/product/geburtshoroskop</loc>
+    <lastmod>2025-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Dynamische Service-URLs (aus Service.jsx; entferne, falls nicht benötigt) -->
+  <url>
+    <loc>https://www.ursulaheinke.de/service/</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/service/</loc>
+    <lastmod>2025-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/service/</loc>
+    <lastmod>2025-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/service/</loc>
+    <lastmod>2025-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.ursulaheinke.de/service/</loc>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

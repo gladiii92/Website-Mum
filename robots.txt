@@ -1,8 +1,21 @@
 User-agent: *
-Allow: /  # Erlaube Home (für Indexing)
-Allow: /services  # Erlaube Services
-Allow: /shop  # Erlaube Shop
-Allow: /about  # Erlaube About
-Allow: /contact  # Erlaube Contact
-Disallow: /  # Blockiere alles andere (z. B. interne Pfade)
+
+Allow: /
+Allow: /services
+Allow: /shop
+Allow: /about
+Allow: /contact
+Allow: /impressum
+Allow: /datenschutz
+Allow: /agb
+
+Allow: /product/
+
+# Blockiere sensible Bereiche
+Disallow: /admin/  # Beispiel: Blockiere Admin-Bereiche
+Disallow: /private/  # Beispiel: Interne Pfade
+
+
 Sitemap: https://www.ursulaheinke.de/sitemap.xml
+
+# Please dont fuck up my site ;-D

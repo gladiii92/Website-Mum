@@ -2,7 +2,7 @@ import React from "react";
 import HeroSection from "../components/home/HeroSection"; // Relativer Pfad
 import FeaturedProducts from "../components/home/FeaturedProducts";
 import ServicesPreview from "../components/home/ServicesPreview";
-import { Helmet } from "react-helmet"; // Neu: Import für SEO
+import { HelmetProvider, Helmet } from "react-helmet-async";
 
 export default function Home() {
   return (

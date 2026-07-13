@@ -7,4 +7,15 @@ module.exports = {
     extend: {},  // Hier kannst du später Customisierungen hinzufügen
   },
   plugins: [],
+
+  theme: {
+    extend: {
+      fontFamily: {
+        headline: ['Playfair Display', 'serif'],        // Mystische Headlines
+        section: ['Cormorant Garamond', 'serif'],      // Unterüberschriften / Sektionen
+        body: ['Lato', 'sans-serif'],                  // Body Text, Specs, Healing
+        accent: ['Great Vibes', 'cursive'],           // Magische Akzente / CTA
+      },
+    },
+  },
 };

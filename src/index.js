@@ -1,13 +1,12 @@
-import './index.css';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';  // Neu: Importiere App (das fehlte!)
-import { HashRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';  // Oder 'react-dom' für ältere React-Versionen
+import { HelmetProvider } from 'react-helmet-async';
+import App from './App';  // Passe den Pfad an
+import './index.css';  // Oder den Pfad zu deiner Haupt-CSS-Datei
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 root.render(
-  <HashRouter basename="/">
+  <HelmetProvider>
     <App />
-  </HashRouter>
+  </HelmetProvider>
 );

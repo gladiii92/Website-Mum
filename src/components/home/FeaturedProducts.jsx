@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../../entities/Product"; // Relativer Pfad (zwei Ordner hoch zu entities)
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { createPageUrl } from "../../utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card"; // Relativer Pfad
 import { Button } from "../../components/ui/Button";
@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const isMobile = window.innerWidth < 768; // md breakpoint
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
   useEffect(() => {
     loadFeaturedProducts();
@@ -104,7 +104,7 @@ export default function FeaturedProducts() {
               >
                 <Card className="group min-h-[550px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 border-0 flex flex-col flex-grow">
                   <div className="relative h-60">
-                    <Link to={`/product/${product.slug}`} className="block w-full h-full">
+                    <Link href={`/product/${product.slug}`} className="block w-full h-full">
                     <img 
                       src={product.image_url || ''}
                       alt={`${product.name} - ${product.description?.slice(0, 100)}`}
@@ -174,7 +174,7 @@ export default function FeaturedProducts() {
                     
                     <div className="flex justify-center mt-auto p-6">
                       <Link 
-                        to={`/product/${product.slug}`}
+                        href={`/product/${product.slug}`}
                         className="w-full inline-block"
                       >
                       <Button 
@@ -194,7 +194,7 @@ export default function FeaturedProducts() {
         </div>
 
         <div className="flex justify-center">
-          <Link to={createPageUrl("Shop")}>
+          <Link href={createPageUrl("Shop")}>
             <Button 
               variant="outline" 
               size="lg"

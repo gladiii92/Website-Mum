@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { createPageUrl } from "../../utils"; // Relativer Pfad
 import { Button } from "../../components/ui/Button";
 import { Sparkles, Heart, Star, ArrowRight } from "lucide-react";
@@ -38,8 +38,8 @@ export default function HeroSection() {
               {/* Logo mittig und über dem Text */}
               <div className="relative mx-auto w-28 h-28">  {/* Passe w-20 h-20 bei Bedarf an */}
                 <img 
-                  src="/images/logo.png"
-                  alt="Seelenwege Logo" 
+                  src="/images/logo.webp"
+                  alt="Ursula Heinke Logo" 
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" 
                 />
                 {/* Glow-Effekt beibehalten */}
@@ -48,13 +48,9 @@ export default function HeroSection() {
 
               {/* Hauptüberschrift */}
               <div className="space-y-4">
-                <h1 className="font-headline text-5xl md:text-7xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-blue-200 via-indigo-300 to-purple-300 bg-clip-text text-transparent">
-                    Entdecke Deine
-                  </span>
-                  <br />
+                <h1 className="font-headline text-4xl md:text-6xl font-bold mb-4">
                   <span className="bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent">
-                    Seelenwege
+                    Authentische Lebensberatung <br />& Spirituelles Coaching
                   </span>
                 </h1>
                 <p className="font-base text-xl md:text-2xl text-indigo-200 max-w-3xl mx-auto leading-relaxed">
@@ -81,14 +77,14 @@ export default function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <Link to={createPageUrl("Services")}>
+            <Link href={createPageUrl("Services")}>
               <Button className="font-headline bg-gradient-to-r from-indigo-500 to-blue-500 text-white hover:shadow-lg hover:shadow-blue-500/20 rounded-full w-auto min-w-[275px] py-2 px-8 text-lg transition-all duration-300 group whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center">
                 <Heart className="w-5 h-5 mr-2 text-red-600" />
                 Erstgespräch
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </Link>
-            <Link to={createPageUrl("Shop")}>
+            <Link href={createPageUrl("Shop")}>
               <Button 
                 variant="outline" 
                 size="lg"

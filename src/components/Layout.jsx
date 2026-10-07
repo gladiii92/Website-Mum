@@ -1,11 +1,13 @@
 
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { createPageUrl } from "../utils"; // Relativer Pfad zu utils
 import { Home, ShoppingBag, Heart, User, Mail, Sparkles, Moon } from "lucide-react";
 
 export default function Layout({ children, currentPageName }) {
-  const location = useLocation();
+  const router = useRouter();
+const location = { pathname: router.pathname };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State für Mobile Menü
   const navigation = [
     { name: "Startseite", href: createPageUrl("Home"), icon: Home },
@@ -55,12 +57,12 @@ export default function Layout({ children, currentPageName }) {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10"></div>
         <div className="relative max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link to={createPageUrl("Home")} className="group">
+            <Link href={createPageUrl("Home")} className="group">
               <div className="flex items-center space-x-3">
                 <div className="relative">
                   <img 
-                    src="/images/logo.png"
-                    alt="Seelenwege Logo" 
+                    src="/images/logo.webp"
+                    alt="Ursula Heinke Logo" 
                     className="w-14 h-14 object-contain group-hover:scale-105 transition-transform duration-300" 
                   />
                   <div className="absolute inset-0 animate-pulse bg-indigo-400/20 rounded-full blur-md"></div>
@@ -81,7 +83,7 @@ export default function Layout({ children, currentPageName }) {
                 return (
                   <Link
                     key={item.name}
-                    to={item.href}
+                    href={item.href}
                     className={`group relative px-4 py-2 rounded-full text-l font-medium transition-all duration-300 ${
                       isActive
                         ? 'text-white action-gradient shadow-lg shadow-pink-500/20'
@@ -131,7 +133,7 @@ export default function Layout({ children, currentPageName }) {
                   return (
                     <Link
                       key={item.name}
-                      to={item.href}
+                      href={item.href}
                       onClick={() => setMobileMenuOpen(false)} // Menü schließen beim Klick
                       className={`flex items-center w-full px-3 py-2 rounded-md transition-colors ${
                         isActive ? "bg-indigo-700 text-white" : "text-blue-200 hover:text-white hover:bg-white/10"
@@ -151,7 +153,7 @@ export default function Layout({ children, currentPageName }) {
       {/* Main content */}
       <main className="relative min-h-screen">
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.webp')] opacity-20"></div>
         </div>
         <div className="relative">
           {children}
@@ -195,11 +197,11 @@ export default function Layout({ children, currentPageName }) {
             <p>&copy;Alle Rechte vorbehalten.</p>
             <p>*Alle Preise inkl. 19% Mwst. & zzgl. Versand</p>
             <p className="mt-2 text-sm space-x-4">
-              <Link to={createPageUrl("AGB")} className="hover:text-white transition-colors">AGB</Link>
+              <Link href={createPageUrl("AGB")} className="hover:text-white transition-colors">AGB</Link>
               <span>|</span>
-              <Link to={createPageUrl("Impressum")} className="hover:text-white transition-colors">Impressum</Link>
+              <Link href={createPageUrl("Impressum")} className="hover:text-white transition-colors">Impressum</Link>
               <span>|</span>
-              <Link to={createPageUrl("Datenschutz")} className="hover:text-white transition-colors">Datenschutz</Link>
+              <Link href={createPageUrl("Datenschutz")} className="hover:text-white transition-colors">Datenschutz</Link>
             </p>
           </div>
         </div>

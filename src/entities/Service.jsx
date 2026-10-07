@@ -14,7 +14,7 @@ const servicesData = [
       "Persönliche astrologische oder Tarot-Einsichten",
       "Flexibel per Telefon oder Video"
     ],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/teeest.png`,
+    image_url: `/images/Kurse/teeest.webp`,
     featured: false,
     available_slots: 15,
     created_date: "2025-01-01"
@@ -30,7 +30,7 @@ const servicesData = [
       "Praktische Tipps für den Alltag",
       "Emotionale Unterstützung und Klarheit"
     ],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/Kartenlegen_test3.png`,
+    image_url: `/images/Kurse/Kartenlegen_test3.webp`,
     featured: true,
     available_slots: 10,
     created_date: "2025-02-01"
@@ -46,7 +46,7 @@ const servicesData = [
       "Langfristige Handlungspläne",
       "Tiefe emotionale Heilung"
     ],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/Kartenlegen_test2.png`,
+    image_url: `/images/Kurse/Kartenlegen_test2.webp`,
     featured: true,
     available_slots: 8,
     created_date: "2025-03-01"
@@ -60,7 +60,7 @@ const servicesData = [
     duration: "2 Stunden",
     type: "gruppenkurs",
     benefits: ["Stressabbau durch Naturverbundenheit", "Gruppenenergie für tiefe Entspannung", "Achtsamkeitsübungen in malerischen Wäldern"],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/waldcoaching_test2.png`,
+    image_url: `/images/Kurse/waldcoaching_test2.webp`,
     featured: true,
     available_slots: 10,
     created_date: "2025-04-01"
@@ -74,7 +74,7 @@ const servicesData = [
     duration: "6 Wochen",
     type: "online_kurs",
     benefits: ["Flexibles Lernen", "Tägliche Übungen", "Community-Support"],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/online_kurs_example.png`,
+    image_url: `/images/Kurse/online_kurs_example.webp`,
     featured: false,
     available_slots: 20,
     created_date: "2025-05-01"
@@ -88,40 +88,59 @@ const servicesData = [
     duration: "5 Stunden (1 Tag)",
     type: "workshop",
     benefits: ["Grundlagen von Tarot und Lenormand", "Praxisübungen und Deutungen", "Tipps für Selbstständigkeit und Klientenarbeit"],
-    image_url: `${process.env.PUBLIC_URL}/images/Kurse/kurs1.png`,
+    image_url: `/images/Kurse/kurs1.webp`,
     featured: true,
     available_slots: 12,
     created_date: "2025-06-01"
+  },
+  {
+    title: "Frauen-Retreat: Herzenszeit",
+    description: "Zurück zu dir – Ein besonderer Tag für dein Herz, deine Seele und dein inneres Strahlen. Gemeinsam fühlen, loslassen, heilen und wachsen. Erlebe Kakaozeremonie, tiefe Meditation mit Klangschalen, Blockadenlösung, Kartenlegung und stärke deine Selbstliebe. Mit Ursula und Jessica im Studio Frieda, Coburg.",
+    price: 129,
+    duration: "3 Stunden (13:00 - 16:00 Uhr)",
+    type: "workshop",
+    benefits: ["Kakaozeremonie & Klangschalen-Meditation", "Persönliche Kartenlegung", "Geführte Blockadenlösung"],
+    image_url: `/images/Kurse/seminar.webp`,
+    featured: true,
+    available_slots: 15,
+    created_date: "2026-11-07"
   }
   // Füge bei Bedarf mehr hinzu
 ];
 
-export const ServiceData = servicesData; // Exportiere das Array für synchrones Laden
+export const ServiceData = servicesData.filter(service => {
+  // Automatisches Verstecken des Frauen-Retreats nach dem 7. November 2026
+  if (service.title === "Frauen-Retreat: Herzenszeit") {
+    const eventDate = new Date("2026-11-08T00:00:00");
+    if (new Date() > eventDate) return false;
+  }
+  return true;
+}); // Exportiere das Array für synchrones Laden
 
 // Neu: Separates Array für Typen (Kategorien) mit dedizierten Vorschaubildern, ähnlich wie Categories in Product.jsx
 export const Types = [
   {
     name: "readings",
     display_name: "Readings & Beratung",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Kurse/Kartenlegen_test2.png`,
+    preview_image_url: `/images/Kurse/Kartenlegen_test2.webp`,
     description: "Persönliche Readings für schnelle Klarheit und tiefe Transformation."
   },
   {
     name: "gruppenkurs",
     display_name: "Gruppenkurse",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Kurse/Kartenlegen_test1.png`,
+    preview_image_url: `/images/Kurse/Kartenlegen_test1.webp`,
     description: "Gemeinsame Erlebnisse in der Gruppe für Wachstum und Verbindung."
   },
 /*  {
     name: "online_kurs",
     display_name: "Online Kurse",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Kurse/Kartenlegen_test3.png`,
+    preview_image_url: `/images/Kurse/Kartenlegen_test3.webp`,
     description: "Flexibles Lernen von zu Hause aus für Ihre spirituelle Entwicklung."
   },
 */  {
     name: "workshop",
     display_name: "Workshops",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Kurse/kurs1.png`,
+    preview_image_url: `/images/Kurse/kurs1.webp`,
     description: "Intensive Praxistage für neue Fähigkeiten und Erkenntnisse."
   }
   // Füge bei Bedarf mehr hinzu (ohne "all")

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Head from "next/head";
 
 const translations = {
   de: {
@@ -37,11 +37,11 @@ export default function Datenschutz() {
 
   return (
     <section className="py-20 px-6 bg-slate-900 min-h-screen text-indigo-100">
-      <Helmet>
+      <Head>
         <title>{t.title} | Ursula Heinke</title>
         <meta name="description" content={t.intro} />
-        <link rel="canonical" href={window.location.href} />
-      </Helmet>
+        <link rel="canonical" href="https://www.ursulaheinke.de/datenschutz" />
+      </Head>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'Arial, sans-serif', lineHeight: '1.6' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '40px' }}>{t.title}</h1>
         

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ServiceData } from "../../entities/Service"; // Relativer Pfad – geändert zu ServiceData
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { createPageUrl } from "../../utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
@@ -13,7 +13,7 @@ export default function ServicesPreview() {
   const [featuredServices, setFeaturedServices] = useState([]); // State für nur featured Services
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const isMobile = window.innerWidth < 768; // md breakpoint
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
 
   useEffect(() => {
@@ -168,7 +168,7 @@ export default function ServicesPreview() {
                     
                     <div className="flex justify-center mt-auto p-6">
                       <Link 
-                        to={createPageUrl("Contact")} 
+                        href={createPageUrl("Contact")} 
                         className="w-full inline-block"
                       >
                       <Button 
@@ -189,7 +189,7 @@ export default function ServicesPreview() {
 
 
         <div className="flex justify-center"> {/* flex justify-center: Zentriert den Inhalt horizontal */}
-          <Link to={createPageUrl("Services")}>
+          <Link href={createPageUrl("Services")}>
             <Button 
               variant="outline" 
               size="lg"

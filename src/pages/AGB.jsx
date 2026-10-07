@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import Head from "next/head";
 
 const translations = {
   de: {
@@ -23,11 +23,11 @@ export default function AGB() {
 
   return (
     <section className="py-20 px-6 bg-slate-900 min-h-screen text-indigo-100">
-      <Helmet>
+      <Head>
         <title>{t.title} | UrsulaHeinke</title>
         <meta name="description" content={t.intro} />
-        <link rel="canonical" href={window.location.href} />
-      </Helmet>
+        <link rel="canonical" href="https://www.ursulaheinke.de/agb" />
+      </Head>
       <div className="max-w-4xl mx-auto bg-slate-800/50 rounded-2xl p-8 shadow-lg backdrop-blur-sm">
         <h1 className="text-4xl font-bold text-blue-400 mb-6">{t.title}</h1>
         <p className="mb-4">{t.intro}</p>

@@ -6,8 +6,8 @@ import { Badge } from "../components/ui/Badge";
 import Tabs, { TabsList, TabsTrigger } from "../components/ui/Tabs";
 import { Star, Sparkles, ShoppingBag, Clock, ArrowRight, Droplet, Brush } from "lucide-react";
 import { motion } from "framer-motion";
-import { HelmetProvider, Helmet } from "react-helmet-async"; 
-import { Link } from "react-router-dom";
+import Head from "next/head"; 
+import Link from "next/link";
 import { createPageUrl } from "../utils"; // Relativer Pfad
 import { useReducedMotion } from "framer-motion";
 
@@ -19,7 +19,7 @@ export default function Shop() {
 
   // Neu: Ref für den Produkte-Container zum automatischen Scrollen
   const productsRef = useRef(null);
-  const isMobile = window.innerWidth < 768; // md breakpoint
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
   useEffect(() => {
     loadProducts();
@@ -114,13 +114,13 @@ export default function Shop() {
   return (
     <>
       {/* Neu: React Helmet für SEO */}
-      <Helmet>
+      <Head>
         <title>Ursula Heinke - Shop</title>
         <meta name="description" content="Handverlesene Heilsteine, Schmuck, mystische Kerzen und persönliche Horoskope für Deine spirituelle Reise. Entdecken Deine Produkte für innere Balance." />
         <meta name="keywords" content="Heilsteine, Schmuck, Kerzen, Horoskope, spirituelle Produkte, Shop" />
         <meta property="og:title" content="Ursula Heinke - Shop" />
         <meta property="og:description" content="Spirituelle Schätze für Dein Wohlbefinden." />
-        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.png" /> {/* Passe Bild an */}
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" /> {/* Passe Bild an */}
         <meta property="og:url" content="https://www.ursulaheinke.de/shop" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.ursulaheinke.de/shop" />
@@ -132,7 +132,7 @@ export default function Shop() {
             "url": "https://www.ursulaheinke.de/shop"
           })}
         </script>
-      </Helmet>
+      </Head>
 
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -252,7 +252,7 @@ export default function Shop() {
                     >
                       <Card className="group min-h-[550px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 border-0 flex flex-col flex-grow">
                         <div className="relative h-60">
-                          <Link to={`/product/${product.slug}`} className="block w-full h-full">
+                          <Link href={`/product/${product.slug}`} className="block w-full h-full">
                           <img 
                             src={product.image_url || ''}
                             alt={`${product.name} - ${product.description?.slice(0, 100)}`}
@@ -322,7 +322,7 @@ export default function Shop() {
                           
                           <div className="flex justify-center mt-auto p-6">
                             <Link 
-                              to={`/product/${product.slug}`}
+                              href={`/product/${product.slug}`}
                               className="w-full inline-block"
                             >
                             <Button 

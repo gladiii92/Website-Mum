@@ -6,8 +6,8 @@ import { Badge } from "../components/ui/Badge";
 import Tabs, { TabsList, TabsTrigger } from "../components/ui/Tabs";
 import { Heart, Clock, Users, Star, ArrowRight, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { HelmetProvider, Helmet } from "react-helmet-async"; // Neu: Import für SEO
-import { Link } from "react-router-dom";
+import Head from "next/head"; // Neu: Import für SEO
+import Link from "next/link";
 import { createPageUrl } from "../utils"; // Relativer Pfad
 import { useReducedMotion } from "framer-motion";
 
@@ -21,7 +21,7 @@ export default function Services() {
   const servicesRef = useRef(null);
 
   const shouldReduceMotion = useReducedMotion();
-  const isMobile = window.innerWidth < 768; // Beispiel: Mobile < md
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // Beispiel: Mobile < md
   const shouldAnimate = !isMobile && !shouldReduceMotion;
   
   useEffect(() => {
@@ -102,13 +102,13 @@ export default function Services() {
   return (
     <>
       {/* Neu: React Helmet für SEO */}
-      <Helmet>
+      <Head>
         <title>Ursula Heinke - Coaching & Kurse</title>
         <meta name="description" content="Entdecken Sie transformative Coaching-Programme, Workshops und Online-Kurse für persönliches Wachstum und spirituelle Entwicklung." />
         <meta name="keywords" content="Coaching, Kurse, Workshops, spirituelle Entwicklung, Einzelcoaching" />
         <meta property="og:title" content="Ursula Heinke - Coaching & Kurse" />
         <meta property="og:description" content="Individuelle Begleitung für Deine persönliche Transformation." />
-        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.png" /> {/* Passe Bild an */}
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" /> {/* Passe Bild an */}
         <meta property="og:url" content="https://www.ursulaheinke.de/services" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.ursulaheinke.de/services" />
@@ -123,7 +123,7 @@ export default function Services() {
             }
           })}
         </script>
-      </Helmet>
+      </Head>
 
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -294,7 +294,7 @@ export default function Services() {
                           
                           <div className="flex justify-center mt-auto p-6">
                             <Link 
-                              to={createPageUrl("Contact")} 
+                              href={createPageUrl("Contact")} 
                               className="w-full inline-block"
                             >
                             <Button 

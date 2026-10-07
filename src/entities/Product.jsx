@@ -22,7 +22,7 @@ export const Product = [
     certification: "none",  // Neu
     rarity_level: "exceptional",  // Neu
     category: "heilsteine",  // Unverändert, passt zu Heilsteinen
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/gelber-saphir-1-43ct-ceylon.jpg`,  // Angepasst aus main_image_url
+    image_url: `/images/Produkte/gelber-saphir-1-43ct-ceylon.webp`,  // Angepasst aus main_image_url
     gallery_images: [  // Neu
       "/videos/gelber-saphir-1-43ct-finger.mp4",
       "/videos/gelber-saphir-1-43ct-pinzette.mp4",
@@ -54,7 +54,7 @@ export const Product = [
     certification: "aig",
     rarity_level: "rare",
     category: "heilsteine",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/blauer-spinell-457ct-aig.jpg`,
+    image_url: `/images/Produkte/blauer-spinell-457ct-aig.webp`,
     gallery_images: [
       "/videos/blauer-spinell-457ct-finger.mp4",
       "/videos/blauer-spinell-457ct-pinzette.mp4",
@@ -86,7 +86,7 @@ export const Product = [
   certification: "none",
   rarity_level: "select",
   category: "heilsteine",
-  image_url: `${process.env.PUBLIC_URL}/images/Produkte/kashmir-saphir-1-95ct.jpg`,
+  image_url: `/images/Produkte/kashmir-saphir-1-95ct.webp`,
   gallery_images: [
     "/videos/kashmir-saphir-1-95ct-finger.mp4",
     "/videos/kashmir-saphir-1-95ct-pinzette.mp4",
@@ -123,7 +123,7 @@ export const Product = [
     symbolik: "Heilige Maria – Schutz und Segen",
     price: 25,
     category: "heilketten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/maria.png`,
+    image_url: `/images/Produkte/maria.webp`,
     healing_properties: ["Schutz und Segen", "Spirituelle Führung", "Gebetskraft", "Energetische Harmonie"],
     in_stock: true,
     featured: true,
@@ -148,7 +148,7 @@ export const Product = [
     symbolik: "Patron der Reisenden",
     price: 20,
     category: "heilketten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/christopherus2.png`,
+    image_url: `/images/Produkte/christopherus2.webp`,
     healing_properties: ["Schutz vor Gefahren", "Reisesegen", "Spiritueller Beistand", "Energetische Harmonie"],
     in_stock: true,
     featured: true,
@@ -172,12 +172,12 @@ export const Product = [
   symbolik: "Erleuchtung und innere Ruhe",
   price: 25,
   category: "heilketten",
-  image_url: `${process.env.PUBLIC_URL}/images/Produkte/Thai.png`,
+  image_url: `/images/Produkte/Thai.webp`,
   gallery_images: [
-    "/images/Produkte/Thai1.png",
-    "/images/Produkte/Thai2.png",
-    "/images/Produkte/Thai3.png",
-    "/images/Produkte/Thai4.png"
+    "/images/Produkte/Thai1.webp",
+    "/images/Produkte/Thai2.webp",
+    "/images/Produkte/Thai3.webp",
+    "/images/Produkte/Thai4.webp"
   ],
   healing_properties: ["Schutz für Haus & Familie", "Fokus", "Innere Ruhe", "Spirituelle Harmonie"],
   in_stock: true,
@@ -193,7 +193,7 @@ export const Product = [
     description: "Eleganter Platzhalter-Anhänger mit mystischen Elementen, perfekt für individualisierte Heilketten. Fördert Schutz und innere Stärke – ein Must-have für spirituelle Schmuckliebhaber. Entdecken Sie harmonischen Schmuck online und integrieren Sie ihn in Ihre tägliche Routine. SEO: Schutzanhänger mit Heilsteinen kaufen, spiritueller Anhänger bestellen.",
     price: 39.9,
     category: "heilketten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/anhaenger_platzhalter1.png`,
+    image_url: `/images/Produkte/anhaenger_platzhalter1.webp`,
     healing_properties: ["Schutzenergie", "Innere Stärke", "Harmonie", "Spirituelle Balance"],
     in_stock: true,
     featured: false,
@@ -209,7 +209,7 @@ export const Product = [
     description: "Handgegossene Kerze mit natürlichen ätherischen Ölen. Perfekt für Rituale, Meditation und spirituelle Praktiken bei Vollmond.",
     price: 34.5,
     category: "kerzen",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/Kerze_test4.png`,
+    image_url: `/images/Produkte/Kerze_test4.webp`,
     healing_properties: ["Intuition", "Klarheit", "Transformation"],
     in_stock: true,
     featured: true,
@@ -222,7 +222,7 @@ export const Product = [
     description: "Beruhigende Kerze mit Lavendelduft für Entspannung und innere Balance. Ideal für Abendrituale.",
     price: 29.9,
     category: "kerzen",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/Kerze_test2.png`,
+    image_url: `/images/Produkte/Kerze_test2.webp`,
     healing_properties: ["Entspannung", "Balance", "Schlaf"],
     in_stock: true,
     featured: true,
@@ -235,7 +235,7 @@ export const Product = [
     description: "Belebende Kerze mit Zitrusnoten für Motivation und positive Energie. Für Morgenmeditationen und Meditationen jeglicher Art.",
     price: 32,
     category: "kerzen",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/Kerze_test1.png`,
+    image_url: `/images/Produkte/Kerze_test1.webp`,
     healing_properties: ["Motivation", "Positivität", "Energie"],
     in_stock: true,
     featured: false,
@@ -249,7 +249,7 @@ export const Product = [
     description: "Pferdebürste mit eingebetteten Amethyst-Steinen für beruhigende Pflege und Energieausgleich bei Tieren.",
     price: 49.9,
     category: "pferdebuersten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/pferdebürsten.png`,
+    image_url: `/images/Produkte/pferdebürsten.webp`,
     healing_properties: ["Beruhigung", "Energiefluss", "Tierpflege"],
     in_stock: true,
     featured: true,
@@ -262,7 +262,7 @@ export const Product = [
     description: "Sanfte Pferdebürste mit Rosenquarz für liebevolle Pflege und emotionale Harmonie bei Pferden. Regt den Kreislauf an.",
     price: 54.9,
     category: "pferdebuersten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/pferdebürsten1.png`,
+    image_url: `/images/Produkte/pferdebürsten1.webp`,
     healing_properties: ["Liebe", "Harmonie", "Emotionale Pflege"],
     in_stock: true,
     featured: false,
@@ -275,7 +275,7 @@ export const Product = [
     description: "Starke Pferdebürste mit Bergkristall für Reinigung und Energieverstärkung während der Grooming-Sitzungen.",
     price: 59.9,
     category: "pferdebuersten",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/pferdebürsten2.png`,
+    image_url: `/images/Produkte/pferdebürsten2.webp`,
     healing_properties: ["Reinigung", "Energie", "Stärke"],
     in_stock: true,
     featured: false,
@@ -298,10 +298,10 @@ export const Product = [
   symbolik: "Stein der Könige und Wahrheit",
   price: 50,
   category: "wassersteine",
-  image_url: `${process.env.PUBLIC_URL}/images/Produkte/lapislazuli-wasserstein.png`,
+  image_url: `/images/Produkte/lapislazuli-wasserstein.webp`,
   gallery_images: [
-  "/images/Produkte/lapislazuli-wasserstein1.png",
-  "/images/Produkte/lapislazuli-wasserstein2.jpg",
+  "/images/Produkte/lapislazuli-wasserstein1.webp",
+  "/images/Produkte/lapislazuli-wasserstein2.webp",
   ],
   healing_properties: ["Weisheit", "Klarheit", "Entgiftung", "Selbstvertrauen"],
   in_stock: true,
@@ -325,9 +325,9 @@ export const Product = [
   symbolik: "Stein der Intuition und inneren Weisheit",
   price: 50,
   category: "wassersteine",
-  image_url: `${process.env.PUBLIC_URL}/images/Produkte/mondstein-wasserstein2.png`,
+  image_url: `/images/Produkte/mondstein-wasserstein2.webp`,
   gallery_images: [
-    "/images/Produkte/mondstein-wasserstein1.png"
+    "/images/Produkte/mondstein-wasserstein1.webp"
   ],
   healing_properties: ["Intuition", "Innere Ruhe", "Emotionale Balance", "Selbstreflexion"],
   in_stock: true,
@@ -342,7 +342,7 @@ export const Product = [
     description: "Rosenquarz für liebevolles Wasser, das Herzenergie stärkt und emotionale Balance fördert und Sie den ganzen Tag frisch hält.",
     price: 16.5,
     category: "wassersteine",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/wassersteine2.png`,
+    image_url: `/images/Produkte/wassersteine2.webp`,
     healing_properties: ["Liebe", "Balance", "Emotionen"],
     in_stock: true,
     featured: true,
@@ -355,7 +355,7 @@ export const Product = [
     description: "Bergkristall zum Energetisieren von Wasser für Klarheit und Vitalität den ganzen Tag sodass Sie den ganzen Tag frisch bleiben.",
     price: 18.9,
     category: "wassersteine",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/wassersteine3.png`,
+    image_url: `/images/Produkte/wassersteine3.webp`,
     healing_properties: ["Klarheit", "Vitalität", "Energie"],
     in_stock: true,
     featured: false,
@@ -380,7 +380,7 @@ export const Product = [
     healing_properties: ["Beziehungsstärkung", "Harmonie", "Emotionale Tiefe", "Astrologische Einsichten"],
     price: 50,
     category: "horoskope",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/horoskop1.jpg`,
+    image_url: `/images/Produkte/horoskop1.webp`,
     healing_properties: ["Beziehungsstärkung", "Harmonie", "Emotionale Tiefe", "Astrologische Einsichten"],
     in_stock: true,
     featured: true,
@@ -404,7 +404,7 @@ export const Product = [
     healing_properties: ["Zukunftsplanung", "Persönliches Wachstum", "Weisheit", "Lebensentscheidungen"],
     price: 50,
     category: "horoskope",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/horoskop.jpg`,
+    image_url: `/images/Produkte/horoskop.webp`,
     healing_properties: ["Zukunftsplanung", "Persönliches Wachstum", "Weisheit", "Lebensentscheidungen"],
     in_stock: true,
     featured: false,
@@ -428,7 +428,7 @@ export const Product = [
     healing_properties: ["Selbsterkenntnis", "Persönlichkeitsentwicklung", "Lebenswege", "Spirituelle Orientierung"],
     price: 50,
     category: "horoskope",
-    image_url: `${process.env.PUBLIC_URL}/images/Produkte/horoskop2.jpg`,
+    image_url: `/images/Produkte/horoskop2.webp`,
     healing_properties: ["Selbsterkenntnis", "Persönlichkeitsentwicklung", "Lebenswege", "Spirituelle Orientierung"],
     in_stock: true,
     featured: false,
@@ -445,33 +445,33 @@ export const Categories = [
   {
     name: "heilsteine",
     display_name: "Heilsteine",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/heilsteine11.png`
+    preview_image_url: `/images/Produkte/heilsteine11.webp`
   },
   {
     name: "heilketten",
     display_name: "Heilketten",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/heilkette.png`
+    preview_image_url: `/images/Produkte/heilkette.webp`
   },
 /*  {
     name: "kerzen",
     display_name: "Mystische Kerzen",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/Kerze_test1.png`
+    preview_image_url: `/images/Produkte/Kerze_test1.webp`
   },
   {
     name: "pferdebuersten",
     display_name: "Pferdebürsten mit Heilsteinen",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/pferdebürsten.png`
+    preview_image_url: `/images/Produkte/pferdebürsten.webp`
   },
 */  {
     name: "wassersteine",
     display_name: "Heilsteine fürs Wasser",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/wassersteine.png`
+    preview_image_url: `/images/Produkte/wassersteine.webp`
   },
   // Neu: Horoskope-Kategorie
   {
     name: "horoskope",
     display_name: "Persönliche Horoskope",
-    preview_image_url: `${process.env.PUBLIC_URL}/images/Produkte/horoskop4.png` // Platzhalter für ein Kategorie-Vorschaubild
+    preview_image_url: `/images/Produkte/horoskop4.webp` // Platzhalter für ein Kategorie-Vorschaubild
   }
   // Fügen Sie bei Bedarf mehr hinzu
 ];

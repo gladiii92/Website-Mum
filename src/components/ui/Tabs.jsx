@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,7 +16,7 @@ export default function Tabs({ items = [], types = [], value, onValueChange }) {
     <div className="w-full">
       <TabsList types={types} activeTab={activeTab} setActiveTab={handleTabChange} />
 
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}

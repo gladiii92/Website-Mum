@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Head from "next/head";
 import { Card, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
@@ -62,8 +63,18 @@ export default function Contact() {
   ];
 
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Head>
+        <title>Kontakt - Ursula Heinke</title>
+        <meta name="description" content="Kontaktieren Sie Ursula Heinke für ein Erstgespräch oder Anfragen zu spiritueller Beratung, Coaching und Heilsteinen." />
+        <meta name="keywords" content="Kontakt Ursula Heinke, Erstgespräch Lebensberatung, spirituelles Coaching Termin" />
+        <meta property="og:title" content="Kontakt - Ursula Heinke" />
+        <meta property="og:description" content="Vereinbaren Sie ein Erstgespräch." />
+        <meta property="og:url" content="https://www.ursulaheinke.de/contact" />
+        <link rel="canonical" href="https://www.ursulaheinke.de/contact" />
+      </Head>
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -244,5 +255,6 @@ export default function Contact() {
         </div>
       </div>
     </section>
+    </>
   );
 }

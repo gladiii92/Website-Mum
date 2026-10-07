@@ -1,11 +1,11 @@
 import React from "react";
-import { HelmetProvider, Helmet } from "react-helmet-async";
+import Head from "next/head";
 import { Card, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import { Heart, Star, Award, Users, Clock, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { createPageUrl } from "../utils"; // Relativer Pfad
 
 export default function About() {
@@ -25,11 +25,21 @@ export default function About() {
     "Förderung von innerer Klarheit und Selbstbestimmung"
   ];
 
-  const isMobile = window.innerWidth < 768; // md breakpoint
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Head>
+        <title>Über Ursula Heinke - Erfahrung & Spiritualität</title>
+        <meta name="description" content="Erfahre mehr über Ursula Heinke, ihre 25-jährige Erfahrung in spiritueller Lebensberatung, Coaching und ihre ganzheitlichen Methoden für innere Balance." />
+        <meta name="keywords" content="Ursula Heinke, spirituelle Beratung, Lebensberatung Erfahrung, spirituelles Coaching, ganzheitlicher Ansatz" />
+        <meta property="og:title" content="Über Ursula Heinke - Erfahrung & Spiritualität" />
+        <meta property="og:description" content="25 Jahre Erfahrung in spiritueller Lebensberatung und Coaching." />
+        <meta property="og:url" content="https://www.ursulaheinke.de/about" />
+        <link rel="canonical" href="https://www.ursulaheinke.de/about" />
+      </Head>
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
 
         {/* Hero Section */}
         <motion.div 
@@ -40,7 +50,7 @@ export default function About() {
         >
           <div className="relative inline-block mb-8">
             <img 
-              src="/images/logo.png" 
+              src="/images/logo.webp" 
               alt="Ursula Heinke"
               className="w-40 h-40 rounded-full object-cover shadow-2xl mx-auto mystical-glow"
             />
@@ -63,7 +73,7 @@ export default function About() {
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/dark-mystic-bg1.png')" }}
+            style={{ backgroundImage: "url('/images/dark-mystic-bg1.webp')" }}
           />
           
           {/* Dark Overlay */}
@@ -156,7 +166,7 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="text-center"
         >
-          <Link to={createPageUrl("Contact")}>
+          <Link href={createPageUrl("Contact")}>
           <Button 
             className="font-headline bg-gradient-to-r from-indigo-500 to-blue-500 text-indigo-300 hover:shadow-lg hover:shadow-blue-500/20 rounded-full px-8 py-4 text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2"
           >
@@ -166,5 +176,6 @@ export default function About() {
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

@@ -63,6 +63,7 @@ export default function Home() {
       <Head>
         <title>Ursula Heinke - Authentische Lebensberatung, Tarot & Spirituelles Coaching</title>
         <meta name="description" content="Über 34.000 Beratungen mit 5,00 Sternen. Mediale Lebensberatung, Gedankenlegung auf den Herzenspartner, Seelenplan-Coaching und Seminare in Coburg & Frankenwald." />
+        <meta name="google-site-verification" content="AiX_4H1-SraqBMkdFLoM5f0KLmUUnNPhMuLQ5Cm1irI" />
         <meta name="keywords" content="Lebensberatung Coburg, Tarot Kartenlegen Frankenwald, Herzenspartner Gedankenlegung, spirituelles Coaching, Ursula Heinke, Questico Beraterin" />
         <meta property="og:title" content="Ursula Heinke – Authentische Lebensberatung & Spirituelles Coaching" />
         <meta property="og:description" content="Über 34.000 Beratungen & 5.0 Sterne. Finde Klarheit, Balance und Seelenfrieden." />

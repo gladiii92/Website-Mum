@@ -22,7 +22,9 @@ const translations = {
     rightsContactEmail: "UrsulaHeinke@gmx.de",
     rightsContactSuffix: " wenden. Sie haben zudem ein Beschwerderecht bei der zuständigen Aufsichtsbehörde (z.B. Bayerisches Landesamt für Datenschutzaufsicht).",
     security: "Ihre Daten werden durch technische und organisatorische Maßnahmen gegen Verlust, Zerstörung, Zugriff, Veränderung oder Verbreitung durch unbefugte Personen geschützt. E-Mails werden auf einem sicheren Server gespeichert.",
-    update: "Stand: September 2025. Wir behalten uns vor, die Datenschutzerklärung jederzeit anzupassen, um sie an geänderte Rechtslagen oder bei Änderungen des Dienstes sowie der Datenverarbeitung anzupassen."
+    analyticsTitle: "Webanalyse mit Google Analytics 4 (Google Ireland Limited)",
+    analyticsText: "Diese Website nutzt den Webanalysedienst Google Analytics 4 der Google Ireland Limited ('Google'), Gordon House, Barrow Street, Dublin 4, Irland. Wir setzen Google Analytics mit aktivierter IP-Anonymisierung sowie dem Google Consent Mode v2 ein. Es werden erst dann Analyse-Cookies gesetzt und Daten zur Webseitennutzung verarbeitet, wenn Sie im Cookie-Banner Ihre freiwillige Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG erteilt haben. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, indem Sie den Cache bzw. die Cookies Ihres Browsers löschen.",
+    update: "Stand: Oktober 2026. Wir behalten uns vor, die Datenschutzerklärung jederzeit anzupassen, um sie an geänderte Rechtslagen oder bei Änderungen des Dienstes sowie der Datenverarbeitung anzupassen."
   }
 };
 
@@ -65,6 +67,9 @@ export default function Datenschutz() {
           ))}
         </ul>
         <p>{t.rightsContact}<a href={`mailto:${t.rightsContactEmail}`}>{t.rightsContactEmail}</a>{t.rightsContactSuffix}</p>
+        
+        <h2 style={{ color: '#4964b0ff', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '20px' }}>{t.analyticsTitle}</h2>
+        <p>{t.analyticsText}</p>
         
         <h2 style={{ color: '#4964b0ff', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '20px' }}>Sicherheitsmaßnahmen</h2>
         <p>{t.security}</p>

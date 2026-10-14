@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { createPageUrl } from "../../utils"; // Relativer Pfad
 import { Button } from "../../components/ui/Button";
-import { Sparkles, Heart, Star, ArrowRight } from "lucide-react";
+import { Sparkles, Heart, Star, ArrowRight, MessageCircle, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
@@ -60,39 +60,42 @@ export default function HeroSection() {
               </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-blue-200">
+          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-sm text-blue-200">
             <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 text-amber-300" />
+              <Star className="w-5 h-5 text-amber-300 fill-amber-300" />
+              <span className="font-semibold">34.000+ Beratungen (Ø 5,0 Sterne)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Heart className="w-5 h-5 text-rose-400" />
+              <span className="font-semibold">Spezialistin für Seelenpartner & Liebe</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-blue-400" />
               <span className="font-semibold">25+ Jahre Erfahrung</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Heart className="w-5 h-10 text-red-600" />
-              <span className="font-semibold">34.500+ zufriedene Klienten</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-blue-500" />
-              <span className="font-semibold">Zertifizierte Beraterin</span>
             </div>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <Link href={createPageUrl("Services")}>
-              <Button className="font-headline bg-gradient-to-r from-indigo-500 to-blue-500 text-white hover:shadow-lg hover:shadow-blue-500/20 rounded-full w-auto min-w-[275px] py-2 px-8 text-lg transition-all duration-300 group whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center">
-                <Heart className="w-5 h-5 mr-2 text-red-600" />
-                Erstgespräch
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+            <a
+              href="https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20deine%20Webseite%20besucht%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Beratung%20(Seelen-Klarheits-Kompass)%20anfragen."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto"
+            >
+              <Button className="font-headline font-semibold bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 rounded-full w-full sm:w-auto min-w-[275px] py-4 px-8 text-lg transition-all duration-300 group flex items-center justify-center gap-2.5">
+                <MessageCircle className="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform duration-300" />
+                <span>Beratung per WhatsApp anfragen</span>
               </Button>
-            </Link>
-            <Link href={createPageUrl("Shop")}>
+            </a>
+            <Link href={createPageUrl("Services")}>
               <Button 
                 variant="outline" 
                 size="lg"
-                className="font-headline w-auto min-w-[275px] px-8 py-2 text-lg border-2 border-blue-400/50 text-white hover:bg-blue-400/10 hover:border-blue-400/80 hover:shadow-lg hover:shadow-black-500/20 rounded-full transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center"
+                className="font-headline font-semibold w-full sm:w-auto min-w-[275px] px-8 py-4 text-lg border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 group"
               >
-                <Sparkles className="w-5 h-5 mr-2 text-blue-500" />
-                Heilsteine entdecken
-                <ArrowRight className="w-5 h-5 ml-2 " />
+                <span>Angebote & Ausbildung</span>
+                <ArrowRight className="w-5 h-5 ml-1 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
             </Link>
           </div>

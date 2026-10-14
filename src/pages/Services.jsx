@@ -4,11 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card"
 import { Button } from "../components/ui/Button";
 import { Badge } from "../components/ui/Badge";
 import Tabs, { TabsList, TabsTrigger } from "../components/ui/Tabs";
-import { Heart, Clock, Users, Star, ArrowRight, CheckCircle } from "lucide-react";
+import { Heart, Clock, Users, Star, ArrowRight, CheckCircle, MessageCircle, Award, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import Head from "next/head"; // Neu: Import für SEO
 import Link from "next/link";
-import { createPageUrl } from "../utils"; // Relativer Pfad
+import { createPageUrl, formatPrice } from "../utils"; // Relativer Pfad
 import { useReducedMotion } from "framer-motion";
 
 export default function Services() {
@@ -60,16 +60,16 @@ export default function Services() {
   const typeLabels = {
     all: "Alle Angebote",
     readings: "Readings & Beratung",
-    gruppenkurs: "Gruppenkurse",
-    //online_kurs: "Online Kurse",
-    workshop: "Workshops"
+    ausbildung: "Zertifizierte Ausbildung",
+    workshop: "Workshops & Retreats",
+    gruppenkurs: "Gruppenkurse & Waldbaden"
   };
 
   const typeIcons = {
     readings: Heart,
-    gruppenkurs: Users,
-    //online_kurs: Clock,
-    workshop: Star
+    ausbildung: Award,
+    workshop: Star,
+    gruppenkurs: Users
   };
 
   // Kategorie-Previews: Nun basierend auf dem neuen Types-Array (separate Vorschaubilder)
@@ -143,10 +143,9 @@ export default function Services() {
             </p>
           </motion.div>
 
-          {/* Kategorie-Vorschau-Karten: Design angepasst an Produktkarten */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {/* Kategorie-Vorschau-Karten: Ruhiges, zentriertes High-End Design */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mb-12">
             {typePreviews.map((preview, index) => {
-              const TypeIcon = typeIcons[preview.type] || Heart;
               return (
                 <motion.div
                   key={preview.type}
@@ -154,39 +153,47 @@ export default function Services() {
                   whileInView={shouldAnimate ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => handleTypeChange(preview.type)}
-                  className="cursor-pointer"
+                  className="cursor-pointer h-full flex flex-col"
                 >
-                  <Card className="group min-h-[340px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 flex flex-col">
-                    <div className="relative h-60">
+                  <Card className="group h-full flex flex-col bg-slate-900/40 border border-blue-400/15 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/35">
+                    <div className="relative h-48 shrink-0 overflow-hidden">
                       <img
                         src={preview.teaserImage || ''}
-                        alt={`${typeLabels[preview.type]} - Teaserbild für ${preview.teaserName || 'Angebote'}`}
-                        title={`${typeLabels[preview.type]}: ${preview.teaserName || 'Entdecken Sie unsere Angebote'}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100"
+                        alt={`${typeLabels[preview.type]} - Vorschau`}
+                        title={typeLabels[preview.type]}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                      <Badge className="absolute top-2 left-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white border-0 flex items-center gap-1 rounded-full px-4 py-1 font-headline text-2xl">
-                        <TypeIcon className="w-3 h-3" />
-                        {typeLabels[preview.type]}
-                      </Badge>
-                      <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white border-0 rounded-full px-3 py-1 font-headline text-2xl">
-                        {preview.count} Angebote
-                      </Badge>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                      <div className="absolute top-3 right-3">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
+                          {preview.count} {preview.count === 1 ? 'Angebot' : 'Angebote'}
+                        </span>
+                      </div>
                     </div>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="font-headline text-4xl md:text-5xl font-bold text-blue-200 group-hover:text-white transition-colors duration-300 mb-2 pl-4">
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-grow space-y-4 py-5">
-                      <div className="flex justify-center mt-2 pb-2">
+
+                    <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
+                      <div className="w-full flex flex-col items-center">
+                        <h3 className="font-headline text-xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300 text-center leading-snug min-h-[3rem] flex items-center justify-center">
+                          {typeLabels[preview.type]}
+                        </h3>
+
+                        <div className="w-12 h-0.5 bg-indigo-400/20 mx-auto my-3 rounded-full"></div>
+
+                        <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 text-center px-1">
+                          {preview.description}
+                        </p>
+                      </div>
+
+                      <div className="w-full mt-auto pt-2">
                         <Button 
-                          aria-label={`Entdecken Sie die Kategorie ${typeLabels[preview.type]}`}
-                          className="font-headline text-xl md:text-lg bg-gradient-to-r from-indigo-500 to-blue-500 text-white hover:shadow-lg hover:shadow-blue-500/20 rounded-full px-6 py-2 transition-all duration-300 flex items-center justify-center w-full max-w-xs mx-auto"
+                          aria-label={`Angebote für ${typeLabels[preview.type]} ansehen`}
+                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-2.5 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                         >
-                          {typeLabels[preview.type]} <ArrowRight className="w-4 h-4 ml-2" />
+                          <span>Angebote entdecken</span>
+                          <ArrowRight className="w-4 h-4 text-indigo-200 group-hover/btn:translate-x-1 transition-transform duration-300" />
                         </Button>
                       </div>
-                    </CardContent>
+                    </div>
                   </Card>
                 </motion.div>
               );
@@ -205,7 +212,7 @@ export default function Services() {
                   <TabsTrigger
                     key={type}
                     value={type}
-                    className="font-accent text-2xl text-indigo-400 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-300 data-[state=active]:to-blue-300 data-[state=active]:text-transparent data-[state=active]:bg-clip-text text-blue-200 whitespace-nowrap"
+                    className="font-headline text-sm font-medium text-indigo-300 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-300 data-[state=active]:to-blue-300 data-[state=active]:text-slate-950 hover:text-white transition-all whitespace-nowrap"
                   >
                     {typeLabels[type]}
                   </TabsTrigger>
@@ -224,7 +231,7 @@ export default function Services() {
             <div className="border-t border-blue-400/20 my-6"></div>
 
             {filteredServices.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-12">
                 {filteredServices.map((service, index) => {
                   const TypeIcon = typeIcons[service.type] || Heart;
                   
@@ -234,79 +241,92 @@ export default function Services() {
                       initial={shouldAnimate ? { opacity: 0, y: 30 } : {}}
                       whileInView={shouldAnimate ? { opacity: 1, y: 0 } : {}}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="flex flex-col"
+                      className="h-full flex flex-col"
                     >
-                      <Card className="group min-h-[550px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 border-0 flex flex-col flex-grow">
-                        <div className="relative h-60">
+                      <Card className="group h-full flex flex-col bg-slate-900/40 border border-blue-400/15 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/35">
+                        <div className="relative h-52 shrink-0 overflow-hidden">
                           <img 
                             src={service.image_url || ''}
                             alt={`${service.title} - ${service.description.slice(0, 100)}`}
                             title={`${service.title}: ${service.description.slice(0, 100)}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                          <Badge className="absolute top-2 left-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white border-0 flex items-center gap-1 rounded-full px-4 py-1 font-headline text-2xl">
-                            <TypeIcon className="w-3 h-3" />
-                            {typeLabels[service.type]}
-                          </Badge>
-                          {service.featured && (
-                            <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white border-0 flex items-center gap-1 rounded-full px-3 py-1 font-headline text-2xl">
-                              <Star className="w-3 h-3" /> Bestseller
-                            </Badge>
-                          )}
-                          <div className="absolute bottom-4 left-4 text-white">
-                            <p className="font-headline text-4xl md:text-3xl font-bold">€{service.price}</p>
-                            {service.duration && (
-                              <p className="font-body text-base opacity-90 flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {service.duration}
-                              </p>
-                            )}
-                            {service.available_slots && (
-                              <p className="font-body text-base opacity-90 text-yellow-300">Nur noch {service.available_slots} Plätze verfügbar!</p>
-                            )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                          <div className="absolute top-3 left-3">
+                            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
+                              {typeLabels[service.type]}
+                            </span>
                           </div>
-                        </div>
-                        
-                        <CardHeader>
-                          <CardTitle className="font-headline text-4xl md:text-2xl font-bold text-blue-200 group-hover:text-white transition-colors duration-300 mb-1 pl-6 p-5">
-                            {service.title}
-                          </CardTitle>
-                        </CardHeader>
-                        
-                        <CardContent className="flex-grow space-y-2 py-4">
-                          <p className="font-body text-base text-indigo-200/80 leading-snug mb-1 pl-6 p-2 font-semibold">
-                            {service.description}
-                          </p>
-                          
-                          {service.benefits && service.benefits.length > 0 && (
-                            <div className="mb-1">
-                              <p className="font-section text-2xl mb-4 font-semibold text-blue-300 pl-6 p-3">Deine Vorteile:</p>
-                              <ul className="font-body text-base text-indigo-200 list-disc p-1 pl-11">
-                                {service.benefits.slice(0, 3).map((benefit, i) => (
-                                  <li key={i} className="leading-relaxed">
-                                    {benefit}
-                                  </li>
-                                ))}
-                              </ul>
+                          {service.featured && (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
+                                Empfehlung
+                              </span>
                             </div>
                           )}
+                        </div>
+                        
+                        <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
+                          <div className="w-full flex flex-col items-center">
+                            <h3 className="font-headline text-xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
+                              {service.title}
+                            </h3>
+
+                            <div className="my-2 text-center">
+                              <span className="font-headline text-3xl font-bold tracking-tight text-white block">
+                                {formatPrice(service.price)}
+                              </span>
+                              {service.duration && (
+                                <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
+                                  {service.duration}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="w-12 h-0.5 bg-indigo-400/20 mx-auto my-3 rounded-full"></div>
+
+                            <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 min-h-[4.5rem] text-center px-1">
+                              {service.description}
+                            </p>
+                            
+                            {service.benefits && service.benefits.length > 0 && (
+                              <div className="w-full mb-5 p-4 rounded-xl bg-slate-900/60 border border-indigo-400/15 text-center">
+                                <p className="text-[11px] font-semibold uppercase tracking-widest text-indigo-300/90 mb-2">
+                                  Im Angebot enthalten
+                                </p>
+                                <ul className="text-xs text-indigo-100/90 space-y-1.5">
+                                  {service.benefits.slice(0, 3).map((benefit, i) => (
+                                    <li key={i} className="text-center leading-relaxed">
+                                      {benefit}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                           
-                          <div className="flex justify-center mt-auto p-6">
-                            <Link 
-                              href={createPageUrl("Contact")} 
+                          <div className="w-full mt-auto pt-4 border-t border-blue-400/10 flex flex-col gap-2">
+                            <a
+                              href={`https://wa.me/4915901276286?text=${encodeURIComponent(
+                                `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="w-full inline-block"
                             >
-                            <Button 
-                              aria-label={`Kostenloses Erstgespräch buchen: ${service.title}`}
-                              className="font-headline text-xl md:text-lg bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full w-full py-2 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 group whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center"
-                            >
-                              Erstgespräch buchen
-                              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                            </Button>
-                            </Link>
+                              <Button 
+                                aria-label={`Termin anfragen für: ${service.title}`}
+                                className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                              >
+                                <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                                <span>Termin per WhatsApp anfragen</span>
+                              </Button>
+                            </a>
+                            <p className="text-[11px] text-center text-indigo-300/60 font-body">
+                              Verbindliche Terminanfrage • Keine kostenlose Beratung im Chat
+                            </p>
                           </div>
-                        </CardContent>
+                        </div>
                       </Card>
                     </motion.div>
                   );
@@ -317,7 +337,7 @@ export default function Services() {
                 <Heart className="w-16 h-16 text-indigo-300 mx-auto mb-4" />
                 <Button 
                   variant="outline" 
-                  className="font-headline text-4xl md:text-5xl mt-4 px-6 py-2 text-blue-200 border-blue-400/50 hover:bg-blue-400/10"
+                  className="font-headline text-base mt-4 px-6 py-2.5 text-blue-200 border-blue-400/50 hover:bg-blue-400/10 rounded-full"
                   onClick={() => handleTypeChange("all")}
                 >
                   Alle Angebote ansehen

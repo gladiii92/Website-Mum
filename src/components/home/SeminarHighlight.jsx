@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { createPageUrl } from "../../utils";
 import { Button } from "../../components/ui/Button";
-import { Heart, MapPin, Calendar, Users, ArrowRight, Sparkles } from "lucide-react";
+import { Heart, MapPin, Calendar, Users, ArrowRight, Sparkles, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function SeminarHighlight() {
@@ -95,18 +95,30 @@ export default function SeminarHighlight() {
                   </div>
                   <div>
                     <h4 className="font-bold text-white">Investition</h4>
-                    <p className="text-indigo-200">129€ pro Person<br/><span className="text-sm opacity-80">Alles inklusive</span></p>
+                    <p className="text-indigo-200">129 € pro Person<br/><span className="text-sm opacity-80">Alles inklusive</span></p>
                   </div>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href={createPageUrl("Contact")}>
-                  <Button className="font-headline w-full sm:w-auto bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-full px-8 py-6 text-lg shadow-[0_0_20px_rgba(219,39,119,0.4)] transition-all duration-300 flex items-center justify-center">
-                    <Heart className="w-5 h-5 mr-2" />
-                    Jetzt Platz sichern
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <a
+                  href={`https://wa.me/4915901276286?text=${encodeURIComponent(
+                    "Hallo Ursula, ich möchte gerne einen Platz für das Frauen-Retreat 'Herzenszeit' (129€) in Coburg reservieren."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto"
+                >
+                  <Button className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-full px-8 py-4 text-base sm:text-lg shadow-[0_0_20px_rgba(219,39,119,0.4)] transition-all duration-300 flex items-center justify-center gap-2.5 group">
+                    <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
+                    <span>Platz per WhatsApp sichern</span>
                   </Button>
-                </Link>
+                </a>
+                <span className="text-xs text-pink-200/80 inline-flex items-center gap-2">
+                  <span>Nur 15 Plätze verfügbar</span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-pink-400 shadow-[0_0_6px_rgba(244,114,182,0.85)]"></span>
+                  <span>Verbindliche Reservierung</span>
+                </span>
               </div>
               
             </div>

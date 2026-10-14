@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../../entities/Product"; // Relativer Pfad (zwei Ordner hoch zu entities)
 import Link from "next/link";
-import { createPageUrl } from "../../utils";
+import { createPageUrl, formatPrice } from "../../utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card"; // Relativer Pfad
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
@@ -18,35 +18,29 @@ export default function FeaturedProducts() {
   }, []);
 
   const loadFeaturedProducts = () => {
-    const allProducts = Product; // Alles aus dem Array
-    const shuffled = [...allProducts].sort(() => 0.5 - Math.random()); // Zufällig mischen
-    const selected = shuffled.slice(0, 3); // Die ersten 3 zufällig auswählen
+    const allProducts = Product;
+    // 3 handverlesene, komplementäre Einstiegsprodukte für maximale Konversion & visuelle Ruhe
+    const curatedSlugs = ["meditation-innerer-frieden", "mondstein-wasserstein", "partnerhoroskop"];
+    const selected = curatedSlugs
+      .map(slug => allProducts.find(p => p.slug === slug))
+      .filter(Boolean);
 
-    // Zufällige Bestseller-Chance vergeben
-    const withBestseller = selected.map(product => ({
-      ...product,
-      is_bestseller: true
-    }));
-
-    setProducts(withBestseller);
+    setProducts(selected.length === 3 ? selected : allProducts.slice(0, 3));
     setLoading(false);
   };
 
   const categoryLabels = {
-    heilsteine: "Heilsteine",
-    heilketten: "Heilketten & Amulette",
-    // kerzen: "Mystische Kerzen",
-    // pferdebuersten: "Pferdebürsten mit Heilsteinen", // Auskommentiert für späteren Gebrauch
-    wassersteine: "Heilsteine fürs Wasser",
-    horoskope: "Persönliche Horoskope"
+    meditation: "Geführte Meditation",
+    wassersteine: "Heil- & Wassersteine",
+    horoskope: "Persönliche Horoskope",
+    heilketten: "Amulette & Heilketten"
   };
 
   const categoryIcons = {
-    heilsteine: Sparkles,
-    heilketten: Sparkles,
-    kerzen: Sparkles,
+    meditation: Sparkles,
     wassersteine: Droplet,
-    horoskope: Star
+    horoskope: Star,
+    heilketten: Sparkles
   };
 
   if (loading) {
@@ -82,111 +76,103 @@ export default function FeaturedProducts() {
         >
           <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent">
-              Spirituelle Schätze
+              Spirituelle Begleiter & Meditation
             </span>
           </h2>
           <p className="font-base text-lg text-indigo-200 max-w-2xl mx-auto mb-4">
-            Handverlesene Heilsteine, kraftvolle Schmuckstücke und mystische Kerzen für Deine spirituelle Reise
+            Geführte Meditationen, energetisierende Wassersteine und persönliche Horoskope zur Begleitung Deiner Entwicklung
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-12">
           {products.map((product, index) => {
-            
             const CategoryIcon = categoryIcons[product.category] || Sparkles;
             
             return (
               <motion.div
-                key={product.id || index}
+                key={product.id || product.slug || index}
                 initial={isMobile ? {} : { opacity: 0, y: 20 }}
                 whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
-                transition={isMobile ? {} : { duration: 0.5 }}
+                transition={isMobile ? {} : { duration: 0.5, delay: index * 0.1 }}
+                className="h-full flex flex-col"
               >
-                <Card className="group min-h-[550px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 border-0 flex flex-col flex-grow">
-                  <div className="relative h-60">
+                <Card className="group h-full flex flex-col bg-slate-900/40 border border-blue-400/15 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/35">
+                  <div className="relative h-52 shrink-0 overflow-hidden">
                     <Link href={`/product/${product.slug}`} className="block w-full h-full">
-                    <img 
-                      src={product.image_url || ''}
-                      alt={`${product.name} - ${product.description?.slice(0, 100)}`}
-                      title={`${product.name}: ${product.description?.slice(0, 100)}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100"
-                    />
+                      <img 
+                        src={product.image_url || ''}
+                        alt={`${product.name} - Spiritueller Begleiter`}
+                        title={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                      />
                     </Link>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent pointer-events-none"></div>
-                    <Badge className="absolute top-2 left-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white border-0 flex items-center gap-1 rounded-full px-4 py-1 font-headline text-2xl">
-                      <CategoryIcon className="w-3 h-3" />
-                      {categoryLabels[product.category]}
-                    </Badge>
-                    {product.is_bestseller && (
-                      <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white border-0 flex items-center gap-1 rounded-full px-3 py-1 font-headline text-2xl">
-                        <Star className="w-3 h-3" /> Bestseller
-                      </Badge>
-                    )}
-                    <div className="absolute bottom-4 left-4 text-white">
-                      <p className="font-headline text-4xl md:text-3xl font-bold">{product.price}€</p>
-                      {product.duration && (
-                        <p className="font-headline text-base opacity-90 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {product.duration}
-                        </p>
-                      )}
-                      {product.in_stock && product.available_slots && (
-                        <p className="font-body text-base opacity-90 text-yellow-300">Nur noch {product.available_slots} verfügbar!</p>
-                      )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none"></div>
+                    <div className="absolute top-3 left-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
+                        {categoryLabels[product.category] || "Begleiter"}
+                      </span>
                     </div>
-                  </div>
-                  
-                  <CardHeader>
-                    <CardTitle className="font-headline text-4xl md:text-3xl font-bold text-blue-200 group-hover:text-white transition-colors duration-300 mb-1 pl-6 p-5">
-                      {product.name}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="flex-grow space-y-2 py-4">
-                    {product.isGemstone ? (
-                    <p className="font-body text-base text-indigo-200/80 leading-snug mb-1 pl-6 p-2 font-semibold">
-                      {product.carat_weight}ct • {product.cut} • {product.origin}
-                      {product.extra_specs && product.extra_specs.split('\n').map((line, i) => (
-                        <span key={i}><br />{line}</span>
-                      ))}
-                    </p>
-                    ) : (
-                    <p className="font-body text-base text-indigo-200/80 leading-snug mb-1 pl-6 p-2 font-semibold">
-                      {product.healing_property} • {product.energy} • {product.focus}
-                      {product.extra_specs && product.extra_specs.split('\n').map((line, i) => (
-                        <span key={i}><br />{line}</span>
-                      ))}
-                    </p>
-                    )}
-
-                    {product.healing_properties && product.healing_properties.length > 0 && (
-                      <div className="mb-1">
-                        <p className="font-section text-2xl mb-4 font-semibold text-blue-300 pl-6 p-3">Heilende Wirkung:</p>
-                        <ul className="font-body text-base text-indigo-200 list-disc p-1 pl-11">
-                          {product.healing_properties?.slice(0, 3).map((property, i) => (
-                            <li key={i} className="leading-relaxed">
-                              {property}
-                            </li>
-                          ))}
-                        </ul>
+                    {product.is_bestseller && (
+                      <div className="absolute top-3 right-3">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
+                          Beliebt
+                        </span>
                       </div>
                     )}
+                  </div>
+                  
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
+                    <div className="w-full flex flex-col items-center">
+                      <h3 className="font-headline text-xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
+                        {product.name}
+                      </h3>
+
+                      <div className="my-2 text-center">
+                        <span className="font-headline text-3xl font-bold tracking-tight text-white block">
+                          {formatPrice(product.price)}
+                        </span>
+                        <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
+                          {product.focus || product.healing_property || 'Spirituelle Begleitung'}
+                        </span>
+                      </div>
+
+                      <div className="w-12 h-0.5 bg-indigo-400/20 mx-auto my-3 rounded-full"></div>
+
+                      <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 min-h-[4rem] text-center px-1">
+                        {product.healing_property ? `${product.healing_property} – ${product.energy || 'Harmonisierend'}` : 'Harmonisierende Unterstützung für deinen Alltag.'}
+                      </p>
+
+                      {product.healing_properties && product.healing_properties.length > 0 && (
+                        <div className="w-full mb-5 p-4 rounded-xl bg-slate-900/60 border border-indigo-400/15 text-center">
+                          <p className="text-[11px] font-semibold uppercase tracking-widest text-indigo-300/90 mb-2">
+                            Wirkung & Fokus
+                          </p>
+                          <ul className="text-xs text-indigo-100/90 space-y-1.5">
+                            {product.healing_properties.slice(0, 3).map((property, i) => (
+                              <li key={i} className="text-center leading-relaxed">
+                                {property}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                     
-                    <div className="flex justify-center mt-auto p-6">
+                    <div className="w-full mt-auto pt-4 border-t border-blue-400/10">
                       <Link 
                         href={`/product/${product.slug}`}
                         className="w-full inline-block"
                       >
-                      <Button 
-                        aria-label={`Anfrage senden: ${product.name}`}
-                        className="font-headline text-xl md:text-lg bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full w-full py-2 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 group whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center"
-                      >
-                        Details ansehen
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                      </Button>
+                        <Button 
+                          aria-label={`Details ansehen: ${product.name}`}
+                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                        >
+                          <span>Details & Bestellen</span>
+                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                        </Button>
                       </Link>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               </motion.div>
             );
@@ -198,10 +184,10 @@ export default function FeaturedProducts() {
             <Button 
               variant="outline" 
               size="lg"
-              className="px-8 py-4 text-lg border-2 border-blue-400/50 text-blue-200 hover:bg-blue-400/10 hover:border-blue-400/80 rounded-full transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center font-headline"
+              className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 flex items-center justify-center font-headline font-semibold group"
             >
-              Alle Produkte ansehen
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <span>Alle Begleiter & Horoskope ansehen</span>
+              <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </Link>
         </div>

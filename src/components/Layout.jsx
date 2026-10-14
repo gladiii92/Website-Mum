@@ -11,8 +11,10 @@ const location = { pathname: router.pathname };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State für Mobile Menü
   const navigation = [
     { name: "Startseite", href: createPageUrl("Home"), icon: Home },
-    { name: "Shop", href: createPageUrl("Shop"), icon: ShoppingBag },
     { name: "Coaching", href: createPageUrl("Services"), icon: Heart },
+    { name: "Tarot", href: "/tarot", icon: Sparkles },
+    { name: "Lenormand", href: "/lenormand", icon: Moon },
+    { name: "Shop", href: createPageUrl("Shop"), icon: ShoppingBag },
     { name: "Über mich", href: createPageUrl("About"), icon: User },
     { name: "Kontakt", href: createPageUrl("Contact"), icon: Mail },
   ];
@@ -84,7 +86,7 @@ const location = { pathname: router.pathname };
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`group relative px-4 py-2 rounded-full text-l font-medium transition-all duration-300 ${
+                    className={`group relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                       isActive
                         ? 'text-white action-gradient shadow-lg shadow-pink-500/20'
                         : 'text-blue-200 hover:text-white hover:bg-white/10'
@@ -176,8 +178,9 @@ const location = { pathname: router.pathname };
             </div>
             
             <div>
-              <h4 className="font-headline text-lg font-semibold mb-4 text-white">Kontakt</h4>
-              <div className="space-y-2 text-blue-200/80">
+              <h4 className="font-headline text-lg font-semibold mb-4 text-white">Kontakt & Beratung</h4>
+              <div className="space-y-2 text-blue-200/80 text-sm">
+                <p>💬 <a href="https://wa.me/4915901276286" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors font-medium">WhatsApp: +49 1590 1276286</a></p>
                 <p>📧 Ursulaheinke@gmx.de</p>
                 <p>📍 Gräfenthaler Straße 4, 96337 Ludwigsstadt</p>
               </div>
@@ -185,7 +188,7 @@ const location = { pathname: router.pathname };
             
             <div>
               <h4 className="font-headline text-lg font-semibold mb-4 text-white">Öffnungszeiten</h4>
-              <div className="space-y-1 text-blue-200/80">
+              <div className="space-y-1 text-blue-200/80 text-sm">
                 <p>Mo-Fr: 9:00 - 18:00 Uhr</p>
                 <p>Sa: 9:00 - 18:00 Uhr</p>
                 <p>So: Nach Vereinbarung</p>
@@ -193,10 +196,21 @@ const location = { pathname: router.pathname };
             </div>
           </div>
           
-          <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-300">
-            <p>&copy;Alle Rechte vorbehalten.</p>
-            <p>*Alle Preise inkl. 19% Mwst. & zzgl. Versand</p>
-            <p className="mt-2 text-sm space-x-4">
+          <div className="border-t border-blue-800/60 mt-8 pt-8 text-center text-blue-300 text-sm">
+            <p className="mb-2">
+              <span className="font-semibold text-blue-200">Ursula Heinke</span> – Über 34.000 Beratungen mit 5,00 Sternen. Bekannt aus Questico.
+            </p>
+            <p className="inline-flex items-center justify-center gap-2 mb-3 text-xs text-indigo-300/80 flex-wrap">
+              <Link href="/tarot" className="hover:text-white transition-colors underline">Tarot-Lexikon</Link>
+              <span className="inline-block w-1 h-1 rounded-full bg-indigo-400/60"></span>
+              <Link href="/lenormand" className="hover:text-white transition-colors underline">Lenormand-Karten (36 Bedeutungen)</Link>
+              <span className="inline-block w-1 h-1 rounded-full bg-indigo-400/60"></span>
+              <a href="https://www.questico.de/tarot-und-kartenlegen/ursula-heinke" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Questico Profil</a>
+              <span className="inline-block w-1 h-1 rounded-full bg-indigo-400/60"></span>
+              <a href="https://share.google/fmGTco4Orpqq5yJyM" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Google Unternehmensprofil</a>
+            </p>
+            <p className="text-xs text-indigo-300/60">&copy; {new Date().getFullYear()} Ursula Heinke. Alle Rechte vorbehalten. *Alle Preise inkl. MwSt.</p>
+            <p className="mt-2 text-xs space-x-4">
               <Link href={createPageUrl("AGB")} className="hover:text-white transition-colors">AGB</Link>
               <span>|</span>
               <Link href={createPageUrl("Impressum")} className="hover:text-white transition-colors">Impressum</Link>

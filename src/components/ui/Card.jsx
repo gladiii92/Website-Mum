@@ -2,8 +2,8 @@
 export function Card({ children, className = "" }) {
   return <div className={`border rounded p-0 ${className}`}>{children}</div>;
 }
-export function CardContent({ children }) {
-  return <div>{children}</div>;
+export function CardContent({ children, className = "" }) {
+  return <div className={className}>{children}</div>;
 }
 
 export function CardHeader({ children, className }) {

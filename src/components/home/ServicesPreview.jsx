@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ServiceData } from "../../entities/Service"; // Relativer Pfad – geändert zu ServiceData
 import Link from "next/link";
-import { createPageUrl } from "../../utils";
+import { createPageUrl, formatPrice } from "../../utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
-import { Heart, Clock, Users, ArrowRight, Star } from "lucide-react";
+import { Heart, Clock, Users, ArrowRight, Star, MessageCircle, Award, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-
 
 export default function ServicesPreview() {
   const [featuredServices, setFeaturedServices] = useState([]); // State für nur featured Services
@@ -15,11 +14,9 @@ export default function ServicesPreview() {
   const [error, setError] = useState(null);
   const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
-
   useEffect(() => {
     loadFeaturedServices();
   }, []);
-
 
   const loadFeaturedServices = async () => {
     try {
@@ -35,22 +32,20 @@ export default function ServicesPreview() {
     }
   };
 
-
-
   const typeLabels = {
     all: "Alle Angebote",
     readings: "Readings & Beratung",
-    gruppenkurs: "Gruppenkurse",
-    //online_kurs: "Online Kurse",
-    workshop: "Workshops"
+    ausbildung: "Zertifizierte Ausbildung",
+    gruppenkurs: "Gruppenkurse & Waldbaden",
+    workshop: "Workshops & Retreats"
   };
 
-
   const typeIcons = {
+    readings: Heart,
+    ausbildung: Award,
     einzelcoaching: Heart,
     gruppenkurs: Users,
-    online_kurs: Clock,
-    workshop: Users
+    workshop: Star
   };
 
 
@@ -98,89 +93,103 @@ export default function ServicesPreview() {
         </motion.div>
 
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"> {/* grid: Grid-Layout, grid-cols-1: 1 Spalte auf Mobile, md:grid-cols-3: 3 Spalten ab Medium, gap-8: Abstand 2rem, mb-12: Margin bottom 3rem */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-12">
           {featuredServices.map((service, index) => {
-            const normalizedType = service.type?.toLowerCase() || '';  // 
+            const normalizedType = service.type?.toLowerCase() || '';
             const TypeIcon = typeIcons[service.type] || Heart;
             
             return (
               <motion.div
-                key={service.id || index}  // HinzugefÃ¼gt: key fÃ¼r eindeutige Identifikation (verwendet service.id, fallback zu index)
+                key={service.id || index}
                 initial={isMobile ? {} : { opacity: 0, y: 20 }}
                 whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
-                transition={isMobile ? {} : { duration: 0.6, delay: index * 0.1 }} // transition: Dauer 0.6s, delay: VerzÃ¶gerung basierend auf Index (0.1s pro Item)
+                transition={isMobile ? {} : { duration: 0.6, delay: index * 0.1 }}
+                className="h-full flex flex-col"
               >
-                <Card className="group min-h-[550px] bg-slate-900/30 border border-blue-400/10 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/30 border-0 flex flex-col flex-grow">
-                  <div className="relative h-60">
+                <Card className="group h-full flex flex-col bg-slate-900/40 border border-blue-400/15 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/35">
+                  <div className="relative h-52 shrink-0 overflow-hidden">
                     <img 
                       src={service.image_url || ''}
                       alt={`${service.title} - ${service.description.slice(0, 100)}`}
                       title={`${service.title}: ${service.description.slice(0, 100)}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-100"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                    <Badge className="absolute top-2 left-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white border-0 flex items-center gap-1 rounded-full px-4 py-1 font-headline text-2xl">
-                      <TypeIcon className="w-3 h-3" />
-                      {typeLabels[service.type]}
-                    </Badge>
-                    {service.featured && (
-                      <Badge className="absolute top-2 right-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white border-0 flex items-center gap-1 rounded-full px-3 py-1 font-headline text-2xl">
-                        <Star className="w-3 h-3" /> Bestseller
-                      </Badge>
-                    )}
-                    <div className="absolute bottom-4 left-4 text-white">
-                      <p className="font-headline text-4xl md:text-3xl font-bold">€{service.price}</p>
-                      {service.duration && (
-                        <p className="font-body text-base opacity-90 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {service.duration}
-                        </p>
-                      )}
-                      {service.available_slots && (
-                        <p className="font-body text-base opacity-90 text-yellow-300">Nur noch {service.available_slots} Plätze verfügbar!</p>
-                      )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                    <div className="absolute top-3 left-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
+                        {typeLabels[service.type]}
+                      </span>
                     </div>
-                  </div>
-                  
-                  <CardHeader>
-                    <CardTitle className="font-headline text-4xl md:text-2xl font-bold text-blue-200 group-hover:text-white transition-colors duration-300 mb-1 pl-6 p-5">
-                      {service.title}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="flex-grow space-y-2 py-4">
-                    <p className="font-body text-base text-indigo-200/80 leading-snug mb-1 pl-6 p-2 font-semibold">
-                      {service.description}
-                    </p>
-                    
-                    {service.benefits && service.benefits.length > 0 && (
-                      <div className="mb-1">
-                        <p className="font-section text-2xl mb-4 font-semibold text-blue-300 pl-6 p-3">Deine Vorteile:</p>
-                        <ul className="font-body text-base text-indigo-200 list-disc p-1 pl-11">
-                          {service.benefits.slice(0, 3).map((benefit, i) => (
-                            <li key={i} className="leading-relaxed">
-                              {benefit}
-                            </li>
-                          ))}
-                        </ul>
+                    {service.featured && (
+                      <div className="absolute top-3 right-3">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
+                          Empfehlung
+                        </span>
                       </div>
                     )}
+                  </div>
+                  
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
+                    <div className="w-full flex flex-col items-center">
+                      <h3 className="font-headline text-xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
+                        {service.title}
+                      </h3>
+
+                      <div className="my-2 text-center">
+                        <span className="font-headline text-3xl font-bold tracking-tight text-white block">
+                          {formatPrice(service.price)}
+                        </span>
+                        {service.duration && (
+                          <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
+                            {service.duration}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="w-12 h-0.5 bg-indigo-400/20 mx-auto my-3 rounded-full"></div>
+
+                      <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 min-h-[4.5rem] text-center px-1">
+                        {service.description}
+                      </p>
+                      
+                      {service.benefits && service.benefits.length > 0 && (
+                        <div className="w-full mb-5 p-4 rounded-xl bg-slate-900/60 border border-indigo-400/15 text-center">
+                          <p className="text-[11px] font-semibold uppercase tracking-widest text-indigo-300/90 mb-2">
+                            Im Angebot enthalten
+                          </p>
+                          <ul className="text-xs text-indigo-100/90 space-y-1.5">
+                            {service.benefits.slice(0, 3).map((benefit, i) => (
+                              <li key={i} className="text-center leading-relaxed">
+                                {benefit}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                     
-                    <div className="flex justify-center mt-auto p-6">
-                      <Link 
-                        href={createPageUrl("Contact")} 
+                    <div className="w-full mt-auto pt-4 border-t border-blue-400/10 flex flex-col gap-2">
+                      <a 
+                        href={`https://wa.me/4915901276286?text=${encodeURIComponent(
+                          `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="w-full inline-block"
                       >
-                      <Button 
-                        aria-label={`Kostenloses Erstgespräch buchen: ${service.title}`}
-                        className="font-headline text-xl md:text-lg bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full w-full py-2 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 group whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center"
-                      >
-                        Erstgespräch buchen
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                      </Button>
-                      </Link>
+                        <Button 
+                          aria-label={`Termin anfragen für: ${service.title}`}
+                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                        >
+                          <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                          <span>Termin per WhatsApp anfragen</span>
+                        </Button>
+                      </a>
+                      <p className="text-[11px] text-center text-indigo-300/60 font-body">
+                        Verbindliche Anfrage direkt via WhatsApp
+                      </p>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               </motion.div>
             );
@@ -188,15 +197,15 @@ export default function ServicesPreview() {
         </div>
 
 
-        <div className="flex justify-center"> {/* flex justify-center: Zentriert den Inhalt horizontal */}
+        <div className="flex justify-center">
           <Link href={createPageUrl("Services")}>
             <Button 
               variant="outline" 
               size="lg"
-              className="px-8 py-4 text-lg border-2 border-blue-400/50 text-blue-200 hover:bg-blue-400/10 hover:border-blue-400/80 rounded-full transition-all duration-300 whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-center font-headline" // variant="outline": Outline-Stil (nur Rand), size="lg": GroÃŸe GrÃ¶ÃŸe, px-8: Padding left/right 2rem, py-4: Padding top/bottom 1rem, text-lg: Schrift 1.125rem, border-2: Randdicke 2px, border-blue-400/50: Blau mit 50% OpazitÃ¤t, text-blue-200: Hellblau, hover:bg-blue-400/10: Hover-Hintergrund blau 10% OpazitÃ¤t, hover:border-blue-400/80: Hover-Rand blau 80% OpazitÃ¤t, rounded-full: Voll abgerundet, transition-all duration-300: ÃœbergÃ¤nge 300ms, whitespace-nowrap: Kein Umbruch, overflow-hidden: Ãœberlauf verstecken, text-ellipsis: Mit ... kÃ¼rzen, flex items-center justify-center: Flex zentriert
+              className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 flex items-center justify-center font-headline font-semibold group"
             >
-              Alle Coaching-Angebote ansehen
-              <ArrowRight className="w-5 h-5 ml-2" /> {/* w-5 h-5: GrÃ¶ÃŸe 1.25rem, ml-2: Margin left 0.5rem */}
+              <span>Alle Coaching-Angebote ansehen</span>
+              <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </Link>
         </div>

@@ -4,110 +4,7 @@
 // Neu: Slug-Feld für jeden Eintrag hinzugefügt (für Routing zur Detailseite).
 
 export const Product = [
-  // Kategorie: heilsteine (3 Produkte) – unverändert
-  {
-    extra_specs: "\n",
-    slug: "gelber-saphir",
-    name: "Gelber Saphir",
-    type: "sapphire",  // Neu
-    isGemstone: true,
-    carat_weight: 1.43,  // Neu
-    color: "Gelb",  // Neu
-    origin: "Ceylon",  // Neu
-    category: "heilsteine",
-    cut: "Fancy",  // Neu
-    clarity: "VS",  // Neu
-    price: 850,  // Angepasst aus price_eur
-    treatment: "untreated",  // Neu
-    certification: "none",  // Neu
-    rarity_level: "exceptional",  // Neu
-    category: "heilsteine",  // Unverändert, passt zu Heilsteinen
-    image_url: `/images/Produkte/gelber-saphir-1-43ct-ceylon.webp`,  // Angepasst aus main_image_url
-    gallery_images: [  // Neu
-      "/videos/gelber-saphir-1-43ct-finger.mp4",
-      "/videos/gelber-saphir-1-43ct-pinzette.mp4",
-      "/videos/gelber-saphir-1-43ct-360.mp4"
-    ],
-    video_url: "/videos/gelber-saphir-1-43ct-360.mp4",  // Neu
-    healing_properties: ["Freude", "Wohlstand", "Selbstvertrauen", "Energiebalance"],  // Neu: Heilende Eigenschaften hinzugefügt, passend zum Fokus
-    in_stock: true,
-    featured: true,  // Aus deiner Angabe (is_featured)
-    is_sold: false,  // Neu
-    is_bestseller: true,
-    available_slots: 1,  // Unverändert vom Original
-    created_date: "2024-04-10",  // Aus deiner Angabe
-    description: "<p><strong>Gelber Ceylon Saphir – 1,43 ct</strong>: Ein seltener, unbehandelter Heilstein voller Sonnenenergie. Er aktiviert dein Solarplexus-Chakra, stärkt Selbstvertrauen und zieht Freude, Wohlstand und Harmonie in dein Leben.</p><p>Dieser Edelstein unterstützt dich bei Meditation und Energiearbeit, löst Blockaden und fördert innere Balance. Seine goldene Strahlkraft macht ihn zu einem einzigartigen Begleiter für deine spirituelle Reise.</p><p><strong>Preis</strong>: Nur 850 € – sichere dir dieses lichtvolle Unikat und spüre seine transformierende Kraft!</p>"
-  },
-  {
-    extra_specs: "\n",
-    slug: "blauer-spinell",
-    name: "Blauer Spinell",
-    type: "spinel",
-    isGemstone: true,
-    carat_weight: 4.57,
-    color: "Blau",
-    origin: "Tansania",
-    cut: "Cushion",
-    clarity: "VS",
-    price: 1750,
-    treatment: "untreated",
-    certification: "aig",
-    rarity_level: "rare",
-    category: "heilsteine",
-    image_url: `/images/Produkte/blauer-spinell-457ct-aig.webp`,
-    gallery_images: [
-      "/videos/blauer-spinell-457ct-finger.mp4",
-      "/videos/blauer-spinell-457ct-pinzette.mp4",
-      "/videos/blauer-spinell-457ct-360.mp4"
-    ],
-    video_url: "/videos/blauer-spinell-457ct-360.mp4",
-    healing_properties: ["Schutz vor Negativität", "Innere Stärke", "Klarheit im Geist", "Energetische Balance"],
-    in_stock: true,
-    featured: false,
-    is_sold: false,
-    is_bestseller: false,
-    available_slots: 1,
-    created_date: "2024-03-20",
-    description: `<p><strong>Blauer Spinell – 4,57 ct</strong>: Dieser seltene, unbehandelte Spinell aus Tansania besticht durch seine tiefe, reine blaue Farbe, VVS-Reinheit und den klassischen Cushion-Schliff. Ein Edelstein voller spiritueller Kraft, der sowohl Schutz als auch innere Klarheit schenkt.</p><p>Er eignet sich perfekt für Meditation, spirituelle Rituale oder als energetischer Begleiter im Alltag. Sein Blau aktiviert Intuition und geistige Ruhe, fördert Konzentration und unterstützt bei energetischen Ausgleichsprozessen.</p><ul><li><strong>Seltene Rarität</strong>: Ein einzigartiger Stein, der Sammlerherzen höherschlagen lässt.</li><li><strong>Preis</strong>: 1750 € – Investition in zeitlose spirituelle Energie.</li></ul><p>Fordere jetzt Dein Angebot an und bring diesen kraftvollen Spinell in Dein Leben!</p>`
-  },
-  {
-  extra_specs: "\n",
-  slug: "kashmir-saphir",
-  name: "Kashmir Saphir",
-  type: "sapphire",
-  isGemstone: true,
-  carat_weight: 1.95,
-  color: "Lila",
-  origin: "Pakistan",
-  cut: "Triangle",
-  clarity: "I",
-  price: 145,
-  treatment: "untreated",
-  certification: "none",
-  rarity_level: "select",
-  category: "heilsteine",
-  image_url: `/images/Produkte/kashmir-saphir-1-95ct.webp`,
-  gallery_images: [
-    "/videos/kashmir-saphir-1-95ct-finger.mp4",
-    "/videos/kashmir-saphir-1-95ct-pinzette.mp4",
-    "/videos/kashmir-saphir-1-95ct-360.mp4"
-  ],
-  video_url: "/videos/kashmir-saphir-1-95ct-360.mp4",
-  healing_properties: [
-    "Selbsterkenntnis",
-    "Spirituelle Orientierung",
-    "Innere Balance",
-    "Kreative Energie"
-  ],
-  in_stock: true,
-  featured: false,
-  is_sold: false,
-  is_bestseller: false,
-  available_slots: 1,
-  created_date: "2025-08-13",
-  description: `<p><strong>Kashmir Saphir – 1,95 ct</strong>: Ein einzigartiger, unbehandelter Saphir aus der legendären Kashmir-Region in Pakistan. Sein intensives Lila, die starken Einschlüsse und der Triangle-Schliff schenken diesem Stein eine kosmische Ausstrahlung, die wie eine Mini-Galaxie wirkt.</p><p>Dieser Edelstein ist ideal für Meditation, spirituelle Rituale oder kreative Schmuckprojekte. Er fördert Selbsterkenntnis, innere Balance, kreative Energie und spirituelle Orientierung.</p><ul><li><strong>Einzigartige Rarität</strong>: Perfektes Stück für Sammler und Liebhaber des Außergewöhnlichen.</li><li><strong>Preis</strong>: 145 € – erschwinglicher Einstieg in echte Kashmir-Saphire.</li></ul><p>Fordere jetzt Dein Angebot an und bring diesen kraftvollen Stein in Dein Leben!</p>`
-},
-  // Kategorie: heilketten (erweitert um Anhänger – jetzt 6 Produkte)
+  // Kategorie: heilketten (Spirituelle Amulette & Ketten)
   {
     extra_specs: "\n",
     name: "Heilige Maria",
@@ -203,8 +100,9 @@ export const Product = [
   }, */
   // Weitere kommentierte Einträge bleiben unverändert, füge Slugs bei Bedarf hinzu
 
-  // Kategorie: kerzen (3 Produkte) – unverändert
-/*  {
+  // Kategorie: kerzen und pferdebuersten (inaktiv)
+  /*
+  {
     name: "Mystische Mondschein-Kerze",
     description: "Handgegossene Kerze mit natürlichen ätherischen Ölen. Perfekt für Rituale, Meditation und spirituelle Praktiken bei Vollmond.",
     price: 34.5,
@@ -243,7 +141,6 @@ export const Product = [
     created_date: "2025-03-03",
     slug: "zitrus-energie-kerze"
   },
-  // Kategorie: pferdebuersten (3 Produkte) – unverändert
   {
     name: "Amethyst Pferdebürste",
     description: "Pferdebürste mit eingebetteten Amethyst-Steinen für beruhigende Pflege und Energieausgleich bei Tieren.",
@@ -282,68 +179,74 @@ export const Product = [
     available_slots: 8,
     created_date: "2025-04-03",
     slug: "bergkristall-pferdebuerste"
-  },
-  // Kategorie: wassersteine (3 Produkte) – unverändert
-*/{
-  name: "Lapislazuli Wasserstein",
-  description: `<p><strong>Lapislazuli – 10 g, oval geschliffen</strong>: Dieser außergewöhnliche Lapislazuli besticht durch ein intensives, tiefes Blau und funkelnde goldene Pyrit-Einschlüsse, die wie Sterne in einer Mini-Galaxie wirken. Ein kraftvoller Stein voller Weisheit, Klarheit und spiritueller Energie!</p><p>Ideal zur Meditation, Energetisierung von Wasser oder als persönlicher Begleiter im Alltag. Er fördert Selbsterkenntnis, innere Ruhe, Ehrlichkeit und stärkt Selbstvertrauen. Die goldenen Einschlüsse aus Pyrit verstärken die energetische Balance und ziehen positive Energie an.</p><ul><li><strong>Spirituelle Wirkung</strong>: Aktiviert Intuition und stärkt geistige Klarheit.</li><li><strong>Heilende Eigenschaften</strong>: Fördert innere Ruhe, Selbstvertrauen und energetische Reinigung.</li><li><strong>Marktwert</strong>: Ca. 200 € – ein einzigartiges spirituelles Unikat.</li></ul><p>Fordere jetzt dein Exemplar an und integriere die transformierende Kraft dieses Lapislazulis in dein Leben!</p>`,
-  healing_property: "Weisheit",
-  energy: "Spirituelle Intuition",
-  focus: "Wasserenergetisierung und Meditation",
-  isGemstone: false,
-  material: "Natürlicher Lapislazuli",
-  gewicht: "10g",
-  maße: "4cm x 2cm",
-  schutzwirkung: ["Gegen Stress", "Für Immunsystem"],
-  symbolik: "Stein der Könige und Wahrheit",
-  price: 50,
-  category: "wassersteine",
-  image_url: `/images/Produkte/lapislazuli-wasserstein.webp`,
-  gallery_images: [
-  "/images/Produkte/lapislazuli-wasserstein1.webp",
-  "/images/Produkte/lapislazuli-wasserstein2.webp",
-  ],
-  healing_properties: ["Weisheit", "Klarheit", "Entgiftung", "Selbstvertrauen"],
-  in_stock: true,
-  featured: false,
-  is_bestseller: false,
-  available_slots: 8,
-  created_date: "2025-08-27",
-  slug: "lapislazuli-wasserstein"
+  }
+  */
+  // Kategorie: wassersteine & echte Heilsteine
+  {
+    name: "Lapislazuli Wasserstein",
+    description: `<p><strong>Lapislazuli – 10 g, oval geschliffen</strong>: Dieser außergewöhnliche Lapislazuli besticht durch ein intensives, tiefes Blau und funkelnde goldene Pyrit-Einschlüsse. Ein kraftvoller Stein voller Weisheit, Klarheit und spiritueller Energie!</p><p>Ideal zur Meditation, Energetisierung von Trinkwasser oder als persönlicher Begleiter im Alltag. Er fördert Selbsterkenntnis, innere Ruhe, Ehrlichkeit und stärkt dein Selbstvertrauen.</p><ul><li><strong>Spirituelle Wirkung</strong>: Aktiviert Intuition und stärkt geistige Klarheit.</li><li><strong>Heilende Eigenschaften</strong>: Fördert innere Ruhe, Selbstvertrauen und energetische Reinigung.</li></ul>`,
+    healing_property: "Weisheit & Erkenntnis",
+    energy: "Spirituelle Intuition",
+    focus: "Wasserenergetisierung und Meditation",
+    isGemstone: false,
+    material: "Natürlicher Lapislazuli",
+    gewicht: "10g",
+    maße: "4cm x 2cm",
+    schutzwirkung: ["Gegen Stress", "Für seelische Klarheit"],
+    symbolik: "Stein der Könige und Wahrheit",
+    price: 19,
+    category: "wassersteine",
+    image_url: `/images/Produkte/lapislazuli-wasserstein.webp`,
+    gallery_images: [
+      "/images/Produkte/lapislazuli-wasserstein1.webp",
+      "/images/Produkte/lapislazuli-wasserstein2.webp"
+    ],
+    healing_properties: ["Weisheit", "Klarheit", "Entgiftung", "Selbstvertrauen"],
+    in_stock: true,
+    featured: false,
+    is_bestseller: false,
+    available_slots: 8,
+    created_date: "2025-08-27",
+    slug: "lapislazuli-wasserstein"
   },
   {
-  name: "Mondstein Wasserstein",
-  description: `<p><strong>Mondstein – 21 ct, oval geschliffen</strong>: Dieser bezaubernde Mondstein besticht durch sein schimmerndes, perlmuttfarbenes Leuchten und seine sanften Lichtreflexe, die an den Schein des Mondes erinnern. Ein kraftvoller Stein voller Intuition, innerer Ruhe und spiritueller Ausgeglichenheit!</p><p>Ideal zur Meditation, Energetisierung von Wasser oder als persönlicher Begleiter im Alltag. Er fördert emotionale Balance, geistige Klarheit, innere Ruhe und stärkt Intuition sowie Selbstbewusstsein. Seine sanfte Mondenergie unterstützt die Verbindung zu inneren Zyklen und spirituellem Wachstum.</p><ul><li><strong>Spirituelle Wirkung</strong>: Aktiviert Intuition und fördert innere Gelassenheit.</li><li><strong>Heilende Eigenschaften</strong>: Unterstützt emotionale Balance, Selbstreflexion und harmonische Energieflüsse.</li><li><strong>Marktwert</strong>: Ca. 200 € – ein einzigartiges spirituelles Unikat.</li></ul><p>Fordere jetzt dein Exemplar an und integriere die transformierende Kraft dieses Mondsteins in dein Leben!</p>`,
-  healing_property: "Intuition",
-  energy: "Emotionale Balance",
-  focus: "Wasserenergetisierung und Meditation",
-  isGemstone: false,
-  material: "Natürlicher Mondstein",
-  gewicht: "21 ct",
-  maße: "5cm x 3cm",
-  schutzwirkung: ["Für emotionale Harmonie", "Für innere Ruhe"],
-  symbolik: "Stein der Intuition und inneren Weisheit",
-  price: 50,
-  category: "wassersteine",
-  image_url: `/images/Produkte/mondstein-wasserstein2.webp`,
-  gallery_images: [
-    "/images/Produkte/mondstein-wasserstein1.webp"
-  ],
-  healing_properties: ["Intuition", "Innere Ruhe", "Emotionale Balance", "Selbstreflexion"],
-  in_stock: true,
-  featured: true,
-  is_bestseller: true,
-  available_slots: 9,
-  created_date: "2025-08-27",
-  slug: "mondstein-wasserstein"
+    name: "Mondstein Wasserstein",
+    description: `<p><strong>Mondstein – 21 ct, oval geschliffen</strong>: Dieser bezaubernde Mondstein besticht durch sein schimmerndes, perlmuttfarbenes Leuchten und seine sanften Lichtreflexe, die an den Schein des Mondes erinnern. Ein kraftvoller Begleiter voller Intuition, innerer Ruhe und weiblicher Weisheit.</p><p>Ideal zur Meditation, Energetisierung von Trinkwasser oder als persönlicher Schutzstein im Alltag. Er fördert emotionale Balance, geistige Klarheit und stärkt die Verbindung zur inneren Stimme.</p><ul><li><strong>Spirituelle Wirkung</strong>: Aktiviert Intuition und fördert innere Gelassenheit.</li><li><strong>Heilende Eigenschaften</strong>: Unterstützt emotionale Balance, Selbstreflexion und harmonische Energieflüsse.</li></ul>`,
+    healing_property: "Intuition & Weibliche Kraft",
+    energy: "Emotionale Balance",
+    focus: "Wasserenergetisierung und Meditation",
+    isGemstone: false,
+    material: "Natürlicher Mondstein",
+    gewicht: "21 ct",
+    maße: "5cm x 3cm",
+    schutzwirkung: ["Für emotionale Harmonie", "Für innere Ruhe"],
+    symbolik: "Stein der Intuition und inneren Weisheit",
+    price: 19,
+    category: "wassersteine",
+    image_url: `/images/Produkte/mondstein-wasserstein2.webp`,
+    gallery_images: [
+      "/images/Produkte/mondstein-wasserstein1.webp"
+    ],
+    healing_properties: ["Intuition", "Innere Ruhe", "Emotionale Balance", "Selbstreflexion"],
+    in_stock: true,
+    featured: true,
+    is_bestseller: true,
+    available_slots: 9,
+    created_date: "2025-08-27",
+    slug: "mondstein-wasserstein"
   },
-  /*{
+  {
     name: "Rosenquarz Wasserstein",
-    description: "Rosenquarz für liebevolles Wasser, das Herzenergie stärkt und emotionale Balance fördert und Sie den ganzen Tag frisch hält.",
-    price: 16.5,
+    description: "<p><strong>Rosenquarz – Naturkristall</strong>: Der klassische Stein der bedingungslosen Liebe, des Herzchakras und der Partnerschaftsharmonie. Ideal zur sanften Energetisierung deines Trinkwassers oder als persönlicher Schutzstein für emotionale Ausgeglichenheit und Herzöffnung.</p>",
+    price: 19,
     category: "wassersteine",
     image_url: `/images/Produkte/wassersteine2.webp`,
-    healing_properties: ["Liebe", "Balance", "Emotionen"],
+    healing_properties: ["Liebe", "Emotionale Balance", "Herzöffnung", "Selbstakzeptanz"],
+    healing_property: "Bedingungslose Liebe & Herzöffnung",
+    energy: "Sanft & Harmonisch",
+    focus: "Partnerschaft & Selbstliebe",
+    material: "Natürlicher Rosenquarz",
+    gewicht: "ca. 50g",
     in_stock: true,
     featured: true,
     available_slots: 18,
@@ -352,17 +255,73 @@ export const Product = [
   },
   {
     name: "Bergkristall Wasserstein",
-    description: "Bergkristall zum Energetisieren von Wasser für Klarheit und Vitalität den ganzen Tag sodass Sie den ganzen Tag frisch bleiben.",
-    price: 18.9,
+    description: "<p><strong>Bergkristall – Naturkristall</strong>: Der Master-Heilstein für mentale Klarheit, Vitalität und die Neutralisierung von negativen Energien. Verstärkt die Schwingung deines Trinkwassers und bringt frische Energie in Geist und Körper.</p>",
+    price: 19,
     category: "wassersteine",
     image_url: `/images/Produkte/wassersteine3.webp`,
-    healing_properties: ["Klarheit", "Vitalität", "Energie"],
+    healing_properties: ["Klarheit", "Vitalität", "Energieverstärkung", "Reinigung"],
+    healing_property: "Geistige Klarheit & Vitalität",
+    energy: "Stärkend & Reinigend",
+    focus: "Fokus & energetische Reinigung",
+    material: "Natürlicher Bergkristall",
+    gewicht: "ca. 50g",
     in_stock: true,
     featured: false,
     available_slots: 12,
     created_date: "2025-05-03",
     slug: "bergkristall-wasserstein"
-  },*/
+  },
+  {
+    name: "Amethyst Wasserstein",
+    description: "<p><strong>Amethyst – Naturkristall</strong>: Zum energetischen Aufladen von Trinkwasser für seelische Klärung, Stressabbau und tiefe innere Entspannung. Unterstützt das Loslassen von Sorgen und fördert intuitive Träume.</p>",
+    price: 19,
+    category: "wassersteine",
+    image_url: `/images/Produkte/wassersteine1.webp`,
+    healing_properties: ["Innere Ruhe", "Reinigung", "Stressabbau", "Spiritualität"],
+    healing_property: "Seelenfrieden & Klärung",
+    energy: "Beruhigend & Schützend",
+    focus: "Trinkwasser & Abendentspannung",
+    material: "Natürlicher Amethyst",
+    gewicht: "ca. 45g",
+    in_stock: true,
+    featured: false,
+    available_slots: 14,
+    created_date: "2025-05-04",
+    slug: "amethyst-wasserstein"
+  },
+  {
+    slug: "kashmir-saphir",
+    name: "Kashmir Saphir",
+    type: "sapphire",
+    isGemstone: true,
+    carat_weight: 1.95,
+    color: "Lila",
+    origin: "Pakistan",
+    cut: "Triangle",
+    clarity: "I",
+    price: 145,
+    treatment: "untreated",
+    certification: "none",
+    rarity_level: "select",
+    category: "wassersteine",
+    image_url: `/images/Produkte/kashmir-saphir-1-95ct.webp`,
+    healing_properties: [
+      "Selbsterkenntnis",
+      "Spirituelle Orientierung",
+      "Innere Balance",
+      "Kreative Energie"
+    ],
+    healing_property: "Selbsterkenntnis & Spirituelle Führung",
+    energy: "Innere Balance",
+    focus: "Meditation & Selbstfindung",
+    in_stock: true,
+    featured: false,
+    is_sold: false,
+    is_bestseller: false,
+    available_slots: 1,
+    created_date: "2024-03-20",
+    description: "<p><strong>Kashmir Saphir – 1,95 ct</strong>: Ein seltener violett-lilafarbener Natur-Saphir aus dem Himalaya-Gebiet. Er fördert geistige Klarheit, Intuition und schützt vor energetischer Fremdeinwirkung. Ein echtes, erreichbares Edelstein-Unikat für spirituelle Begleitung.</p>"
+  },
   // Neu: Kategorie horoskope (3 Produkte)
   {
     extra_specs: "\n",
@@ -436,42 +395,55 @@ export const Product = [
     available_slots: 7,
     created_date: "2025-08-21",
     slug: "geburtshoroskop"
+  },
+  {
+    slug: "meditation-innerer-frieden",
+    name: "Geführte Meditation: Innerer Frieden",
+    category: "meditation",
+    price: 9.99,
+    image_url: "/images/Produkte/meditation-innerer-frieden.jpeg",
+    audio_preview_url: "/audio/Between_Two_Breaths.mp3",
+    in_stock: true,
+    featured: true,
+    is_bestseller: true,
+    available_slots: 99,
+    created_date: "2026-10-12",
+    description: "<p><strong>Geführte Meditation: Innerer Frieden (MP3)</strong>: Finde in tiefe Ruhe, lasse den Alltagsstress los und verbinde dich mit deiner inneren Mitte. Diese kraftvolle Meditation von Ursula Heinke führt dich sanft in einen Zustand der Gelassenheit, Heilung und Herzöffnung.</p><p>Nach dem Kauf erhältst du den direkten Audio-Download auf dein Smartphone oder deinen PC (Dauer ca. 30 Minuten). Ideal für tägliche Morgen- oder Abendrituale.</p>",
+    healing_properties: ["Tiefe Entspannung", "Innere Ruhe & Gelassenheit", "Herzöffnung", "Stressabbau"],
+    healing_property: "Tiefer Frieden & Herzöffnung",
+    energy: "Beruhigend & Zentrierend",
+    focus: "Tägliche Meditation & Loslassen",
+    material: "Digitaler MP3-Download",
+    gewicht: "ca. 30 MB (Audio)",
+    symbolik: "Verbindung mit dem höheren Selbst",
+    schutzwirkung: ["Gegen Stress & Überlastung", "Für seelische Balance"]
   }
-  // Fügen Sie bei Bedarf mehr hinzu
 ];
 
-// Aktualisiertes Categories-Array mit neuer Kategorie "horoskope"
+// Bereinigtes Categories-Array
 export const Categories = [
   {
-    name: "heilsteine",
-    display_name: "Heilsteine",
-    preview_image_url: `/images/Produkte/heilsteine11.webp`
+    name: "meditation",
+    display_name: "Geführte Meditationen",
+    preview_image_url: `/images/Produkte/meditation-innerer-frieden.jpeg`,
+    description: "Tauche ein in geführte Meditationen für innere Ruhe, Herzöffnung und emotionale Heilung."
   },
   {
-    name: "heilketten",
-    display_name: "Heilketten",
-    preview_image_url: `/images/Produkte/heilkette.webp`
-  },
-/*  {
-    name: "kerzen",
-    display_name: "Mystische Kerzen",
-    preview_image_url: `/images/Produkte/Kerze_test1.webp`
-  },
-  {
-    name: "pferdebuersten",
-    display_name: "Pferdebürsten mit Heilsteinen",
-    preview_image_url: `/images/Produkte/pferdebürsten.webp`
-  },
-*/  {
     name: "wassersteine",
-    display_name: "Heilsteine fürs Wasser",
-    preview_image_url: `/images/Produkte/wassersteine.webp`
+    display_name: "Heil- & Wassersteine",
+    preview_image_url: `/images/Produkte/wassersteine.webp`,
+    description: "Energetisiere deinen Alltag und dein Trinkwasser mit ausgewählten Heil- und Wassersteinen."
   },
-  // Neu: Horoskope-Kategorie
   {
     name: "horoskope",
     display_name: "Persönliche Horoskope",
-    preview_image_url: `/images/Produkte/horoskop4.webp` // Platzhalter für ein Kategorie-Vorschaubild
+    preview_image_url: `/images/Produkte/horoskop4.webp`,
+    description: "Astrologische Tiefenanalysen für Partnerschaft, Beruf und Lebensweg."
+  },
+  {
+    name: "heilketten",
+    display_name: "Amulette & Heilketten",
+    preview_image_url: `/images/Produkte/heilkette.webp`,
+    description: "Spirituelle Begleiter und Schutzamulette für deinen Alltag."
   }
-  // Fügen Sie bei Bedarf mehr hinzu
 ];

@@ -3,42 +3,84 @@ import HeroSection from "../components/home/HeroSection"; // Relativer Pfad
 import FeaturedProducts from "../components/home/FeaturedProducts";
 import ServicesPreview from "../components/home/ServicesPreview";
 import SeminarHighlight from "../components/home/SeminarHighlight";
+import QuesticoProof from "../components/home/QuesticoProof";
 import Head from "next/head";
 
 export default function Home() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.ursulaheinke.de/#website",
+        "url": "https://www.ursulaheinke.de",
+        "name": "Ursula Heinke – Lebensberatung & Coaching",
+        "inLanguage": "de-DE"
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.ursulaheinke.de/#business",
+        "name": "Ursula Heinke – Authentische Lebensberatung & Spirituelles Coaching",
+        "image": "https://www.ursulaheinke.de/images/logo.webp",
+        "url": "https://www.ursulaheinke.de",
+        "telephone": "+4915901276286",
+        "priceRange": "€€",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Gräfenthaler Straße 4",
+          "addressLocality": "Ludwigsstadt",
+          "postalCode": "96337",
+          "addressRegion": "Bayern",
+          "addressCountry": "DE"
+        },
+        "sameAs": [
+          "https://www.questico.de/tarot-und-kartenlegen/ursula-heinke",
+          "https://share.google/fmGTco4Orpqq5yJyM",
+          "https://www.instagram.com/ursulaheinke/"
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "947",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "areaServed": [
+          { "@type": "Country", "name": "Deutschland" },
+          { "@type": "City", "name": "Ludwigsstadt" },
+          { "@type": "City", "name": "Coburg" },
+          { "@type": "City", "name": "Kronach" },
+          { "@type": "City", "name": "Lichtenfels" },
+          { "@type": "City", "name": "Bamberg" },
+          { "@type": "City", "name": "Saalfeld" }
+        ]
+      }
+    ]
+  };
+
   return (
     <>
-      {/* Neu: React Helmet für SEO */}
       <Head>
-        <title>Ursula Heinke - Authentische Lebensberatung und Spirituelles Coaching</title>
-        <meta name="description" content="Entdecken Sie transformative Lebensberatung, spirituelles Coaching, Heilsteine und Kurse für Klarheit, Balance und Ihr wahres Selbst." />
-        <meta name="keywords" content="Lebensberatung, spirituelles Coaching, Heilsteine, Transformation, Balance, innere Entwicklung" />
-        <meta property="og:title" content="Ursula Heinke - Home" />
-        <meta property="og:description" content="Ihre Reise zu innerem Wachstum und spiritueller Klarheit beginnt hier." />
-        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" /> {/* Passe Bild an */}
+        <title>Ursula Heinke - Authentische Lebensberatung, Tarot & Spirituelles Coaching</title>
+        <meta name="description" content="Über 34.000 Beratungen mit 5,00 Sternen. Mediale Lebensberatung, Gedankenlegung auf den Herzenspartner, Seelenplan-Coaching und Seminare in Coburg & Frankenwald." />
+        <meta name="keywords" content="Lebensberatung Coburg, Tarot Kartenlegen Frankenwald, Herzenspartner Gedankenlegung, spirituelles Coaching, Ursula Heinke, Questico Beraterin" />
+        <meta property="og:title" content="Ursula Heinke – Authentische Lebensberatung & Spirituelles Coaching" />
+        <meta property="og:description" content="Über 34.000 Beratungen & 5.0 Sterne. Finde Klarheit, Balance und Seelenfrieden." />
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" />
         <meta property="og:url" content="https://www.ursulaheinke.de/" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.ursulaheinke.de/" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Ursula Heinke",
-            "url": "https://www.ursulaheinke.de",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://www.ursulaheinke.de/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          })}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </Head>
 
-      {/* Original-Inhalt bleibt unverändert */}
       <div className="min-h-screen">
         <HeroSection />
-        <SeminarHighlight />
+        <QuesticoProof />
         <ServicesPreview />
+        <SeminarHighlight />
         <FeaturedProducts />
       </div>
     </>

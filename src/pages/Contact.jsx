@@ -5,9 +5,8 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Textarea } from "../components/ui/Textarea";
 import { Label } from "../components/ui/Label";
-import { Phone, Mail, Clock, Heart, Send, Star } from "lucide-react";
+import { Phone, Mail, Clock, Heart, Send, Star, MessageCircle, ShieldCheck, Instagram, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { Instagram } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,6 +16,7 @@ export default function Contact() {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -27,7 +27,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     const { name, email, phone, message } = formData;
-    const subject = encodeURIComponent("Anfrage für Erstgespräch");
+    const subject = encodeURIComponent("Anfrage für Beratung – Ursula Heinke");
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nTelefonnummer: ${phone}\nNachricht: ${message}`
     );
@@ -35,19 +35,24 @@ export default function Contact() {
     // Öffnet den E-Mail-Client des Benutzers mit vorausgefüllten Formulardaten
     window.location.href = `mailto:Ursulaheinke@gmx.de?subject=${subject}&body=${body}`;
 
-    // Optional: Zeige eine Benachrichtigung und setze das Formular zurück (nach einer kurzen Verzögerung)
     setTimeout(() => {
-      alert("Vielen Dank für Ihre Nachricht! Ihr E-Mail-Client sollte sich nun öffnen. Bitte senden Sie die E-Mail ab.");
+      setSubmitted(true);
       setFormData({ name: "", email: "", phone: "", message: "" });
       setIsSubmitting(false);
-    }, 500);
+    }, 400);
   };
 
   const contactInfo = [
     {
+      icon: MessageCircle,
+      title: "WhatsApp",
+      details: "+49 1590 1276286",
+      url: "https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20deine%20Webseite%20besucht%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Beratung%20(Seelen-Klarheits-Kompass)%20anfragen."
+    },
+    {
       icon: Phone,
       title: "Telefon",
-      details: "Nach Vereinbarung",
+      details: "+49 1590 1276286",
     },
     {
       icon: Mail,
@@ -100,12 +105,51 @@ export default function Contact() {
             className="lg:col-span-2"
           >
             <div className="p-4">
+              {/* WhatsApp Quick-Booking Card */}
+              <div className="mb-8 p-6 md:p-8 bg-gradient-to-r from-slate-900/90 via-indigo-950/60 to-slate-900/90 border border-indigo-400/30 rounded-2xl shadow-xl">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                  <div className="space-y-1.5">
+                    <div className="inline-flex items-center gap-2 text-indigo-300 font-bold text-xs tracking-wide uppercase px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-400/20">
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-300" />
+                      Empfohlener Buchungsweg
+                    </div>
+                    <h3 className="font-headline text-2xl font-bold text-white">
+                      Direkt per WhatsApp anfragen
+                    </h3>
+                    <p className="text-sm text-indigo-200/90 max-w-xl leading-relaxed">
+                      Klicke hier, um sofort eine vorbereitete Terminanfrage an Ursula zu senden. Schnelle persönliche Antwort direkt auf dein Smartphone.
+                    </p>
+                  </div>
+                  <a
+                    href="https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20deine%20Webseite%20besucht%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Beratung%20(Seelen-Klarheits-Kompass)%20anfragen."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto flex-shrink-0"
+                  >
+                    <Button className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-3.5 px-8 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300">
+                      <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                      <span>WhatsApp Chat starten</span>
+                    </Button>
+                  </a>
+                </div>
+                <div className="mt-5 pt-3 border-t border-indigo-400/15 flex items-start gap-2 text-xs text-indigo-300/80">
+                  <ShieldCheck className="w-4 h-4 text-indigo-300 flex-shrink-0 mt-0.5" />
+                  <span>Wichtiger Hinweis: Termine werden erst nach Vereinbarung und Zahlungseingang (PayPal / Überweisung) fest reserviert. Keine kostenlose Lebensberatung im Chat.</span>
+                </div>
+              </div>
+
               <div className="font-headline text-2xl font-bold flex items-center gap-2 text-blue-200 mb-2">
-                Erstgespräch vereinbaren
+                Oder: Anfrage per E-Mail senden
               </div>
               <p className="text-indigo-300 mb-8">
-                Lass uns in einem unverbindlichen Gespräch herausfinden, wie ich Dich am besten unterstützen kann.
+                Schreibe mir dein Anliegen gerne auch ausführlich über das Formular. Ich melde mich zeitnah bei dir zurück.
               </p>
+
+              {submitted && (
+                <div className="mb-6 p-4 rounded-xl bg-green-950/60 border border-green-500/40 text-green-200 text-center font-medium">
+                  Vielen Dank für deine Nachricht! Dein E-Mail-Programm sollte sich nun geöffnet haben. Bitte sende die E-Mail ab.
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-2">
@@ -156,7 +200,7 @@ export default function Contact() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-headline w-full h-14 text-lg font-semibold rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 text-indigo-300 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 inline-flex items-center justify-center gap-2"
+                  className="font-headline w-full h-14 text-base font-semibold rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-400 hover:to-blue-400 text-white shadow-lg shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 inline-flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -189,17 +233,22 @@ export default function Contact() {
               {contactInfo.map((info, index) => {
                 const Icon = info.icon;
 
+                const isWhatsApp = info.title.toLowerCase() === "whatsapp";
                 const isEmail = info.title.toLowerCase() === "e-mail";
                 const isPhone = info.title.toLowerCase() === "telefon";
                 const isInstagram = info.title.toLowerCase() === "instagram";
 
-                const href = isEmail
+                const href = isWhatsApp
+                  ? info.url
+                  : isEmail
                   ? `mailto:${info.details}`
                   : isPhone
                   ? `tel:${info.details}`
                   : isInstagram
                   ? info.url
                   : "#";
+
+                const isExternal = isWhatsApp || isInstagram;
 
                 return (
                   <motion.div
@@ -210,18 +259,19 @@ export default function Contact() {
                   >
                     <a
                       href={href}
-                      target={isInstagram ? "_blank" : "_self"}
-                      rel={isInstagram ? "noopener noreferrer" : undefined}
-                      className="p-1 flex items-start gap-4 rounded-xl hover:bg-indigo-900/20 transition-colors"
+                      target={isExternal ? "_blank" : "_self"}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="p-3 flex items-start gap-4 rounded-xl hover:bg-indigo-900/30 transition-colors group"
                     >
-                      <div className="w-12 h-12 bg-gradient-to-r from-indigo-900/50 to-blue-900/50 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-indigo-900/50 to-blue-900/50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h3 className="font-bold text-blue-200 mb-0">{info.title}</h3>
                         <p className="font-medium text-indigo-300">{info.details}</p>
-                        {info.description}
-                        <p className="text-s text-indigo-200/80 mb-4">{info.description}</p>
+                        {info.description && (
+                          <p className="text-xs text-indigo-200/80 mt-1">{info.description}</p>
+                        )}
                       </div>
                     </a>
                   </motion.div>
@@ -242,10 +292,19 @@ export default function Contact() {
                     <p className="text-sm opacity-90 mb-5 text-indigo-300">
                       Über 34.500 Menschen haben bereits ihren Weg mit meiner Unterstützung gefunden.
                     </p>
-                    <div className="space-y-2 text-sm text-indigo-200 mb-6">
-                      <p>✓ Zertifizierte Lebensberaterin</p>
-                      <p>✓ Perfekte Erstberatung</p>
-                      <p>✓ 100% Vertraulichkeit</p>
+                    <div className="space-y-2 text-sm text-indigo-200 mb-6 text-left max-w-[240px] mx-auto">
+                      <p className="flex items-center gap-2.5">
+                        <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span>Zertifizierte Lebensberaterin</span>
+                      </p>
+                      <p className="flex items-center gap-2.5">
+                        <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+                        <span>Perfekte Erstberatung</span>
+                      </p>
+                      <p className="flex items-center gap-2.5">
+                        <Heart className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>100% Vertraulichkeit</span>
+                      </p>
                     </div>
                   </div>
                 </CardContent>

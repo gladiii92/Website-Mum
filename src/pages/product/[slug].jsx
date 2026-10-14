@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { createPageUrl } from "../../utils";
+import { createPageUrl, formatPrice } from "../../utils";
 import { Product } from "../../entities/Product";
-import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info } from "lucide-react";
+import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info, MessageCircle, Mail } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { Card, CardContent } from "../../components/ui/Card";
@@ -193,15 +193,41 @@ const translations = {
   },
 };
 
-export default function ProductDetail() {
+export async function getStaticPaths() {
+  const paths = Product.map((prod) => ({
+    params: { slug: prod.slug }
+  }));
+
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const product = Product.find((p) => p.slug === params.slug) || null;
+
+  if (!product) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      initialProduct: product
+    }
+  };
+}
+
+export default function ProductDetail({ initialProduct }) {
   const router = useRouter();
   const { slug } = router.query;
   const [language, setLanguage] = useState("de");
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState(initialProduct || null);
+  const [loading, setLoading] = useState(!initialProduct);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);  // Neu: Wie in Stone.jsx
   const [inquirySent, setInquirySent] = useState(false);
+  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
     full_name: "",
     email: "",
@@ -227,13 +253,13 @@ export default function ProductDetail() {
     const storedLang = localStorage.getItem('language') || 'de';
     setLanguage(storedLang);
     window.addEventListener('languageChange', handleLanguageChange);
-    if (slug) {
-      loadProductBySlug(slug);
-    } else {
-      router.push(createPageUrl("Shop"));
+    if (!product) {
+      if (slug) {
+        loadProductBySlug(slug);
+      }
     }
     return () => window.removeEventListener('languageChange', handleLanguageChange);
-  }, [router, slug]);
+  }, [slug, product]);
 
   const loadProductBySlug = async (slug) => {
     try {
@@ -309,10 +335,11 @@ export default function ProductDetail() {
     const body = encodeURIComponent(
       `Name: ${inquiryForm.full_name}\nE-Mail: ${inquiryForm.email}\nTelefon: ${inquiryForm.phone}\n\n${inquiryForm.message}`
     );
-    window.location.href = `mailto:noblecutgems_official@gmx.de?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:Ursulaheinke@gmx.de?subject=${subject}&body=${body}`;
     setInquirySent(true);
     setTimeout(() => {
       setInquirySent(false);
+      setIsInquiryOpen(false);
       setInquiryForm({ full_name: "", email: "", phone: "", message: "" });
     }, 2000);
   };
@@ -333,15 +360,6 @@ export default function ProductDetail() {
     } catch (error) {
       console.error('Fehler beim Teilen:', error);
     }
-  };
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
   };
 
   const getRarityColor = (rarity_level) => {
@@ -408,20 +426,20 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-indigo-30 text-indigo-900">
+      <div className="flex justify-center items-center min-h-screen text-indigo-200">
         {t.stone_not_found}
       </div>
     );
   }
 
   return (
-    <div {...handlers} className="min-h-screen bg-gray-40 text-indigo-300 max-w-7xl mx-auto p-4 md:p-8">
+    <div {...handlers} className="min-h-screen text-indigo-200 max-w-7xl mx-auto p-4 md:p-8">
       
         <Head>
           <title>{product.name} | Ursula Heinke</title>
-          <meta name="description" content={product.description} />
+          <meta name="description" content={product.description ? product.description.replace(/<[^>]*>/g, '').slice(0, 160) : `${product.name} – Handverlesene spirituelle Schätze von Ursula Heinke.`} />
           <meta property="og:title" content={`${product.name} | Ursula Heinke`} />
-          <meta property="og:description" content={product.description} />
+          <meta property="og:description" content={product.description ? product.description.replace(/<[^>]*>/g, '').slice(0, 160) : `${product.name} – Handverlesene spirituelle Schätze von Ursula Heinke.`} />
           <meta property="og:image" content={`https://www.ursulaheinke.de${product.image_url}`} />
           <meta property="og:url" content={`https://www.ursulaheinke.de/product/${product.slug}`} />
           <link rel="canonical" href={`https://www.ursulaheinke.de/product/${product.slug}`} />
@@ -445,7 +463,7 @@ export default function ProductDetail() {
 
       <Button
         variant="ghost"
-        className="mb-4 flex items-center bg-gradient-to-r from-indigo-500 to-blue-500 hover:text-blue-800 font-headline text-l md:text-l"
+        className="mb-6 inline-flex items-center bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-400 hover:to-blue-400 text-white font-headline text-sm font-semibold rounded-full px-5 py-2.5 shadow-md transition-all"
         onClick={() => router.push(createPageUrl("Shop"))}
       >
         <ArrowLeft className="mr-2 h-4 w-4" />
@@ -533,26 +551,26 @@ export default function ProductDetail() {
             {/* Heilstein-Lexikon nur wenn Gemstone */}
             {product.isGemstone && (
               <>
-                <h3 className="font-section text-2xl mb-4 font-bold text-white-900 flex items-center gap-2">
-                  <Info className="w-5 h-5" style={{ color: "var(--primary-color)" }} />
+                <h3 className="font-headline text-lg mb-3 font-bold text-white flex items-center gap-2">
+                  <Info className="w-4 h-4 text-indigo-400" />
                   {t.lexicon_title}
                 </h3>
 
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="clarity">
-                    <AccordionTrigger className="font-section text-2xl mb-4">
+                    <AccordionTrigger className="font-headline text-sm font-semibold text-indigo-200 mb-2">
                       {t.lexicon_clarity_title}
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="font-body text-base text-white-700 mb-2 font-semibold">
+                      <p className="font-body text-xs text-indigo-200/80 mb-2">
                         {t.lexicon_clarity_desc}
                       </p>
-                      <ul className="list-disc pl-5 space-y-1 text-sm font-body text-base text-white-700 font-semibold">
+                      <ul className="list-disc pl-5 space-y-1 text-xs font-body text-indigo-200/90">
                         {Object.entries(t.clarities).map(([key, value]) => {
                           const [title, desc] = value.split(" - ");
                           return (
                             <li key={key}>
-                              <span className="font-bold">{title}</span> - {desc}
+                              <span className="font-bold text-white">{title}</span> - {desc}
                             </li>
                           );
                         })}
@@ -561,24 +579,24 @@ export default function ProductDetail() {
                   </AccordionItem>
 
                   <AccordionItem value="rarity">
-                    <AccordionTrigger className="font-section text-2xl mb-4">
+                    <AccordionTrigger className="font-headline text-sm font-semibold text-indigo-200 mb-2">
                       {t.lexicon_rarity_title}
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="font-body text-base text-white-700 mb-2 font-semibold">
+                      <p className="font-body text-xs text-indigo-200/80 mb-2">
                         {t.lexicon_rarity_desc}
                       </p>
-                      <ul className="list-disc pl-5 space-y-1 text-sm font-body text-base text-white-700 font-semibold">
+                      <ul className="list-disc pl-5 space-y-1 text-xs font-body text-indigo-200/90">
                         {Object.entries(t.rarity_descriptions).map(([key, value]) => {
                           const [title, desc] = value.split(" - ");
                           const colorClasses = {
-                            exceptional: "text-purple-700",
-                            rare: "text-amber-600",
-                            premium: "text-blue-700",
-                            select: "text-green-600",
+                            exceptional: "text-purple-300",
+                            rare: "text-amber-300",
+                            premium: "text-blue-300",
+                            select: "text-emerald-300",
                           };
                           return (
-                            <li key={key} className="font-body text-base text-white-700">
+                            <li key={key} className="font-body text-xs text-indigo-200/90">
                               <span
                                 className={`font-semibold ${colorClasses[key] || "text-white"}`}
                               >
@@ -596,34 +614,33 @@ export default function ProductDetail() {
             )}
 
             {/* Heilwirkungs-Lexikon: immer sichtbar, egal ob Gemstone oder nicht */}
-            <h3 className="font-section text-2xl mb-4 font-bold text-white-900 flex items-center gap-2 mt-6">
-              <Info className="w-5 h-5" style={{ color: "var(--primary-color)" }} />
+            <h3 className="font-headline text-lg mb-3 font-bold text-white flex items-center gap-2 mt-6">
+              <Info className="w-4 h-4 text-indigo-400" />
               {t.lexicon_healing_title1}
             </h3>
 
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="healing-lexicon">
-                <AccordionTrigger className="font-section text-2xl mb-4">
+                <AccordionTrigger className="font-headline text-sm font-semibold text-indigo-200 mb-2">
                   {t.lexicon_healing_title}
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="font-body text-base text-white-700 mb-2 font-semibold">
+                  <p className="font-body text-xs text-indigo-200/80 mb-2">
                     {t.lexicon_healing_desc}
                   </p>
-                    <ul className="list-disc pl-5 space-y-1 text-sm font-body text-base text-white-700 font-semibold">
+                    <ul className="list-disc pl-5 space-y-1 text-xs font-body text-indigo-200/90">
                       {product.healing_properties &&
                         product.healing_properties.map((prop) => {
-                          // Wir suchen den Key in healing_properties1, dessen Titel (vor dem " - ") exakt mit prop übereinstimmt
                           const matchingEntry = Object.entries(t.healing_properties1).find(
                             ([key, value]) => value.split(" - ")[0] === prop
                           );
 
-                          if (!matchingEntry) return null; // kein passender Eintrag
+                          if (!matchingEntry) return null;
                           const [key, value] = matchingEntry;
                           const [title, desc] = value.split(" - ");
                           return (
                             <li key={key}>
-                              <span className="font-bold">{title}</span> - {desc}
+                              <span className="font-bold text-white">{title}</span> - {desc}
                             </li>
                           );
                         })}
@@ -639,121 +656,168 @@ export default function ProductDetail() {
           <div>
             {product.isGemstone && (
               <Badge
-                className={`${getRarityColor(product.rarity_level)} border mb-3 px-3 py-1 rounded-full font-headline text-2xl md:text-1xl`}
+                className={`${getRarityColor(product.rarity_level)} border mb-3 px-3 py-1 rounded-full font-headline text-xs`}
               >
                 {getTranslatedRarity(product.rarity_level)}
               </Badge>
             )}
             <div className="flex items-start justify-between mb-4">
-              <h1 className="font-headline text-2xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent"> {/* 1-2 Nummern kleiner als vorher */}
+              <h1 className="font-headline text-2xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-200 via-blue-200 to-indigo-300 bg-clip-text text-transparent">
                 {getTranslatedProductName(product.id)}
               </h1>
-              <Button variant="outline" className="rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-500 hover:to-blue-400 shadow-md font-accent text-2xl text-whhite-400" size="icon" onClick={handleShare}>
+              <Button variant="outline" className="rounded-full border border-indigo-400/30 bg-slate-900/60 hover:bg-white/10 text-white shadow-md" size="icon" onClick={handleShare}>
                 <Share2 className="w-4 h-4" />
               </Button>
             </div>
 
             {product.isGemstone ? (
-            <p className="font-body text-base text-white-700 mb-6 bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
-              {getTranslatedType(product.type)} • {product.carat_weight}ct • {getTranslatedCut(product.cut)} • {getTranslatedOrigin(product.origin)} • {getTranslatedTreatment(product.treatment)} • {product.clarity || "N/A"}
-            </p>
-            ) : (
-            <p className="font-body text-base text-white-700 mb-6 bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
-              {product.healing_property} • {product.energy} • {product.focus}
-            </p>
-            )}
-            <div className="font-headline text-4xl md:text-5xl font-bold text-white-900 mb-6"> {/* Schriftart wie Badge und Button (Headline) */}
-              {product.price}€ {/* Preis nun statisch 850€ */}
+            <div className="flex flex-wrap items-center gap-2 font-body text-sm text-indigo-200 mb-6">
+              <span>{getTranslatedType(product.type)}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+              <span>{product.carat_weight}ct</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+              <span>{getTranslatedCut(product.cut)}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+              <span>{getTranslatedOrigin(product.origin)}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+              <span>{getTranslatedTreatment(product.treatment)}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+              <span>{product.clarity || "N/A"}</span>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: product.description }} className="font-body text-base text-white-700 leading-relaxed mb-8" />
-            <p className="font-body text-xs text-gray-500 italic mb-6">
+            ) : (
+            <div className="flex flex-wrap items-center gap-2 font-body text-sm text-indigo-200 mb-6">
+              <span>{product.healing_property}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]"></span>
+              <span>{product.energy}</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]"></span>
+              <span>{product.focus}</span>
+            </div>
+            )}
+            <div className="font-headline text-3xl md:text-4xl font-bold text-white mb-6">
+              {formatPrice(product.price)}
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: product.description }} className="font-body text-base text-indigo-100 leading-relaxed mb-6 space-y-3 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1" />
+
+            {/* Action Buttons: WhatsApp & E-Mail */}
+            <div className="p-5 bg-slate-900/60 border border-indigo-400/20 rounded-2xl space-y-3 mb-8 shadow-xl">
+              <a
+                href={`https://wa.me/4915901276286?text=${encodeURIComponent(
+                  `Hallo Ursula, ich habe dein Produkt "${product.name}" (${formatPrice(product.price)}) auf deiner Webseite gesehen und möchte es gerne verbindlich per WhatsApp & PayPal anfragen/kaufen.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full block"
+              >
+                <Button className="w-full bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-4 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300">
+                  <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                  <span>Direkt per WhatsApp anfragen & kaufen</span>
+                </Button>
+              </a>
+
+              <Button
+                variant="outline"
+                onClick={() => setIsInquiryOpen(true)}
+                className="w-full border border-indigo-400/30 hover:bg-white/10 text-indigo-200 hover:text-white font-headline text-base py-3.5 rounded-full flex items-center justify-center gap-2 transition-all"
+              >
+                <Mail className="w-4 h-4 text-indigo-300" />
+                <span>Per E-Mail anfragen</span>
+              </Button>
+
+              <p className="text-xs text-indigo-300/70 text-center pt-1 inline-flex items-center justify-center gap-2 w-full">
+                <span>Sichere Abwicklung via PayPal oder Überweisung</span>
+                <span className="inline-block w-1 h-1 rounded-full bg-amber-400/80 shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span>
+                <span>Schnelle persönliche Antwort</span>
+              </p>
+            </div>
+
+            <p className="font-body text-xs text-indigo-300/60 italic mb-6">
               Hinweis: Die beschriebenen Heilwirkungen sind wissenschaftlich nicht erwiesen 
               und stellen keinen Ersatz für ärztliche Beratung, Diagnose oder Behandlung dar.
             </p>
 
             {/* Specs Section */}
-            <Card className="mb-6">
+            <Card className="mb-6 bg-slate-900/40 border border-blue-400/15 shadow-lg rounded-2xl overflow-hidden">
               <CardContent className="p-6">
-                <h3 className="font-section text-2xl mb-4 font-bold text-white-900 mt-6 flex items-center gap-2 pl-2">
-                  <Sparkles className="w-5 h-5" style={{ color: "white" }} />
+                <h3 className="font-headline text-xl mb-4 font-bold text-white flex items-center gap-2 pl-2">
+                  <Sparkles className="w-5 h-5 text-indigo-300" />
                   {t.specifications}
                 </h3>
                 {product.isGemstone ? (
-                <div className="grid grid-cols-2 gap-5 text-s">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   {product.carat_weight && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.carat_weight}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.carat_weight}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.carat_weight}ct
                       </dd>
                     </div>
                   )}
                   {product.color && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.color}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.color}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {getTranslatedColor(product.color)}
                       </dd>
                     </div>
                   )}
                   {product.clarity && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.clarity}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.clarity}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {getTranslatedClarityDescription(product.clarity)}
                       </dd>
                     </div>
                   )}
                   {product.cut && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.cut}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.cut}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {getTranslatedCut(product.cut)}
                       </dd>
                     </div>
                   )}
                   {product.origin && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.origin}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.origin}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {getTranslatedOrigin(product.origin)}
                       </dd>
                     </div>
                   )}
                   <div className="pb-3 pl-1">
-                    <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.treatment}</dt>
-                    <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                    <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.treatment}</dt>
+                    <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                       {getTranslatedTreatment(product.treatment)}
                     </dd>
                   </div>
                   {product.rarity_level && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.rarity}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.rarity}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {getTranslatedRarityDescription(product.rarity_level)}
                       </dd>
                     </div>
                   )}
                   <div className="pb-3 pl-1">
-                    <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.certification}</dt>
-                    <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                    <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.certification}</dt>
+                    <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                       {getTranslatedCertification(product.certification)}
                     </dd>
                   </div>
                   <div className="pb-3 pl-1">
-                    <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.price_per_carat}</dt>
-                    <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                    <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.price_per_carat}</dt>
+                    <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                       {formatPrice(product.price / product.carat_weight)} / ct
                     </dd>
                   </div>
                 </div>
                 ) : (
                 <>
-                <div className="grid grid-cols-2 gap-5 text-s">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   {product.material && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.material}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.material}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.material}
                       </dd>
                     </div>
@@ -761,8 +825,8 @@ export default function ProductDetail() {
 
                   {product.gewicht && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.gewicht}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.gewicht}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.gewicht}
                       </dd>
                     </div>
@@ -770,8 +834,8 @@ export default function ProductDetail() {
 
                   {product.maße && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.maße}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.maße}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.maße}
                       </dd>
                     </div>
@@ -779,8 +843,8 @@ export default function ProductDetail() {
 
                   {product.schutzwirkung && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.schutzwirkung}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.schutzwirkung}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.schutzwirkung.join(", ")}
                       </dd>
                     </div>
@@ -788,8 +852,8 @@ export default function ProductDetail() {
 
                   {product.symbolik && (
                     <div className="pb-3 pl-1">
-                      <dt className="font-semi font-body text-base text-white-700 mb-1 pl-5">{t.symbolik}</dt>
-                      <dd className="font-body text-base text-white-700 font-bold border-b border-white-100 w-auto mx-5 pb-3">
+                      <dt className="font-body text-xs uppercase tracking-wider text-indigo-300/80 mb-1 pl-4">{t.symbolik}</dt>
+                      <dd className="font-body text-sm text-indigo-100 font-semibold border-b border-indigo-400/15 w-auto mx-4 pb-2.5">
                         {product.symbolik}
                       </dd>
                     </div>
@@ -798,17 +862,17 @@ export default function ProductDetail() {
                 </>
                 )}
                 {/* Healing Section */}
-                <h3 className="font-section text-2xl mb-4 font-bold text-white-900 mt-8 flex items-center gap-2 pl-2">
-                  <Sparkles className="w-5 h-5" style={{ color: "white" }} />
+                <h3 className="font-headline text-xl mb-4 font-bold text-white mt-8 flex items-center gap-2 pl-2">
+                  <Sparkles className="w-5 h-5 text-indigo-300" />
                   {t.healing}
                 </h3>
-                <div className="grid grid-cols-2 gap-4 text-s font-semibold">
+                <div className="grid grid-cols-2 gap-4 text-sm font-semibold">
                   {product.healing_properties &&
                     product.healing_properties.map((prop, index) => {
-                      const isLastTwo = index >= product.healing_properties.length - 2; // letzte 2 Elemente
+                      const isLastTwo = index >= product.healing_properties.length - 2;
                       return (
                         <div key={index} className="pb-3 pl-1">
-                          <dd className="font-body text-base text-white-700 font-semi border-b border-white-100 w-auto mx-5 pb-3" 
+                          <dd className="font-body text-sm text-indigo-100 border-b border-indigo-400/15 w-auto mx-4 pb-2.5" 
                               style={{ borderBottomWidth: isLastTwo ? 0 : '1px' }}>
                             {getTranslatedHealingDescription(prop)}
                           </dd>
@@ -820,26 +884,26 @@ export default function ProductDetail() {
             </Card>
 
             {/* Kontaktformular */}
-            <Dialog open={handleInquirySubmit} onOpenChange={handleInquirySubmit}>
-              <DialogContent className="sm:max-w-md rounded-2x2 p-6 shadow-xl">
-                <DialogHeader className="mt-16 mb-8text-center">
-                  <div className="font-section text-2xl mb-4 text-3xl font-extrabold font-serif text-white-900 mt-20">
+            <Dialog open={isInquiryOpen} onOpenChange={setIsInquiryOpen}>
+              <DialogContent className="sm:max-w-md rounded-2xl p-6 shadow-2xl bg-slate-900 border border-indigo-400/30 text-white">
+                <DialogHeader className="mt-4 mb-2 text-center">
+                  <h3 className="font-headline text-xl font-bold text-white">
                     {t.contact_form_title}
-                  </div>
+                  </h3>
                 </DialogHeader>
 
                 {inquirySent ? (
-                  <p className="font-body text-base text-white-700 text-green-600 text-center font-medium py-4">
+                  <p className="font-body text-sm text-emerald-400 text-center font-medium py-4">
                     {t.inquiry_success}
                   </p>
                 ) : (
                   <form
                     onSubmit={handleInquirySubmit}
-                    className="space-y-5 mt-2"
+                    className="space-y-4 mt-2"
                   >
                     {/* Name */}
-                    <div className="space-y-2">
-                      <Label htmlFor="full_name" className="font-body text-base text-white-700 font-medium">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="full_name" className="font-body text-xs font-semibold text-indigo-200">
                         {t.full_name}
                       </Label>
                       <Input
@@ -847,13 +911,13 @@ export default function ProductDetail() {
                         value={inquiryForm.full_name}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, full_name: e.target.value })}
                         required
-                        className="rounded-lg border-gray-300 focus:border-indigo-400 focus:ring-indigo-400"
+                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
                       />
                     </div>
 
                     {/* Email */}
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="font-body text-base text-white-700 font-medium">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email" className="font-body text-xs font-semibold text-indigo-200">
                         {t.email}
                       </Label>
                       <Input
@@ -862,26 +926,26 @@ export default function ProductDetail() {
                         value={inquiryForm.email}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
                         required
-                        className="rounded-lg border-white-300 focus:border-indigo-400 focus:ring-indigo-400"
+                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
                       />
                     </div>
 
                     {/* Phone */}
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="font-body text-base text-white-700 font-medium">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="phone" className="font-body text-xs font-semibold text-indigo-200">
                         {t.phone}
                       </Label>
                       <Input
                         id="phone"
                         value={inquiryForm.phone}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                        className="rounded-lg border-gray-300 focus:border-indigo-400 focus:ring-indigo-400"
+                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
                       />
                     </div>
 
                     {/* Message */}
-                    <div className="space-y-2">
-                      <Label htmlFor="message" className="font-body text-base text-white-700 font-medium">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="message" className="font-body text-xs font-semibold text-indigo-200">
                         {t.message}
                       </Label>
                       <Textarea
@@ -889,14 +953,14 @@ export default function ProductDetail() {
                         value={inquiryForm.message}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
                         required
-                        className="rounded-lg border-gray-300 focus:border-indigo-400 focus:ring-indigo-400 min-h-[120px]"
+                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400 min-h-[100px]"
                       />
                     </div>
 
                     {/* Submit */}
                     <Button
                       type="submit"
-                      className="w-full rounded-xl py-3 text-white font-medium shadow-md transition bg-gradient-to-r from-indigo-400 to-blue-500 hover:from-indigo-500 hover:to-blue-600 font-headline text-l md:text-l"
+                      className="w-full rounded-full py-3.5 text-white font-headline font-semibold text-base shadow-lg transition bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500"
                     >
                       {t.send_inquiry}
                     </Button>

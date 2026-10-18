@@ -96,8 +96,16 @@ export default function ServicesPreview() {
                         <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-lg shadow-emerald-950/50">
                           100% Kostenfrei
                         </span>
+                      ) : service.price === 149 ? (
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/25 text-amber-200 border border-amber-400/40 backdrop-blur-md shadow-lg shadow-amber-950/40">
+                          Bestseller / Empfehlung
+                        </span>
+                      ) : service.price >= 2000 ? (
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/25 text-purple-200 border border-purple-400/40 backdrop-blur-md shadow-lg shadow-purple-950/40">
+                          Exklusives Mentoring
+                        </span>
                       ) : (
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
                           Empfehlung
                         </span>
                       )}

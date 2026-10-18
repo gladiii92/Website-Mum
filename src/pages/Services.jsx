@@ -224,13 +224,37 @@ export default function Services() {
                           </div>
                           {service.price === 0 ? (
                             <div className="absolute top-3 right-3">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-sm">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-sm">
                                 100% Kostenfrei
+                              </span>
+                            </div>
+                          ) : service.price === 19 ? (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 backdrop-blur-md">
+                                Express Audio
+                              </span>
+                            </div>
+                          ) : service.price === 149 ? (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/25 text-amber-200 border border-amber-400/40 backdrop-blur-md shadow-sm">
+                                Bestseller / Meistgebucht
+                              </span>
+                            </div>
+                          ) : service.price === 390 ? (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/25 text-purple-200 border border-purple-400/40 backdrop-blur-md">
+                                VIP Begleitung
+                              </span>
+                            </div>
+                          ) : service.price >= 2000 ? (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/25 text-purple-200 border border-purple-400/40 backdrop-blur-md">
+                                Exklusives Mentoring
                               </span>
                             </div>
                           ) : service.featured ? (
                             <div className="absolute top-3 right-3">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
+                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
                                 Empfehlung
                               </span>
                             </div>
@@ -281,6 +305,8 @@ export default function Services() {
                               href={`https://wa.me/4915901276286?text=${encodeURIComponent(
                                 service.price === 0
                                   ? `Hallo Ursula, ich habe dein Angebot "3-Fragen Herzenspartner-Check (Kostenlos)" auf deiner Webseite gesehen und möchte gerne meine 3 Fragen per WhatsApp für eine Einschätzung stellen.`
+                                  : service.price === 19
+                                  ? `Hallo Ursula, ich möchte den Express 1-Karten-Audio-Impuls (19 €) buchen. Meine konkrete Frage an die Karten lautet: `
                                   : `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
                               )}`}
                               target="_blank"
@@ -289,15 +315,25 @@ export default function Services() {
                               className={`font-headline font-semibold text-sm ${
                                 service.price === 0
                                   ? "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:via-teal-500 hover:to-emerald-500 text-white shadow-emerald-950/40"
+                                  : service.price === 19
+                                  ? "bg-gradient-to-r from-cyan-600 via-blue-600 to-cyan-600 hover:from-cyan-500 hover:via-blue-500 hover:to-cyan-500 text-white shadow-cyan-950/40"
                                   : "bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white shadow-indigo-950/40"
                               } border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}
                             >
                               <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
-                              <span>{service.price === 0 ? "Kostenlosen Check anfragen" : "Termin per WhatsApp anfragen"}</span>
+                              <span>
+                                {service.price === 0
+                                  ? "Kostenlosen Check anfragen"
+                                  : service.price === 19
+                                  ? "Express-Impuls buchen (19 €)"
+                                  : "Termin per WhatsApp anfragen"}
+                              </span>
                             </a>
                             <p className="text-[11px] text-center text-indigo-300/60 font-body">
                               {service.price === 0
                                 ? "100% unverbindlich • Persönliche Sprachnachricht von Ursula"
+                                : service.price === 19
+                                ? "Deutung innerhalb 12–24h direkt per WhatsApp Sprachnachricht"
                                 : "Verbindliche Terminanfrage • Keine kostenlose Beratung im Chat"}
                             </p>
                           </div>

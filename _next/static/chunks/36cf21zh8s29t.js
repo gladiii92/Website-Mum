@@ -1,5 +1,5 @@
 __turbopack_load_page_chunks__("/shop", [
-  "static/chunks/249gfd65jiopp.js",
-  "static/chunks/0hx5pba7jqn0a.js",
+  "static/chunks/1hxq8o099337c.js",
+  "static/chunks/2s70_gbug0d0r.js",
   "static/chunks/turbopack-2uhpngkd-69mb.js"
 ])

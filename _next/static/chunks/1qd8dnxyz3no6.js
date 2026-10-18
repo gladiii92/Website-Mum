@@ -1,5 +1,5 @@
 __turbopack_load_page_chunks__("/tarot", [
-  "static/chunks/39al75xg4uuqc.js",
-  "static/chunks/0hx5pba7jqn0a.js",
+  "static/chunks/2a856ov3zakky.js",
+  "static/chunks/2s70_gbug0d0r.js",
   "static/chunks/turbopack-2uhpngkd-69mb.js"
 ])

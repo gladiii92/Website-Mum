@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { createPageUrl, formatPrice } from "../../utils";
 import { Product } from "../../entities/Product";
-import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info, MessageCircle, Mail } from "lucide-react";
+import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info, MessageCircle, Mail, Check } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { Card, CardContent } from "../../components/ui/Card";
@@ -235,6 +235,7 @@ export default function ProductDetail({ initialProduct }) {
     message: ""
   });
   const [thumbnails, setThumbnails] = useState([]);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => setCurrentIndex((prev) => (prev + 1) % allMedia.length),
@@ -347,18 +348,19 @@ export default function ProductDetail({ initialProduct }) {
   const handleShare = async () => {
     const shareData = {
       title: product.name,
-      text: `Schauen Sie sich dieses wundervolle Produkt an!`,
-      url: window.location.href
+      text: `Entdecke "${product.name}" von Ursula Heinke:`,
+      url: typeof window !== "undefined" ? window.location.href : `https://www.ursulaheinke.de/product/${product.slug}`
     };
     try {
-      if (navigator.share) {
+      if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share(shareData);
-      } else {
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
         await navigator.clipboard.writeText(shareData.url);
-        alert('Link kopiert!');
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2500);
       }
     } catch (error) {
-      console.error('Fehler beim Teilen:', error);
+      // Aborted or cancelled by user
     }
   };
 
@@ -443,21 +445,28 @@ export default function ProductDetail({ initialProduct }) {
           <meta property="og:image" content={`https://www.ursulaheinke.de${product.image_url}`} />
           <meta property="og:url" content={`https://www.ursulaheinke.de/product/${product.slug}`} />
           <link rel="canonical" href={`https://www.ursulaheinke.de/product/${product.slug}`} />
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Product",
-              "name": product.name,
-              "image": `https://www.ursulaheinke.de${product.image_url}`,
-              "description": product.description,
-              "offers": {
-                "@type": "Offer",
-                "price": product.price,
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock"
-              }
-            })}
-          </script>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.name,
+                "image": `https://www.ursulaheinke.de${product.image_url}`,
+                "description": product.description ? product.description.replace(/<[^>]*>/g, '').slice(0, 300) : product.name,
+                "offers": {
+                  "@type": "Offer",
+                  "price": product.price,
+                  "priceCurrency": "EUR",
+                  "availability": "https://schema.org/InStock",
+                  "seller": {
+                    "@type": "Person",
+                    "name": "Ursula Heinke"
+                  }
+                }
+              })
+            }}
+          />
         </Head>
       
 
@@ -665,8 +674,15 @@ export default function ProductDetail({ initialProduct }) {
               <h1 className="font-headline text-2xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-indigo-200 via-blue-200 to-indigo-300 bg-clip-text text-transparent">
                 {getTranslatedProductName(product.id)}
               </h1>
-              <Button variant="outline" className="rounded-full border border-indigo-400/30 bg-slate-900/60 hover:bg-white/10 text-white shadow-md" size="icon" onClick={handleShare}>
-                <Share2 className="w-4 h-4" />
+              <Button
+                variant="outline"
+                className="rounded-full border border-indigo-400/30 bg-slate-900/60 hover:bg-white/10 text-white shadow-md transition-all"
+                size="icon"
+                onClick={handleShare}
+                title={linkCopied ? "Link in Zwischenablage kopiert!" : "Produktlink teilen"}
+                aria-label="Produktlink teilen"
+              >
+                {linkCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
               </Button>
             </div>
 
@@ -706,12 +722,10 @@ export default function ProductDetail({ initialProduct }) {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full block"
+                className="w-full bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-4 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300"
               >
-                <Button className="w-full bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-4 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300">
-                  <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
-                  <span>Direkt per WhatsApp anfragen & kaufen</span>
-                </Button>
+                <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                <span>Direkt per WhatsApp anfragen & kaufen</span>
               </a>
 
               <Button

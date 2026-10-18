@@ -107,12 +107,11 @@ export default function SeminarHighlight() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto"
+                  aria-label="Platz per WhatsApp sichern für Frauen-Retreat Herzenszeit"
+                  className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-full px-8 py-4 text-base sm:text-lg shadow-[0_0_20px_rgba(219,39,119,0.4)] transition-all duration-300 flex items-center justify-center gap-2.5 group"
                 >
-                  <Button className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-full px-8 py-4 text-base sm:text-lg shadow-[0_0_20px_rgba(219,39,119,0.4)] transition-all duration-300 flex items-center justify-center gap-2.5 group">
-                    <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
-                    <span>Platz per WhatsApp sichern</span>
-                  </Button>
+                  <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
+                  <span>Platz per WhatsApp sichern</span>
                 </a>
                 <span className="text-xs text-pink-200/80 inline-flex items-center gap-2">
                   <span>Nur 15 Plätze verfügbar</span>

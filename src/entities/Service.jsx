@@ -4,6 +4,38 @@
 // Array der Services (ähnlich wie Product in Product.jsx)
 const servicesData = [
   {
+    title: "3-Fragen Herzenspartner-Check",
+    description: "Du hast eine drängende Frage zu deinem Herzenspartner, Dualseele oder Seelenplan? Sende Ursula deine 3 wichtigsten Fragen per WhatsApp. Du erhältst eine intuitive Ersteinschätzung als persönliche Sprachnachricht direkt auf dein Smartphone – 100% kostenfrei.",
+    price: 0,
+    duration: "WhatsApp Audio-Impuls",
+    type: "readings",
+    benefits: [
+      "100% kostenlos & unverbindlich per WhatsApp",
+      "Persönliche Audio-Sprachnachricht von Ursula Heinke",
+      "Erste Tendenzen zu Gedanken & Gefühlen deines Partners"
+    ],
+    image_url: `/images/Kurse/Kartenlegen_test1.webp`,
+    featured: true,
+    available_slots: 15,
+    created_date: "2026-10-18"
+  },
+  {
+    title: "Express 1-Karten-Audio-Impuls",
+    description: "Die schnelle Seelen-Antwort für zwischendurch: Ursula zieht 1 gezielte Karte (Tarot oder Lenormand) auf deine konkrete Frage zu Liebe, Herzenspartner oder Beruf und sendet dir deine individuelle Audio-Deutung innerhalb von 12–24 Stunden direkt per WhatsApp.",
+    price: 19,
+    duration: "Audio-Deutung (12–24h)",
+    type: "readings",
+    benefits: [
+      "Gezielte Kartenlegung auf 1 konkrete Frage",
+      "Schnelle Audio-Antwort ohne Termindruck (12–24h)",
+      "Dauerhaft auf deinem Smartphone abrufbar"
+    ],
+    image_url: `/images/Kurse/Kartenlegen_test3.webp`,
+    featured: false,
+    available_slots: 20,
+    created_date: "2026-10-18"
+  },
+  {
     title: "Standard Reading – 30 Minuten Klarheit",
     description: "In 30 Minuten tauchst du intensiv in deine wichtigsten Themen ein – Liebe, Partnerschaft, Familie oder berufliche Neuorientierung. Dieses Reading bietet dir fundierte astrologische und mediale Einsichten per Telefon oder Video. Perfekt für schnelle, treffsichere Antworten und konkrete Entscheidungshilfe.",
     price: 90,
@@ -21,19 +53,35 @@ const servicesData = [
   },
   {
     title: "Seelen-Klarheits-Kompass – Intensiv-Reading",
-    description: "Das umfassende 60-Minuten Intensiv-Reading mit Spezialisierung auf Gedankenlegung für den Herzenspartner, Zwillingsseelen- und Dualseelen-Verbindungen. Ursula Heinke deckt verborgene Blockaden auf und gibt dir glasklare Handlungsschritte.",
+    description: "Das umfassende 60-Minuten Intensiv-Reading mit Spezialisierung auf Gedankenlegung für den Herzenspartner, Zwillingsseelen- und Seelenplan-Verbindungen. Ursula Heinke deckt verborgene Blockaden auf und gibt dir glasklare Handlungsschritte – inkl. Audio-Aufnahme & 7 Tage WhatsApp-Support.",
     price: 149,
-    duration: "60 Minuten",
+    duration: "60 Minuten Intensiv-Call",
     type: "readings",
     benefits: [
-      "Gedankenlegung auf Herzenspartner & Seelenplan",
-      "Aufdeckung karmischer Blockaden & klare Tendenzen",
-      "100% vertraulich per Telefon oder WhatsApp-Call"
+      "Gedankenlegung auf Herzenspartner & Seelenplan (60 Min)",
+      "Inkl. Audio-Aufnahme der Session & MP3 'Innerer Frieden'",
+      "Inkl. 7 Tage WhatsApp-Support & 15-Min-Klarheitsgarantie"
     ],
     image_url: `/images/Kurse/Kartenlegen_test2.webp`,
     featured: true,
     available_slots: 6,
     created_date: "2026-10-14"
+  },
+  {
+    title: "30 Tage Herzensweg-Begleitung (VIP Retainer)",
+    description: "Die intensive 4-wöchige 1:1 Begleitung für deine emotionale Stabilität, Liebeskummer-Heilung oder Beziehungs-Neuausrichtung. Beinhaltet 4 wöchentliche 1:1 Readings (je 45 Min) plus deinen persönlichen WhatsApp-Notfall-Joker für sofortigen Halt bei akuten Krisen.",
+    price: 390,
+    duration: "4 Wochen 1:1 VIP-Begleitung",
+    type: "readings",
+    benefits: [
+      "4x wöchentliche 1:1 Readings per Telefon/WhatsApp (je 45 Min)",
+      "Priorisierter WhatsApp-Support für akute Fragen & Rückfälle",
+      "Fortlaufende energetische Seelenpartner- & Blockadenbegleitung"
+    ],
+    image_url: `/images/Kurse/coaching_test1.webp`,
+    featured: true,
+    available_slots: 4,
+    created_date: "2026-10-18"
   },
   {
     title: "Zertifizierte Ausbildung: Intuitive Kartenlegerin",

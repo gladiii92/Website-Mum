@@ -124,12 +124,11 @@ export default function Contact() {
                     href="https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20deine%20Webseite%20besucht%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Beratung%20(Seelen-Klarheits-Kompass)%20anfragen."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto flex-shrink-0"
+                    aria-label="WhatsApp Chat starten"
+                    className="w-full sm:w-auto flex-shrink-0 bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-3.5 px-8 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300"
                   >
-                    <Button className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 font-headline font-semibold text-base py-3.5 px-8 rounded-full flex items-center justify-center gap-2.5 group/btn transition-all duration-300">
-                      <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
-                      <span>WhatsApp Chat starten</span>
-                    </Button>
+                    <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                    <span>WhatsApp Chat starten</span>
                   </a>
                 </div>
                 <div className="mt-5 pt-3 border-t border-indigo-400/15 flex items-start gap-2 text-xs text-indigo-300/80">

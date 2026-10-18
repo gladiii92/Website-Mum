@@ -1,60 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Product, Categories } from "../entities/Product"; // Importiere auch Categories
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
+import React, { useState, useMemo, useRef } from "react";
+import { Product, Categories } from "../entities/Product";
+import { Card, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
-import { Badge } from "../components/ui/Badge";
-import Tabs, { TabsList, TabsTrigger } from "../components/ui/Tabs";
 import { Star, Sparkles, ShoppingBag, Clock, ArrowRight, Droplet, Brush, Headphones } from "lucide-react";
 import { motion } from "framer-motion";
 import Head from "next/head"; 
 import Link from "next/link";
-import { createPageUrl, formatPrice } from "../utils"; // Relativer Pfad
+import { createPageUrl, formatPrice } from "../utils";
 import { useReducedMotion } from "framer-motion";
 
 export default function Shop() {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products] = useState(Product);
   const [activeCategory, setActiveCategory] = useState("all");
-
-  // Neu: Ref für den Produkte-Container zum automatischen Scrollen
   const productsRef = useRef(null);
-  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768;
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  useEffect(() => {
-    filterProducts();
+  const filteredProducts = useMemo(() => {
+    if (!products || products.length === 0) return [];
+    let filtered = activeCategory === "all"
+      ? [...products]
+      : products.filter(p => p.category?.toLowerCase() === activeCategory.toLowerCase());
+    return filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
   }, [products, activeCategory]);
 
-  const loadProducts = () => {
-    // Statische Ladung (kein async, da Mock-Array)
-    const allProducts = Product; // Direkter Zugriff auf das Array aus Product.jsx
-    setProducts(allProducts);
-    setLoading(false);
-  };
-
-  const filterProducts = () => {
-    if (!products || products.length === 0) return;
-
-    let filtered;
-    if (activeCategory === "all") {
-      filtered = [...products];
-    } else {
-      filtered = products.filter(
-        (p) => p.category?.toLowerCase() === activeCategory.toLowerCase()
-      );
-    }
-
-    // Featured zuerst
-    filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-
-    setFilteredProducts(filtered);
-  };
-
-  // Neu: Funktion für Kategorie-Wechsel mit smooth Scroll zum Produkte-Bereich
   const handleCategoryChange = (cat) => {
     setActiveCategory(cat);
     if (productsRef.current) {
@@ -77,57 +45,54 @@ export default function Shop() {
     heilketten: Sparkles
   };
 
-  // Kategorie-Previews: Nun basierend auf dem neuen Categories-Array (separate Vorschaubilder)
-  // Filtere auskommentierte Kategorien heraus (z.B. pferdebuersten)
   const categoryPreviews = Categories
-    .filter(cat => categoryLabels[cat.name]) // Nur Kategorien einbeziehen, die in categoryLabels aktiv sind
+    .filter(cat => categoryLabels[cat.name])
     .map(cat => ({
       category: cat.name,
       count: products.filter(p => p.category === cat.name).length,
       teaserImage: cat.preview_image_url,
-      teaserName: cat.display_name, // Oder ein Teaser-Name, falls gewünscht
-      description: cat.description // Neu: Beschreibung hinzugefügt
+      teaserName: cat.display_name,
+      description: cat.description
     }));
 
-  if (loading) {
-    return (
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl h-96 animate-pulse"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const shopSchema = {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Ursula Heinke – Spirituelle Schätze Shop",
+    "url": "https://www.ursulaheinke.de/shop",
+    "description": "Handverlesene Heil- und Wassersteine, geführte Meditationen, Horoskope und Schutzamulette.",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Spirituelle Begleiter & Meditationen",
+      "itemListElement": Product.map(p => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": p.name,
+          "image": `https://www.ursulaheinke.de${p.image_url}`
+        },
+        "price": p.price,
+        "priceCurrency": "EUR"
+      }))
+    }
+  };
 
   return (
     <>
-      {/* Neu: React Helmet für SEO */}
       <Head>
-        <title>Ursula Heinke - Shop</title>
-        <meta name="description" content="Handverlesene Heilsteine, Schmuck, mystische Kerzen und persönliche Horoskope für Deine spirituelle Reise. Entdecken Deine Produkte für innere Balance." />
-        <meta name="keywords" content="Heilsteine, Schmuck, Kerzen, Horoskope, spirituelle Produkte, Shop" />
-        <meta property="og:title" content="Ursula Heinke - Shop" />
-        <meta property="og:description" content="Spirituelle Schätze für Dein Wohlbefinden." />
-        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" /> {/* Passe Bild an */}
+        <title>Shop für spirituelle Begleiter & Meditationen | Ursula Heinke</title>
+        <meta name="description" content="Handverlesene Heilsteine, geführte Audio-Meditationen (MP3) und persönliche Horoskope von Ursula Heinke. Energetische Begleiter für deine innere Balance." />
+        <meta name="keywords" content="Heilsteine kaufen, Wassersteine Energetisierung, Meditation Innerer Frieden MP3, Horoskop Ursula Heinke, spiritueller Shop" />
+        <meta property="og:title" content="Shop für spirituelle Begleiter | Ursula Heinke" />
+        <meta property="og:description" content="Handverlesene Heilsteine, MP3-Meditationen und Horoskope für deine Seelenreise." />
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" />
         <meta property="og:url" content="https://www.ursulaheinke.de/shop" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.ursulaheinke.de/shop" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Store",
-            "name": "Ursula Heinke Shop",
-            "url": "https://www.ursulaheinke.de/shop"
-          })}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(shopSchema) }}
+        />
       </Head>
 
       <section className="py-20 px-6">
@@ -205,25 +170,27 @@ export default function Shop() {
             })}
           </div>
 
-          {/* Suchfeld entfernt; nur Tabs für sekundäre Navigation */}
+          {/* Filter-Pills für Navigation */}
           <div className="flex justify-center mb-8">
-            <Tabs
-              value={activeCategory}
-              onValueChange={handleCategoryChange}
-              className="bg-slate-900/30 p-1 rounded-full border border-blue-400/10 overflow-x-auto"
-            >
-              <TabsList className="flex-nowrap">
-                {Object.keys(categoryLabels).map(cat => (
-                  <TabsTrigger
+            <div className="bg-slate-900/60 p-1.5 rounded-full border border-blue-400/20 overflow-x-auto flex flex-nowrap gap-1.5 max-w-full">
+              {Object.keys(categoryLabels).map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
                     key={cat}
-                    value={cat}
-                    className="font-headline text-sm font-medium text-indigo-300 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-300 data-[state=active]:to-blue-300 data-[state=active]:text-slate-950 hover:text-white transition-all whitespace-nowrap"
+                    type="button"
+                    onClick={() => handleCategoryChange(cat)}
+                    className={`font-headline text-sm font-semibold px-5 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? "bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 text-white shadow-md shadow-indigo-950/50 border border-indigo-300/40"
+                        : "text-indigo-200 hover:text-white hover:bg-white/10 border border-transparent"
+                    }`}
                   >
                     {categoryLabels[cat]}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Produkte-Container mit Ref für Scroll */}
@@ -313,15 +280,11 @@ export default function Shop() {
                           <div className="w-full mt-auto pt-4 border-t border-blue-400/10">
                             <Link 
                               href={`/product/${product.slug}`}
-                              className="w-full inline-block"
+                              aria-label={`Details ansehen: ${product.name}`}
+                              className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                             >
-                              <Button 
-                                aria-label={`Details ansehen: ${product.name}`}
-                                className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                              >
-                                <span>Details & Bestellen</span>
-                                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                              </Button>
+                              <span>Details & Bestellen</span>
+                              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                             </Link>
                           </div>
                         </div>

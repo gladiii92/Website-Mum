@@ -9,25 +9,16 @@ import { Sparkles, Clock, ArrowRight, Star, Droplet, Brush } from "lucide-react"
 import { motion } from "framer-motion";
 
 export default function FeaturedProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
-  useEffect(() => {
-    loadFeaturedProducts();
-  }, []);
-
-  const loadFeaturedProducts = () => {
-    const allProducts = Product;
-    // 3 handverlesene, komplementäre Einstiegsprodukte für maximale Konversion & visuelle Ruhe
+  // Synchronous initialization for Next.js SSG so static HTML contains full cards
+  const products = React.useMemo(() => {
     const curatedSlugs = ["meditation-innerer-frieden", "mondstein-wasserstein", "partnerhoroskop"];
     const selected = curatedSlugs
-      .map(slug => allProducts.find(p => p.slug === slug))
+      .map(slug => Product.find(p => p.slug === slug))
       .filter(Boolean);
-
-    setProducts(selected.length === 3 ? selected : allProducts.slice(0, 3));
-    setLoading(false);
-  };
+    return selected.length === 3 ? selected : Product.slice(0, 3);
+  }, []);
 
   const categoryLabels = {
     meditation: "Geführte Meditation",
@@ -42,24 +33,6 @@ export default function FeaturedProducts() {
     horoskope: Star,
     heilketten: Sparkles
   };
-
-  if (loading) {
-    return (
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl h-96 animate-pulse"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   if (products.length === 0) {
     return null;
@@ -161,15 +134,11 @@ export default function FeaturedProducts() {
                     <div className="w-full mt-auto pt-4 border-t border-blue-400/10">
                       <Link 
                         href={`/product/${product.slug}`}
-                        className="w-full inline-block"
+                        aria-label={`Details ansehen: ${product.name}`}
+                        className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                       >
-                        <Button 
-                          aria-label={`Details ansehen: ${product.name}`}
-                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                        >
-                          <span>Details & Bestellen</span>
-                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                        </Button>
+                        <span>Details & Bestellen</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                       </Link>
                     </div>
                   </div>
@@ -180,15 +149,12 @@ export default function FeaturedProducts() {
         </div>
 
         <div className="flex justify-center">
-          <Link href={createPageUrl("Shop")}>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 flex items-center justify-center font-headline font-semibold group"
-            >
-              <span>Alle Begleiter & Horoskope ansehen</span>
-              <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
+          <Link
+            href="/shop"
+            className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 inline-flex items-center justify-center font-headline font-semibold group"
+          >
+            <span>Alle Begleiter & Horoskope ansehen</span>
+            <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </div>

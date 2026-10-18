@@ -112,12 +112,11 @@ export default function TarotIndex() {
             href="https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20dein%20Tarot-Lexikon%20gelesen%20und%20m%C3%B6chte%20gerne%20einen%20pers%C3%B6nlichen%20Termin%20f%C3%BCr%20ein%20Reading%20(Seelen-Klarheits-Kompass)%20buchen."
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 w-full sm:w-auto"
+            aria-label="Termin per WhatsApp anfragen"
+            className="flex-shrink-0 w-full sm:w-auto font-headline font-semibold bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-300/30 rounded-full px-7 py-3.5 text-sm flex items-center justify-center gap-2 group/btn shadow-md shadow-indigo-950/40 transition-all"
           >
-            <Button className="font-headline font-semibold bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-300/30 rounded-full px-7 py-3.5 text-sm flex items-center justify-center gap-2 group/btn shadow-md shadow-indigo-950/40 transition-all">
-              <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform" />
-              <span>Termin per WhatsApp anfragen</span>
-            </Button>
+            <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform" />
+            <span>Termin per WhatsApp anfragen</span>
           </a>
         </motion.div>
 
@@ -166,15 +165,13 @@ export default function TarotIndex() {
                   </div>
 
                   <div className="w-full mt-auto pt-4 border-t border-blue-400/10">
-                    <Link href={`/tarot/${card.slug}`} className="w-full inline-block">
-                      <Button
-                        variant="outline"
-                        aria-label={`Bedeutung von ${card.name} lesen`}
-                        className="font-headline text-xs border border-blue-400/30 text-blue-200 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full w-full py-2.5 transition-all flex items-center justify-center gap-2 group/btn"
-                      >
-                        <span>Vollständige Bedeutung lesen</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                      </Button>
+                    <Link
+                      href={`/tarot/${card.slug}`}
+                      aria-label={`Bedeutung von ${card.name} lesen`}
+                      className="font-headline text-xs border border-blue-400/30 text-blue-200 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full w-full py-2.5 transition-all inline-flex items-center justify-center gap-2 group/btn"
+                    >
+                      <span>Vollständige Bedeutung lesen</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>

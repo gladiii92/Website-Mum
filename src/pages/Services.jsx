@@ -1,55 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
-import { ServiceData, Types } from "../entities/Service"; // Importiere ServiceData (das Array) und Types
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
+import React, { useState, useMemo, useRef } from "react";
+import { ServiceData, Types } from "../entities/Service";
+import { Card, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
-import { Badge } from "../components/ui/Badge";
-import Tabs, { TabsList, TabsTrigger } from "../components/ui/Tabs";
-import { Heart, Clock, Users, Star, ArrowRight, CheckCircle, MessageCircle, Award, Sparkles } from "lucide-react";
+import { Heart, Clock, Users, Star, ArrowRight, CheckCircle, MessageCircle, Award, Sparkles, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
-import Head from "next/head"; // Neu: Import für SEO
+import Head from "next/head";
 import Link from "next/link";
-import { createPageUrl, formatPrice } from "../utils"; // Relativer Pfad
+import { createPageUrl, formatPrice } from "../utils";
 import { useReducedMotion } from "framer-motion";
 
 export default function Services() {
-  const [services, setServices] = useState([]);
-  const [filteredServices, setFilteredServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [services] = useState(ServiceData);
   const [activeType, setActiveType] = useState("all");
-
-  // Neu: Ref für den Services-Container zum automatischen Scrollen
   const servicesRef = useRef(null);
 
   const shouldReduceMotion = useReducedMotion();
-  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // Beispiel: Mobile < md
+  const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768;
   const shouldAnimate = !isMobile && !shouldReduceMotion;
-  
-  useEffect(() => {
-    loadServices();
-  }, []);
 
-  useEffect(() => {
-    filterServices();
+  const filteredServices = useMemo(() => {
+    let list = activeType === "all" ? services : services.filter(s => s.type === activeType);
+    return [...list].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
   }, [services, activeType]);
 
-  const loadServices = () => {
-    // Statische Ladung (kein async, da Mock-Array) – genau wie in Shop.jsx
-    const allServices = ServiceData; // Direkter Zugriff auf das Array aus Service.jsx
-    setServices(allServices);
-    setLoading(false);
-  };
-
-  const filterServices = () => {
-    let filtered = services;
-    if (activeType !== "all") {
-      filtered = filtered.filter(s => s.type === activeType);
-    }
-    // Sortiere nach Beliebtheit (z.B. featured zuerst) für bessere Verkaufspsychologie
-    filtered = filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-    setFilteredServices(filtered);
-  };
-
-  // Neu: Funktion für Kategorie-Wechsel mit smooth Scroll zum Services-Bereich
   const handleTypeChange = (type) => {
     setActiveType(type);
     if (servicesRef.current) {
@@ -65,64 +38,56 @@ export default function Services() {
     gruppenkurs: "Gruppenkurse & Waldbaden"
   };
 
-  const typeIcons = {
-    readings: Heart,
-    ausbildung: Award,
-    workshop: Star,
-    gruppenkurs: Users
-  };
-
-  // Kategorie-Previews: Nun basierend auf dem neuen Types-Array (separate Vorschaubilder)
   const typePreviews = Types.map(type => ({
     type: type.name,
     count: services.filter(s => s.type === type.name).length,
     teaserImage: type.preview_image_url,
-    teaserName: type.display_name, // Oder ein Teaser-Name, falls gewünscht
-    description: type.description // Neu: Beschreibung hinzugefügt
+    teaserName: type.display_name,
+    description: type.description
   }));
 
-  if (loading) {
-    return (
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl h-96 animate-pulse"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Lebensberatung & Spirituelles Coaching Ursula Heinke",
+    "serviceType": "Spirituelle Lebensberatung, Tarot & Lenormand Gedankenlegung",
+    "provider": {
+      "@type": "Person",
+      "name": "Ursula Heinke",
+      "url": "https://www.ursulaheinke.de"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Beratungs- & Coaching-Angebote",
+      "itemListElement": ServiceData.map((s) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.title,
+          "description": s.description
+        },
+        "price": s.price,
+        "priceCurrency": "EUR"
+      }))
+    }
+  };
 
   return (
     <>
-      {/* Neu: React Helmet für SEO */}
       <Head>
-        <title>Ursula Heinke - Coaching & Kurse</title>
-        <meta name="description" content="Entdecken Sie transformative Coaching-Programme, Workshops und Online-Kurse für persönliches Wachstum und spirituelle Entwicklung." />
-        <meta name="keywords" content="Coaching, Kurse, Workshops, spirituelle Entwicklung, Einzelcoaching" />
-        <meta property="og:title" content="Ursula Heinke - Coaching & Kurse" />
-        <meta property="og:description" content="Individuelle Begleitung für Deine persönliche Transformation." />
-        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" /> {/* Passe Bild an */}
+        <title>Coaching & Kurse | Ursula Heinke – Lebensberatung & Mentoring</title>
+        <meta name="description" content="Entdecke transformative Beratungen: Kostenloser 3-Fragen Herzenspartner-Check, Seelen-Klarheits-Kompass (149 €), VIP-Begleitung und zertifizierte Ausbildung." />
+        <meta name="keywords" content="Coaching Coburg, Seelen-Klarheits-Kompass, Gedankenlegung Herzenspartner, Ausbildung Kartenlegerin, Lebensberatung Ursula Heinke" />
+        <meta property="og:title" content="Coaching & Kurse | Ursula Heinke" />
+        <meta property="og:description" content="Klarheit für deine Liebe, Seelenpartner & Lebensweg. Authentische Beratung mit 25+ Jahren Erfahrung." />
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/ogbild.webp" />
         <meta property="og:url" content="https://www.ursulaheinke.de/services" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.ursulaheinke.de/services" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": "Spirituelles Coaching",
-            "provider": {
-              "@type": "Person",
-              "name": "Ursula Heinke"
-            }
-          })}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
+        />
       </Head>
 
       <section className="py-20 px-6">
@@ -200,25 +165,27 @@ export default function Services() {
             })}
           </div>
 
-          {/* Suchfeld entfernt; nur Tabs für sekundäre Navigation */}
+          {/* Filter-Pills für Navigation */}
           <div className="flex justify-center mb-8">
-            <Tabs
-              value={activeType}
-              onValueChange={handleTypeChange}
-              className="bg-slate-900/30 p-1 rounded-full border border-blue-400/10 overflow-x-auto"
-            >
-              <TabsList className="flex-nowrap">
-                {Object.keys(typeLabels).map(type => (
-                  <TabsTrigger
+            <div className="bg-slate-900/60 p-1.5 rounded-full border border-blue-400/20 overflow-x-auto flex flex-nowrap gap-1.5 max-w-full">
+              {Object.keys(typeLabels).map((type) => {
+                const isActive = activeType === type;
+                return (
+                  <button
                     key={type}
-                    value={type}
-                    className="font-headline text-sm font-medium text-indigo-300 px-4 py-2 rounded-full data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-300 data-[state=active]:to-blue-300 data-[state=active]:text-slate-950 hover:text-white transition-all whitespace-nowrap"
+                    type="button"
+                    onClick={() => handleTypeChange(type)}
+                    className={`font-headline text-sm font-semibold px-5 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? "bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 text-white shadow-md shadow-indigo-950/50 border border-indigo-300/40"
+                        : "text-indigo-200 hover:text-white hover:bg-white/10 border border-transparent"
+                    }`}
                   >
                     {typeLabels[type]}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Services-Container mit Ref für Scroll */}
@@ -233,8 +200,6 @@ export default function Services() {
             {filteredServices.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-12">
                 {filteredServices.map((service, index) => {
-                  const TypeIcon = typeIcons[service.type] || Heart;
-                  
                   return (
                     <motion.div
                       key={service.id || index}
@@ -257,13 +222,19 @@ export default function Services() {
                               {typeLabels[service.type]}
                             </span>
                           </div>
-                          {service.featured && (
+                          {service.price === 0 ? (
+                            <div className="absolute top-3 right-3">
+                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-sm">
+                                100% Kostenfrei
+                              </span>
+                            </div>
+                          ) : service.featured ? (
                             <div className="absolute top-3 right-3">
                               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
                                 Empfehlung
                               </span>
                             </div>
-                          )}
+                          ) : null}
                         </div>
                         
                         <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
@@ -274,7 +245,7 @@ export default function Services() {
 
                             <div className="my-2 text-center">
                               <span className="font-headline text-3xl font-bold tracking-tight text-white block">
-                                {formatPrice(service.price)}
+                                {service.price === 0 ? "0 € (Kostenlos)" : formatPrice(service.price)}
                               </span>
                               {service.duration && (
                                 <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
@@ -308,22 +279,26 @@ export default function Services() {
                           <div className="w-full mt-auto pt-4 border-t border-blue-400/10 flex flex-col gap-2">
                             <a
                               href={`https://wa.me/4915901276286?text=${encodeURIComponent(
-                                `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
+                                service.price === 0
+                                  ? `Hallo Ursula, ich habe dein Angebot "3-Fragen Herzenspartner-Check (Kostenlos)" auf deiner Webseite gesehen und möchte gerne meine 3 Fragen per WhatsApp für eine Einschätzung stellen.`
+                                  : `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
                               )}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-full inline-block"
+                              aria-label={`Anfrage für: ${service.title}`}
+                              className={`font-headline font-semibold text-sm ${
+                                service.price === 0
+                                  ? "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:via-teal-500 hover:to-emerald-500 text-white shadow-emerald-950/40"
+                                  : "bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white shadow-indigo-950/40"
+                              } border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn`}
                             >
-                              <Button 
-                                aria-label={`Termin anfragen für: ${service.title}`}
-                                className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                              >
-                                <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
-                                <span>Termin per WhatsApp anfragen</span>
-                              </Button>
+                              <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                              <span>{service.price === 0 ? "Kostenlosen Check anfragen" : "Termin per WhatsApp anfragen"}</span>
                             </a>
                             <p className="text-[11px] text-center text-indigo-300/60 font-body">
-                              Verbindliche Terminanfrage • Keine kostenlose Beratung im Chat
+                              {service.price === 0
+                                ? "100% unverbindlich • Persönliche Sprachnachricht von Ursula"
+                                : "Verbindliche Terminanfrage • Keine kostenlose Beratung im Chat"}
                             </p>
                           </div>
                         </div>

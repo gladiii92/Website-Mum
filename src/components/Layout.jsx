@@ -10,7 +10,7 @@ export default function Layout({ children, currentPageName }) {
 const location = { pathname: router.pathname };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // State für Mobile Menü
   const navigation = [
-    { name: "Startseite", href: createPageUrl("Home"), icon: Home },
+    { name: "Startseite", href: "/", icon: Home },
     { name: "Coaching", href: createPageUrl("Services"), icon: Heart },
     { name: "Tarot", href: "/tarot", icon: Sparkles },
     { name: "Lenormand", href: "/lenormand", icon: Moon },
@@ -59,7 +59,7 @@ const location = { pathname: router.pathname };
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10"></div>
         <div className="relative max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href={createPageUrl("Home")} className="group">
+            <Link href="/" className="group">
               <div className="flex items-center space-x-3">
                 <div className="relative">
                   <img 
@@ -80,7 +80,7 @@ const location = { pathname: router.pathname };
 
             <nav className="font-headline hidden md:flex items-center space-x-0">
               {navigation.map((item) => {
-                const isActive = location.pathname === item.href;
+                const isActive = item.href === "/" ? location.pathname === "/" : location.pathname === item.href;
                 const Icon = item.icon;
                 return (
                   <Link
@@ -130,7 +130,7 @@ const location = { pathname: router.pathname };
             {mobileMenuOpen && (
               <nav className="md:hidden bg-black/80 backdrop-blur-md absolute top-full left-0 w-full z-50 flex flex-col items-start px-6 py-4 space-y-2">
                 {navigation.map((item) => {
-                  const isActive = location.pathname === item.href;
+                  const isActive = item.href === "/" ? location.pathname === "/" : location.pathname === item.href;
                   const Icon = item.icon;
                   return (
                     <Link
@@ -216,6 +216,19 @@ const location = { pathname: router.pathname };
               <Link href={createPageUrl("Impressum")} className="hover:text-white transition-colors">Impressum</Link>
               <span>|</span>
               <Link href={createPageUrl("Datenschutz")} className="hover:text-white transition-colors">Datenschutz</Link>
+              <span>|</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    localStorage.removeItem("ursula_cookie_consent");
+                    window.location.reload();
+                  }
+                }}
+                className="hover:text-white transition-colors underline cursor-pointer bg-transparent border-0 p-0 text-xs text-blue-300 inline"
+              >
+                Cookie-Einstellungen
+              </button>
             </p>
           </div>
         </div>

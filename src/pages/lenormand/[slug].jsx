@@ -12,7 +12,9 @@ import {
   MessageCircle,
   ChevronRight,
   ArrowLeft,
-  ArrowRight
+  ArrowRight,
+  Star,
+  Sparkles
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -68,6 +70,7 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
     "@type": "Article",
     "headline": `${card.name} – Bedeutung im Lenormand`,
     "description": metaDescription,
+    "image": "https://www.ursulaheinke.de/images/Kurse/Kartenlegen_test2.webp",
     "author": {
       "@type": "Person",
       "name": "Ursula Heinke",
@@ -109,6 +112,10 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
     ],
   };
 
+  const freeCheckWhatsappUrl = `https://wa.me/4915901276286?text=${encodeURIComponent(
+    `Hallo Ursula, ich habe deine Deutung zur Lenormandkarte "${card.name}" gelesen und möchte gerne den kostenlosen 3-Fragen Herzenspartner-Check per WhatsApp nutzen.`
+  )}`;
+
   const whatsappInquiryUrl = `https://wa.me/4915901276286?text=${encodeURIComponent(
     `Hallo Ursula, ich habe deine Deutung zu der Lenormandkarte "${card.name}" gelesen und möchte gerne eine persönliche Gedankenlegung (Seelen-Klarheits-Kompass, 149 €) für meine Situation anfragen.`
   )}`;
@@ -126,6 +133,11 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://www.ursulaheinke.de/images/Kurse/Kartenlegen_test2.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content="https://www.ursulaheinke.de/images/Kurse/Kartenlegen_test2.webp" />
         <link rel="canonical" href={canonicalUrl} />
 
         <script
@@ -262,6 +274,7 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
         {/* Conversion Funnel Box */}
         <div className="mt-14 p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/80 to-slate-900 border border-indigo-400/30 shadow-2xl text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/15 text-indigo-200 text-xs font-semibold uppercase tracking-wider border border-indigo-400/20">
+            <Star className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
             34.000+ Beratungen mit 5,00 Sternen
           </div>
 
@@ -275,28 +288,42 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
+              href={freeCheckWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Kostenlosen 3-Fragen Herzenspartner-Check per WhatsApp anfordern"
+              className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:via-teal-500 hover:to-emerald-500 text-white border border-emerald-400/40 rounded-full px-8 py-3.5 text-base shadow-xl shadow-emerald-950/50 flex items-center justify-center gap-2.5 group/btn transition-all"
+            >
+              <MessageCircle className="w-5 h-5 text-emerald-200 group-hover/btn:scale-110 transition-transform" />
+              <span>3-Fragen Check (100% Gratis per WhatsApp)</span>
+            </a>
+            <a
               href={whatsappInquiryUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto"
+              aria-label="60 Min Seelen-Klarheits-Kompass buchen"
+              className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-300/30 rounded-full px-7 py-3.5 text-base shadow-xl shadow-indigo-950/60 flex items-center justify-center gap-2.5 group/btn transition-all"
             >
-              <Button className="font-headline font-semibold w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-300/30 rounded-full px-8 py-3.5 text-base shadow-xl shadow-indigo-950/60 flex items-center justify-center gap-2.5 group/btn transition-all">
-                <MessageCircle className="w-5 h-5 text-emerald-300 group-hover/btn:scale-110 transition-transform" />
-                <span>Persönliches Reading per WhatsApp buchen</span>
-              </Button>
+              <Sparkles className="w-4 h-4 text-amber-300 group-hover/btn:scale-110 transition-transform" />
+              <span>Intensiv-Reading (149 €)</span>
             </a>
-            <Link href="/services">
-              <Button
-                variant="outline"
-                className="font-headline w-full sm:w-auto border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 rounded-full px-7 py-3.5 text-base transition-all"
-              >
-                Alle Coaching-Angebote
-              </Button>
+          </div>
+
+          <div className="pt-1">
+            <Link
+              href="/services"
+              className="text-xs text-indigo-300/80 hover:text-white underline transition-colors"
+            >
+              Oder alle Coaching-Angebote & die 10-Wochen Ausbildung ansehen →
             </Link>
           </div>
 
-          <p className="text-xs text-indigo-300/60 pt-2">
-            60 Min Seelen-Klarheits-Kompass • Diskrete persönliche Beratung • Schnelle Terminvergabe
+          <p className="text-xs text-indigo-300/60 pt-2 inline-flex items-center justify-center gap-2 flex-wrap">
+            <span>Audio-Antwort von Ursula Heinke</span>
+            <span className="inline-block w-1 h-1 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+            <span>100% vertraulich</span>
+            <span className="inline-block w-1 h-1 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]"></span>
+            <span>Ohne Risiko & ohne Abo</span>
           </p>
         </div>
 
@@ -329,13 +356,11 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
 
         {/* Back to Hub */}
         <div className="mt-8 text-center">
-          <Link href="/lenormand">
-            <Button
-              variant="outline"
-              className="text-xs border border-blue-400/30 text-indigo-300 hover:text-white rounded-full px-6 py-2"
-            >
-              ← Zurück zur Lenormand-Übersicht (Alle 36 Karten)
-            </Button>
+          <Link
+            href="/lenormand"
+            className="text-xs border border-blue-400/30 text-indigo-300 hover:text-white hover:bg-white/10 rounded-full px-6 py-2.5 inline-flex items-center gap-2 transition-all"
+          >
+            ← Zurück zur Lenormand-Übersicht (Alle 36 Karten)
           </Link>
         </div>
       </div>

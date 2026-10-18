@@ -81,22 +81,19 @@ export default function HeroSection() {
               href="https://wa.me/4915901276286?text=Hallo%20Ursula%2C%20ich%20habe%20deine%20Webseite%20besucht%20und%20m%C3%B6chte%20gerne%20einen%20Termin%20f%C3%BCr%20eine%20pers%C3%B6nliche%20Beratung%20(Seelen-Klarheits-Kompass)%20anfragen."
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto"
+              aria-label="Beratung per WhatsApp anfragen"
+              className="font-headline font-semibold bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 rounded-full w-full sm:w-auto min-w-[275px] py-4 px-8 text-lg transition-all duration-300 group flex items-center justify-center gap-2.5"
             >
-              <Button className="font-headline font-semibold bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-xl shadow-indigo-950/60 border border-indigo-300/30 rounded-full w-full sm:w-auto min-w-[275px] py-4 px-8 text-lg transition-all duration-300 group flex items-center justify-center gap-2.5">
-                <MessageCircle className="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform duration-300" />
-                <span>Beratung per WhatsApp anfragen</span>
-              </Button>
+              <MessageCircle className="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform duration-300" />
+              <span>Beratung per WhatsApp anfragen</span>
             </a>
-            <Link href={createPageUrl("Services")}>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="font-headline font-semibold w-full sm:w-auto min-w-[275px] px-8 py-4 text-lg border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 group"
-              >
-                <span>Angebote & Ausbildung</span>
-                <ArrowRight className="w-5 h-5 ml-1 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
+            <Link
+              href="/services"
+              aria-label="Angebote & Ausbildung ansehen"
+              className="font-headline font-semibold w-full sm:w-auto min-w-[275px] px-8 py-4 text-lg border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full backdrop-blur-sm transition-all duration-300 inline-flex items-center justify-center gap-2 group"
+            >
+              <span>Angebote & Ausbildung</span>
+              <ArrowRight className="w-5 h-5 ml-1 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
         </motion.div>

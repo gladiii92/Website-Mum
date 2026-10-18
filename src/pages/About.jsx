@@ -166,12 +166,13 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="text-center"
         >
-          <Link href={createPageUrl("Contact")}>
-          <Button 
+          <Link
+            href="/contact"
+            aria-label="Erstgespräch vereinbaren"
             className="font-headline bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-400 hover:to-blue-400 text-white hover:shadow-lg hover:shadow-blue-500/20 rounded-full px-8 py-4 text-base sm:text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2"
           >
-            <Heart className="w-5 h-5 text-rose-300" /> Erstgespräch vereinbaren
-          </Button>
+            <Heart className="w-5 h-5 text-rose-300" />
+            <span>Erstgespräch vereinbaren</span>
           </Link>
         </motion.div>
       </div>

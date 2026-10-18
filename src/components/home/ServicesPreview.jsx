@@ -9,28 +9,21 @@ import { Heart, Clock, Users, ArrowRight, Star, MessageCircle, Award, Sparkles }
 import { motion } from "framer-motion";
 
 export default function ServicesPreview() {
-  const [featuredServices, setFeaturedServices] = useState([]); // State für nur featured Services
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const isMobile = (typeof window !== 'undefined' ? window.innerWidth : 1024) < 768; // md breakpoint
 
-  useEffect(() => {
-    loadFeaturedServices();
+  // Synchronous initialization for Next.js SSG so static HTML contains full cards
+  const featuredServices = React.useMemo(() => {
+    // Show the 3 pinnacle tiers of the Value Ladder: Stufe 0 (Free), Stufe 2 (Core 149€), Stufe 4 (Ausbildung 2.490€)
+    const preferredTitles = [
+      "3-Fragen Herzenspartner-Check",
+      "Seelen-Klarheits-Kompass – Intensiv-Reading",
+      "Zertifizierte Ausbildung: Intuitive Kartenlegerin"
+    ];
+    const picked = preferredTitles
+      .map(title => ServiceData.find(s => s.title === title))
+      .filter(Boolean);
+    return picked.length === 3 ? picked : ServiceData.filter(s => s.featured).slice(0, 3);
   }, []);
-
-  const loadFeaturedServices = async () => {
-    try {
-      setLoading(true);
-      const allServices = ServiceData; // Await für Array
-      const featured = allServices.filter(s => s.featured === true); // Strenger Filter auf boolean true
-      setFeaturedServices(featured.slice(0, 3)); // Nur 3 featured
-    } catch (err) {
-      console.error("Error loading featured services:", err);
-      setError("Fehler beim Laden der Services.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const typeLabels = {
     all: "Alle Angebote",
@@ -49,58 +42,36 @@ export default function ServicesPreview() {
   };
 
 
-  if (loading) {
-    return (
-      <section className="py-20 px-6"> {/* py-20: Padding top/bottom 5rem (20*0.25rem = 5rem), px-6: Padding left/right 1.5rem (6*0.25rem = 1.5rem) â€“ schafft vertikalen/horizontalen Abstand um den Abschnitt */}
-        <div className="max-w-7xl mx-auto"> {/* max-w-7xl: Maximale Breite 72rem (7xl), mx-auto: Zentriert horizontal mit auto margins */}
-          <div className="text-center mb-12"> {/* text-center: Text zentriert, mb-12: Margin bottom 3rem (12*0.25rem = 3rem) â€“ Abstand nach unten */}
-            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4 animate-pulse"></div> {/* h-8: HÃ¶he 2rem, bg-gray-200: Hintergrundfarbe grau, rounded: Abgerundete Ecken, w-64: Breite 16rem, mx-auto: Zentriert, mb-4: Margin bottom 1rem, animate-pulse: Pulsierende Animation fÃ¼r Ladeeffekt */}
-            <div className="h-4 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div> {/* Ã„hnlich wie oben, aber h-4: HÃ¶he 1rem, w-96: Breite 24rem */}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> {/* grid: Grid-Layout, grid-cols-1: 1 Spalte auf Mobile, md:grid-cols-3: 3 Spalten ab Medium-Breakpoint (768px), gap-8: Abstand zwischen Grid-Items 2rem (8*0.25rem = 2rem) */}
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl h-96 animate-pulse"></div> /* bg-white: WeiÃŸer Hintergrund, rounded-2xl: Stark abgerundete Ecken (1.5rem), h-96: HÃ¶he 24rem, animate-pulse: Pulsierende Ladeanimation */
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-
-  if (error) {
-    return <div className="text-center py-20 text-red-600">{error}</div>;
-  }
-
-
   return (
-    <section className="py-20 px-6"> {/* py-20: Padding top/bottom 5rem, px-6: Padding left/right 1.5rem â€“ wie im Loading-State */}
-      <div className="max-w-7xl mx-auto"> {/* max-w-7xl: Maximale Breite 72rem, mx-auto: Zentriert horizontal */}
+    <section className="py-20 px-6">
+      <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={isMobile ? {} : { opacity: 0, y: 20 }}
           whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
           transition={isMobile ? {} : { duration: 0.5 }}
-          className="text-center mb-12" // text-center: Text zentriert, mb-12: Margin bottom 3rem
+          className="text-center mb-12"
         >
-          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4"> {/* text-4xl: SchriftgrÃ¶ÃŸe 2.25rem, md:text-5xl: 3rem ab Medium-Breakpoint, font-bold: Fett, mb-4: Margin bottom 1rem */}
-            <span className="bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent"> {/* bg-gradient-to-r: Lineares Gradient von links nach rechts (indigo-300 zu blue-300), bg-clip-text: Gradient auf Text clippen, text-transparent: Textfarbe transparent, um Gradient sichtbar zu machen */}
+          <h2 className="font-headline text-4xl md:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent">
               Transformative Begleitung
             </span>
           </h2>
-          <p className="font-base text-lg text-indigo-200 max-w-2xl mx-auto mb-4"> {/* text-lg: SchriftgrÃ¶ÃŸe 1.125rem, text-indigo-200: Hellindigo-Farbe, max-w-2xl: Maximale Breite 42rem, mx-auto: Zentriert, mb-4: Margin bottom 1rem */}
-            Individuelle Lebensberatung und Workshops für Deine persönliche Entwicklung und spirituelles Wachstum
+          <p className="font-base text-lg text-indigo-200 max-w-2xl mx-auto mb-4">
+            Individuelle Lebensberatung, treffsichere Gedankenlegungen und fundierte Ausbildungen von Ursula Heinke (25+ Jahre Erfahrung)
           </p>
         </motion.div>
 
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-12">
           {featuredServices.map((service, index) => {
-            const normalizedType = service.type?.toLowerCase() || '';
-            const TypeIcon = typeIcons[service.type] || Heart;
-            
+            const isFree = service.price === 0;
+            const formattedPrice = isFree ? "0 € (Kostenlos)" : formatPrice(service.price);
+            const whatsappMessage = isFree
+              ? `Hallo Ursula, ich möchte gerne den kostenlosen 3-Fragen Herzenspartner-Check per WhatsApp nutzen.`
+              : `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`;
+
             return (
               <motion.div
-                key={service.id || index}
+                key={service.id || service.title || index}
                 initial={isMobile ? {} : { opacity: 0, y: 20 }}
                 whileInView={isMobile ? {} : { opacity: 1, y: 0 }}
                 transition={isMobile ? {} : { duration: 0.6, delay: index * 0.1 }}
@@ -117,16 +88,20 @@ export default function ServicesPreview() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
                     <div className="absolute top-3 left-3">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
-                        {typeLabels[service.type]}
+                        {typeLabels[service.type] || "Beratung"}
                       </span>
                     </div>
-                    {service.featured && (
-                      <div className="absolute top-3 right-3">
+                    <div className="absolute top-3 right-3">
+                      {isFree ? (
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-lg shadow-emerald-950/50">
+                          100% Kostenfrei
+                        </span>
+                      ) : (
                         <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/30 backdrop-blur-md">
                           Empfehlung
                         </span>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                   
                   <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
@@ -136,8 +111,8 @@ export default function ServicesPreview() {
                       </h3>
 
                       <div className="my-2 text-center">
-                        <span className="font-headline text-3xl font-bold tracking-tight text-white block">
-                          {formatPrice(service.price)}
+                        <span className={`font-headline text-3xl font-bold tracking-tight block ${isFree ? 'text-emerald-300' : 'text-white'}`}>
+                          {formattedPrice}
                         </span>
                         {service.duration && (
                           <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
@@ -170,23 +145,21 @@ export default function ServicesPreview() {
                     
                     <div className="w-full mt-auto pt-4 border-t border-blue-400/10 flex flex-col gap-2">
                       <a 
-                        href={`https://wa.me/4915901276286?text=${encodeURIComponent(
-                          `Hallo Ursula, ich habe dein Angebot "${service.title}" (${formatPrice(service.price)}) auf deiner Webseite gesehen und möchte gerne einen Termin bzw. Platz buchen.`
-                        )}`}
+                        href={`https://wa.me/4915901276286?text=${encodeURIComponent(whatsappMessage)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full inline-block"
+                        aria-label={`WhatsApp anfragen für: ${service.title}`}
+                        className={`font-headline font-semibold text-sm ${
+                          isFree
+                            ? "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:via-teal-500 hover:to-emerald-500 border border-emerald-400/40 shadow-emerald-950/40"
+                            : "bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 border border-indigo-400/30 hover:border-indigo-300/50 shadow-indigo-950/40"
+                        } text-white rounded-full w-full py-3 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group/btn`}
                       >
-                        <Button 
-                          aria-label={`Termin anfragen für: ${service.title}`}
-                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-3 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                        >
-                          <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
-                          <span>Termin per WhatsApp anfragen</span>
-                        </Button>
+                        <MessageCircle className="w-4 h-4 text-emerald-300 group-hover/btn:scale-110 transition-transform duration-300" />
+                        <span>{isFree ? "Kostenlos per WhatsApp sichern" : "Termin per WhatsApp anfragen"}</span>
                       </a>
                       <p className="text-[11px] text-center text-indigo-300/60 font-body">
-                        Verbindliche Anfrage direkt via WhatsApp
+                        {isFree ? "100% unverbindlich • Audio-Antwort direkt aufs Handy" : "Verbindliche Anfrage direkt via WhatsApp"}
                       </p>
                     </div>
                   </div>
@@ -196,17 +169,13 @@ export default function ServicesPreview() {
           })}
         </div>
 
-
         <div className="flex justify-center">
-          <Link href={createPageUrl("Services")}>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 flex items-center justify-center font-headline font-semibold group"
-            >
-              <span>Alle Coaching-Angebote ansehen</span>
-              <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
+          <Link
+            href="/services"
+            className="px-8 py-3.5 text-base border border-indigo-300/30 text-indigo-100 hover:text-white hover:bg-white/10 hover:border-indigo-300/60 rounded-full transition-all duration-300 inline-flex items-center justify-center font-headline font-semibold group"
+          >
+            <span>Alle Coaching-Angebote & Stufen ansehen</span>
+            <ArrowRight className="w-4 h-4 ml-2 text-indigo-300 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </div>

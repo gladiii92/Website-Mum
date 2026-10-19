@@ -20,12 +20,12 @@ const rawServicesData = [
     metaDescription: "Kostenlose Ersteinschätzung per WhatsApp-Sprachnachricht zu deinem Herzenspartner, Gefühlen & Seelenplan von Ursula Heinke (25+ Jahre Erfahrung, 34.000+ Beratungen).",
     headline: "Was denkt und fühlt dein Herzenspartner wirklich?",
     subheadline: "Erhalte deine persönliche Ersteinschätzung als WhatsApp-Sprachnachricht – diskret, intuitiv & 100% kostenfrei direkt auf dein Smartphone.",
-    description: "Du hast eine drängende Frage zu deinem Herzenspartner, Dualseele oder Seelenplan? Sende Ursula deine 3 wichtigsten Fragen per WhatsApp. Du erhältst eine intuitive Ersteinschätzung als persönliche Sprachnachricht direkt auf dein Smartphone – 100% kostenfrei.",
+    description: "Sende Ursula deine 3 drängendsten Fragen zu Liebe & Herzenspartner per WhatsApp. Du erhältst eine persönliche intuitive Ersteinschätzung als Sprachnachricht – 100% kostenfrei.",
     longDescription: "Wenn zwischen dir und deinem Herzenspartner Ungewissheit, Funkstille oder ein zermürbender On-Off-Zyklus herrscht, drehen sich deine Gedanken Tag und Nacht im Kreis. Der kostenlose 3-Fragen Herzenspartner-Check bricht diese Gedankenschleife. Ursula Heinke verbindet sich medial mit eurer Seelenverbindung und zieht gezielte Karten auf deine 3 brennendsten Fragen. Du erhältst eine warme, ungeschminkte Sprachnachricht mit echten Tendenzen.",
     benefits: [
-      "100% kostenlos & unverbindlich per WhatsApp",
-      "Persönliche Audio-Sprachnachricht von Ursula Heinke",
-      "Erste Tendenzen zu Gedanken & Gefühlen deines Partners",
+      "100% kostenlose Ersteinschätzung per WhatsApp",
+      "Persönliche Audio-Sprachnachricht von Ursula",
+      "Erste Tendenzen zu Gedanken deines Partners",
       "Kein Abo, kein Verkaufsdruck, absolute Diskretion"
     ],
     targetAudience: {
@@ -84,11 +84,11 @@ const rawServicesData = [
     metaDescription: "Schnelle seelische Antwort per WhatsApp innerhalb 12–24h. Ursula zieht 1 gezielte Karte auf deine konkrete Frage zu Liebe, Partner oder Beruf.",
     headline: "Die schnelle Seelen-Antwort für zwischendurch",
     subheadline: "1 gezielte Karte, glasklare Tendenz – als persönliche Sprachnachricht direkt per WhatsApp innerhalb von 12–24 Stunden.",
-    description: "Die schnelle Seelen-Antwort für zwischendurch: Ursula zieht 1 gezielte Karte (Tarot oder Lenormand) auf deine konkrete Frage zu Liebe, Herzenspartner oder Beruf und sendet dir deine individuelle Audio-Deutung innerhalb von 12–24 Stunden direkt per WhatsApp.",
+    description: "Schnelle Seelen-Antwort für zwischendurch: Ursula zieht 1 gezielte Karte auf deine konkrete Frage und sendet dir deine Audio-Deutung innerhalb von 12–24h direkt per WhatsApp.",
     longDescription: "Manchmal steht man vor einer akuten Entscheidung oder einer plötzlichen Verhaltensänderung des Partners und braucht keinen 60-minütigen Gesprächstermin, sondern einen präzisen, schnellen Seelenimpuls. Mit dem Express 1-Karten-Audio-Impuls fokussiert Ursula ihre mediale Gabe auf deine eine zentrale Frage und liefert dir eine fundierte Audio-Deutung zum Immer-Wieder-Anhören.",
     benefits: [
       "Gezielte Kartenlegung auf 1 konkrete Frage",
-      "Schnelle Audio-Antwort ohne Termindruck (12–24h)",
+      "Schnelle Audio-Antwort innerhalb von 12–24h",
       "Dauerhaft auf deinem Smartphone abrufbar",
       "Ideal für akute Zwischenfragen und schnelle Klarheit"
     ],
@@ -142,13 +142,13 @@ const rawServicesData = [
     metaDescription: "In 30 Minuten intensiv in Partnerschaft, Beruf & Seelenweg eintauchen. Mediale Lebensberatung & Kartenlegung mit Ursula Heinke (25+ Jahre Erfahrung).",
     headline: "Kompakte Orientierung & mediale Entscheidungshilfe",
     subheadline: "30 Minuten intensive 1:1 Live-Beratung per Telefon oder WhatsApp-Call – fundiert, ehrlich und treffsicher.",
-    description: "In 30 Minuten tauchst du intensiv in deine wichtigsten Themen ein – Liebe, Partnerschaft, Familie oder berufliche Neuorientierung. Dieses Reading bietet dir fundierte astrologische und mediale Einsichten per Telefon oder Video. Perfekt für schnelle, treffsichere Antworten und konkrete Entscheidungshilfe.",
+    description: "30 Minuten intensive 1:1 Live-Beratung per Telefon oder WhatsApp-Call: Gezielte Legung mit Tarot & Lenormand für schnelle, treffsichere Antworten bei akuten Lebensentscheidungen.",
     longDescription: "Wenn du vor einer wichtigen Weggabelung stehst oder eine gezielte Standortbestimmung brauchst, liefert das 30-Minuten-Reading die nötige Orientierung. Ursula legt live für dich die Karten, beantwortet deine Nachfragen und gibt dir konkrete astrologische und seelische Richtungsweiser an die Hand.",
     benefits: [
-      "Gezielte Analyse deiner aktuellen Lebenssituation",
-      "Persönliche Legung mit Tarot & Lenormand im Live-Gespräch",
-      "Flexibel und vertraulich per Telefon oder WhatsApp-Call",
-      "Direkte Klärung deiner Zwischenfragen"
+      "30 Minuten 1:1 Live-Gespräch (Telefon/Call)",
+      "Gezielte Standortbestimmung & Kartenlegung",
+      "Direkte Klärung deiner wichtigsten Fragen",
+      "Flexibel und diskret mit Ursula Heinke"
     ],
     targetAudience: {
       forWhom: [
@@ -194,15 +194,13 @@ const rawServicesData = [
     metaDescription: "Tiefgründige Gedankenlegung auf den Herzenspartner, Dualseelen & Blockaden. 60 Min 1:1 Call, Audio-Aufnahme, MP3 & 7 Tage WhatsApp-Support. 15-Min-Klarheitsgarantie.",
     headline: "Die tiefe Gedankenlegung für deinen Herzenspartner",
     subheadline: "60 Minuten 1:1 Intensiv-Reading: Erfahre, was er/sie fühlt, welche Blockaden euch trennen und wann die Wende eintritt – inkl. Audio-Aufnahme & 7 Tage WhatsApp-Support.",
-    description: "Das umfassende 60-Minuten Intensiv-Reading mit Spezialisierung auf Gedankenlegung für den Herzenspartner, Zwillingsseelen- und Seelenplan-Verbindungen. Ursula Heinke deckt verborgene Blockaden auf und gibt dir glasklare Handlungsschritte – inkl. Audio-Aufnahme & 7 Tage WhatsApp-Support.",
+    description: "Das umfassende 60-Minuten Intensiv-Reading mit Spezialisierung auf Gedankenlegung für den Herzenspartner. Ursula deckt Blockaden auf – inkl. Audio-Mitschnitt & 7 Tage WhatsApp-Support.",
     longDescription: "Dies ist Ursulas meistgebuchtes Flaggschiff-Angebot für alle Menschen, die in einer emotional zermürbenden Partnerschaftssituation stecken. In 60 Minuten analysiert Ursula nicht nur die Oberfläche, sondern taucht tief in das Seelenfeld deines Herzenspartners ein: Was denkt er über dich? Welche Ängste blockieren ihn? Welche Rolle spielt seine Vergangenheit? Und was ist eure seelische Lernaufgabe? Du erhältst den vollständigen Audio-Mitschnitt zum Nachhören und 7 Tage persönlichen WhatsApp-Support.",
     benefits: [
-      "Vollständige Gedankenlegung auf den Herzenspartner (60 Min)",
-      "Aufdeckung karmischer Blockaden & Seelenverbindungen",
-      "Inkl. Audio-Aufnahme der gesamten Session zum Nachhören (Wert: 49 €)",
-      "Inkl. MP3 'Meditation Innerer Frieden & Loslassen' (Wert: 19 €)",
-      "Inkl. 7 Tage WhatsApp-Support für aufkommende Fragen (Wert: 99 €)",
-      "Inkl. 15-Minuten-Klarheits-Garantie (volles Risk-Reversal)"
+      "60 Min 1:1 Intensiv-Reading & Gedankenlegung",
+      "Inkl. Audio-Mitschnitt zum Wiederanhören",
+      "Inkl. 7 Tage persönlicher WhatsApp-Support",
+      "Inkl. 15-Minuten-Klarheits-Garantie (Risk-Reversal)"
     ],
     targetAudience: {
       forWhom: [
@@ -262,12 +260,12 @@ const rawServicesData = [
     metaDescription: "4 Wochen intensive Begleitung bei Liebeskummer, Dualseelen-Prozessen & Beziehungs-Neuausrichtung. 4x 1:1 Readings + persönlicher WhatsApp-Notfall-Joker.",
     headline: "4 Wochen emotionale Stabilität, Halt & Transformation",
     subheadline: "Gehe deinen Seelenweg nicht allein: 4 intensive 1:1 Sessions plus täglicher WhatsApp-Notfall-Halt bei akuten Rückfällen und Liebeskummer-Wellen.",
-    description: "Die intensive 4-wöchige 1:1 Begleitung für deine emotionale Stabilität, Liebeskummer-Heilung oder Beziehungs-Neuausrichtung. Beinhaltet 4 wöchentliche 1:1 Readings (je 45 Min) plus deinen persönlichen WhatsApp-Notfall-Joker für sofortigen Halt bei akuten Krisen.",
+    description: "Intensive 4-wöchige 1:1 VIP-Begleitung für deine Liebeskummer-Heilung und emotionale Stabilität: 4 wöchentliche 1:1 Readings plus persönlicher täglicher WhatsApp-Notfall-Joker bei Krisen.",
     longDescription: "Tiefgreifende Herzens- und Dualseelenprozesse lassen sich selten in einer einzelnen Stunde lösen. Wenn die Gefühle Achterbahn fahren und der Drang übermächtig wird, dem Partner hinterherzulaufen oder in Verzweiflung zu verfallen, ist Ursula 30 Tage lang dein Fels in der Brandung. Durch wöchentliche Neuausrichtungen und direkten WhatsApp-Kontakt bleibst du in deiner Mitte und gewinnst deine Selbstachtung und Anziehungskraft zurück.",
     benefits: [
-      "4x wöchentliche 1:1 Readings per Telefon/WhatsApp (je 45 Min)",
-      "Priorisierter WhatsApp-Support für akute Krisen & Rückfälle",
-      "Fortlaufende energetische Seelenpartner- & Blockadenbegleitung",
+      "4x wöchentliche 1:1 Readings (je 45 Minuten)",
+      "Täglicher WhatsApp-Notfall-Support bei Krisen",
+      "Fortlaufende Seelenpartner- & Blockadenarbeit",
       "Persönliche Übungen zur Stärkung deines Selbstwerts"
     ],
     targetAudience: {
@@ -317,14 +315,14 @@ const rawServicesData = [
     metaDescription: "Professionelle Ausbildung zur intuitiven Kartenlegerin mit Tarot & Lenormand. Persönliches 1:1 Mentoring mit Ursula Heinke (25+ Jahre Erfahrung) inkl. Zertifikat.",
     headline: "Werde professionelle intuitive Kartenlegerin & Beraterin",
     subheadline: "Die exklusive 10-wöchige Fachausbildung in persönlicher 1:1 Mentorenschaft mit Ursula Heinke – lerne mediale Deutung, Klientenführung und Praxisaufbau.",
-    description: "Die exklusive 10-wöchige Fachausbildung in persönlicher 1:1 Mentorenschaft mit Ursula Heinke. Lerne das mediale Kartenlegen (Tarot & Lenormand), Klientenführung und den Praxisaufbau für deine erfolgreiche Selbstständigkeit.",
+    description: "10-wöchige Fachausbildung in persönlicher 1:1 Mentorenschaft mit Ursula Heinke. Lerne mediales Kartenlegen (Tarot & Lenormand), Klientenführung und Praxisaufbau mit Abschluss-Zertifikat.",
     longDescription: "Spürst du eine tiefe intuitive Gabe in dir und möchtest Menschen professionell auf ihrem Seelenweg begleiten? In dieser 10-wöchigen Intensiv-Ausbildung lernst du nicht aus Büchern, sondern im direkten 1:1 Mentoring von Ursula Heinke (über 25 Jahre Praxis, 34.000+ geführte Beratungen). Du meisterst die Großen Arkana des Tarot, das 36er Lenormand-Deck, die mediale Gedankenlegung und erfährst, wie du eine erfolgreiche spirituelle Beratungspraxis aufbaust.",
     benefits: [
-      "Persönliche 1:1 Begleitung durch Ursula Heinke (kein Massen-Webinar)",
-      "Praxis-Ausbildung in Tarot, Lenormand & medialer Intuition",
-      "Erprobte Legesysteme für Liebe, Seelenpartner & Lebensweg",
-      "Praxisaufbau, Ethik & professionelle Klientenführung",
-      "Offizielles Abschluss-Zertifikat der Ursula Heinke Akademie"
+      "10 Wochen persönliche 1:1 Mentorenschaft",
+      "Praxis-Ausbildung in Tarot & Lenormand",
+      "Offizielles Abschluss-Zertifikat der Akademie",
+      "Erprobte Legesysteme für Liebe & Seelenpartner",
+      "Praxisaufbau, Ethik & professionelle Klientenführung"
     ],
     targetAudience: {
       forWhom: [
@@ -380,13 +378,13 @@ const rawServicesData = [
     metaDescription: "Heilsames Waldbaden im Frankenwald & Raum Coburg ab 5 Personen. 2 Stunden Stressabbau, Natur-Meditation & seelische Erdung mit Ursula Heinke.",
     headline: "Tauche ein in die heilsame Atmosphäre des Waldes",
     subheadline: "2 Stunden achtsames Waldbaden im Frankenwald: Entschleunige deinen Geist, stärke dein Immunsystem und verbinde dich mit der regenerierenden Kraft der Natur.",
-    description: "Erlebe heilsame Waldbaden-Sitzungen ab 5 Personen in ausgewählten Wäldern (Frankenwald oder Ort nach Wahl). Entspanne dich, tanke neue Lebensenergie und verbinde dich bewusst mit der regenerierenden Kraft der Natur.",
+    description: "2 Stunden heilsame Shinrin-Yoku Waldbaden-Sitzungen ab 5 Personen im Frankenwald. Entspanne deinen Geist, baue Stresshormone ab und tanke neue Lebensenergie in der unberührten Natur.",
     longDescription: "Waldbaden (Shinrin-Yoku) ist weit mehr als ein gewöhnlicher Spaziergang. Unter Ursulas einfühlsamer Anleitung öffnest du alle Sinne für die heilsamen Botenstoffe des Waldes (Terpene). Angeleitete Atemübungen, Geh-Meditationen und Naturrituale senken nachweislich das Stresshormon Cortisol, beruhigen das vegetative Nervensystem und schenken dir tiefe innere Ruhe und seelische Erdung.",
     benefits: [
-      "Geführte Sinnes- und Wahrnehmungsübungen im alten Baumbestand",
-      "Atemtechniken & seelische Erdungsrituale",
-      "Stärkung des Immunsystems & nachweislicher Stressabbau",
-      "Findet in kleinen Gruppen ab 5 Personen statt"
+      "2 Stunden geführte Shinrin-Yoku Sitzung",
+      "Atemtechniken & heilsame Erdungsrituale",
+      "Kleine, geschützte Gruppe ab 5 Personen",
+      "Nachweislicher Stressabbau im alten Baumbestand"
     ],
     targetAudience: {
       forWhom: [
@@ -433,13 +431,13 @@ const rawServicesData = [
     metaDescription: "Zurück zu dir: Kakaozeremonie, Klangschalen, Blockadenlösung & persönliche Kartenlegung im Studio Frieda, Coburg. Stärke dein inneres Strahlen.",
     headline: "Ein besonderer Tag für dein Herz, deine Seele & dein Strahlen",
     subheadline: "Gemeinsam fühlen, loslassen, heilen und wachsen – mit Kakaozeremonie, Klangschalen-Meditation und persönlicher Kartenlegung im Studio Frieda, Coburg.",
-    description: "Zurück zu dir – Ein besonderer Tag für dein Herz, deine Seele und dein inneres Strahlen. Gemeinsam fühlen, loslassen, heilen und wachsen. Erlebe Kakaozeremonie, tiefe Meditation mit Klangschalen, Blockadenlösung, Kartenlegung und stärke deine Selbstliebe. Mit Ursula und Jessica im Studio Frieda, Coburg.",
+    description: "Ein besonderer Tag für dein Herz im Studio Frieda, Coburg: Kakaozeremonie, Tiefenentspannung mit Klangschalen, geführte Blockadenlösung und persönliche 1:1 Kartenlegung mit Ursula & Jessica.",
     longDescription: "Gönne dir eine Auszeit nur für dich: In geschützter Frauenrunde im stilvollen Studio Frieda in Coburg laden Ursula und Jessica dich ein, allen Alltagsballast abzustreifen. Wir eröffnen den Kreis mit einer herzöffnenden Rohkakao-Zeremonie, gefolgt von einer tiefenentspannenden Klangschalen-Klangreise. Jede Teilnehmerin erhält von Ursula eine persönliche Kartenlegung und eine energetische Blockadenlösung für ihr inneres Strahlen.",
     benefits: [
-      "Herzöffnende Rohkakao-Zeremonie",
-      "Tiefenentspannung mit Klangschalen & Frequenzklängen",
-      "Geführte Blockadenlösung für Selbstliebe & Weiblichkeit",
-      "Persönliche 1:1 Kurzkartenlegung durch Ursula Heinke"
+      "3 Stunden Auszeit im Studio Frieda, Coburg",
+      "Herzöffnende Rohkakao-Zeremonie & Klangreise",
+      "Persönliche 1:1 Kurzkartenlegung durch Ursula",
+      "Geführte Blockadenlösung für Selbstliebe"
     ],
     targetAudience: {
       forWhom: [
@@ -485,13 +483,13 @@ const rawServicesData = [
     metaDescription: "Lerne an einem intensiven Praxistag die Grundlagen von Tarot & Lenormand. Intuitionsschulung, Symbolik & Praxisübungen mit Ursula Heinke.",
     headline: "Der kompakte Praxistag: Grundlagen von Tarot & Lenormand",
     subheadline: "Lerne an einem intensiven Praxistag die Symbole und Legemuster von Tarot und Lenormand – ideal für den privaten Einstieg und die Selbsterkenntnis.",
-    description: "Lerne in diesem praxisnahen 1-Tages-Workshop die Grundlagen des Kartenlegens mit Tarot und Lenormand – ideal für die private Nutzung oder als erster Einblick in die spirituelle Beratung.",
+    description: "Praxisnaher 5-Stunden Workshop in kleiner Gruppe: Lerne die Symbole und Legemuster von Tarot und Lenormand fundiert kennen – ideal für den privaten Einstieg und die Selbsterkenntnis.",
     longDescription: "Möchtest du lernen, die Sprache der Karten selbst zu entschlüsseln? In diesem 5-stündigen Basis-Workshop vermittelt Ursula Heinke dir ein solides Fundament: von der Bedeutung der Großen Arkana im Tarot über die Schlüsselkombinationen des Lenormand bis hin zu einfachen Legesystemen für Alltag, Liebe und Entscheidungen. Viele praktische Partnerübungen garantieren, dass du das Gelernte sofort anwenden kannst.",
     benefits: [
+      "5 Stunden Praxis-Workshop in kleiner Runde",
       "Fundierter Überblick über Tarot & Lenormand",
-      "Praktische Deutungsübungen in kleinen Gruppen",
-      "Schulung deiner medialen Wahrnehmung und Bauchgefühle",
-      "Umfassendes Handout zum Nachschlagen für zu Hause"
+      "Umfassendes Handout & Legemuster für zu Hause",
+      "Praktische Deutungsübungen mit Gleichgesinnten"
     ],
     targetAudience: {
       forWhom: [

@@ -152,7 +152,11 @@ export default function Services() {
                       <div className="w-full mt-auto pt-2">
                         <Button 
                           aria-label={`Angebote für ${typeLabels[preview.type]} ansehen`}
-                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-2.5 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTypeChange(preview.type);
+                          }}
+                          className="font-headline font-semibold text-sm bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-indigo-600/90 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-500 text-white border border-indigo-400/30 hover:border-indigo-300/50 rounded-full w-full py-2.5 shadow-md shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer"
                         >
                           <span>Angebote entdecken</span>
                           <ArrowRight className="w-4 h-4 text-indigo-200 group-hover/btn:translate-x-1 transition-transform duration-300" />
@@ -210,50 +214,52 @@ export default function Services() {
                     >
                       <Card className="group h-full flex flex-col bg-slate-900/40 border border-blue-400/15 shadow-lg hover:shadow-blue-500/10 transition-all duration-500 rounded-2xl mystical-glow overflow-hidden hover:border-blue-400/35">
                         <div className="relative h-52 shrink-0 overflow-hidden">
-                          <img 
-                            src={service.image_url || ''}
-                            alt={`${service.title} - ${service.description.slice(0, 100)}`}
-                            title={`${service.title}: ${service.description.slice(0, 100)}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
-                          <div className="absolute top-3 left-3">
+                          <Link href={`/services/${service.slug}`} className="block w-full h-full cursor-pointer" aria-label={`Details zu ${service.title}`}>
+                            <img 
+                              src={service.image_url || ''}
+                              alt={`${service.title} - ${service.description.slice(0, 100)}`}
+                              title={`${service.title}: ${service.description.slice(0, 100)}`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                            />
+                          </Link>
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none"></div>
+                          <div className="absolute top-3 left-3 pointer-events-none">
                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/80 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
                               {typeLabels[service.type]}
                             </span>
                           </div>
                           {service.price === 0 ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/25 text-emerald-200 border border-emerald-400/40 backdrop-blur-md shadow-sm">
                                 100% Kostenfrei
                               </span>
                             </div>
                           ) : service.price === 19 ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 backdrop-blur-md">
                                 Express Audio
                               </span>
                             </div>
                           ) : service.price === 149 ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/25 text-amber-200 border border-amber-400/40 backdrop-blur-md shadow-sm">
                                 Bestseller / Meistgebucht
                               </span>
                             </div>
                           ) : service.price === 390 ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/25 text-purple-200 border border-purple-400/40 backdrop-blur-md">
                                 VIP Begleitung
                               </span>
                             </div>
                           ) : service.price >= 2000 ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/25 text-purple-200 border border-purple-400/40 backdrop-blur-md">
                                 Exklusives Mentoring
                               </span>
                             </div>
                           ) : service.featured ? (
-                            <div className="absolute top-3 right-3">
+                            <div className="absolute top-3 right-3 pointer-events-none">
                               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 backdrop-blur-md">
                                 Empfehlung
                               </span>
@@ -263,38 +269,37 @@ export default function Services() {
                         
                         <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
                           <div className="w-full flex flex-col items-center">
-                            <Link href={`/services/${service.slug}`} className="group/title block">
-                              <h3 className="font-headline text-xl font-bold text-white group-hover/title:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
+                            <Link href={`/services/${service.slug}`} className="group/title block w-full">
+                              <h3 className="font-headline text-lg sm:text-xl font-bold text-white group-hover/title:text-blue-200 transition-colors duration-300 min-h-[3.75rem] flex items-center justify-center text-center leading-snug px-1">
                                 {service.title}
                               </h3>
                             </Link>
 
-                            <div className="my-2 text-center">
-                              <span className="font-headline text-3xl font-bold tracking-tight text-white block">
+                            <div className="my-2 text-center w-full">
+                              <span className={`font-headline text-3xl font-bold tracking-tight block ${service.price === 0 ? "text-emerald-300" : "text-white"}`}>
                                 {service.price === 0 ? "0 € (Kostenlos)" : formatPrice(service.price)}
                               </span>
-                              {service.duration && (
-                                <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block">
-                                  {service.duration}
-                                </span>
-                              )}
+                              <span className="text-xs uppercase tracking-wider text-indigo-300/80 mt-1 block min-h-[1.25rem] flex items-center justify-center">
+                                {service.duration || "Individuelle Terminabsprache"}
+                              </span>
                             </div>
 
                             <div className="w-12 h-0.5 bg-indigo-400/20 mx-auto my-3 rounded-full"></div>
 
-                            <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 min-h-[4.5rem] text-center px-1">
+                            <p className="font-body text-sm text-indigo-200/90 leading-relaxed mb-4 min-h-[4.75rem] flex items-center justify-center text-center px-1">
                               {service.description}
                             </p>
                             
                             {service.benefits && service.benefits.length > 0 && (
-                              <div className="w-full mb-5 p-4 rounded-xl bg-slate-900/60 border border-indigo-400/15 text-center">
+                              <div className="w-full mb-5 p-4 rounded-xl bg-slate-900/60 border border-indigo-400/15 text-center min-h-[7.25rem] flex flex-col justify-center">
                                 <p className="text-[11px] font-semibold uppercase tracking-widest text-indigo-300/90 mb-2">
                                   Im Angebot enthalten
                                 </p>
                                 <ul className="text-xs text-indigo-100/90 space-y-1.5">
                                   {service.benefits.slice(0, 3).map((benefit, i) => (
-                                    <li key={i} className="text-center leading-relaxed">
-                                      {benefit}
+                                    <li key={i} className="text-center leading-relaxed flex items-center justify-center gap-1.5">
+                                      <span className="w-1 h-1 rounded-full bg-indigo-400/80 shrink-0"></span>
+                                      <span>{benefit}</span>
                                     </li>
                                   ))}
                                 </ul>
@@ -334,18 +339,18 @@ export default function Services() {
 
                             <Link
                               href={`/services/${service.slug}`}
-                              className="font-headline font-semibold text-xs text-indigo-300 hover:text-white py-2 px-3 rounded-full border border-indigo-400/20 hover:border-indigo-400/50 hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-1.5 group/link"
+                              className="font-headline font-semibold text-xs text-indigo-200 hover:text-white py-2 px-3 rounded-full border border-indigo-400/20 hover:border-indigo-400/50 hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-1.5 group/link"
                             >
                               <span>Details, Ablauf & Kunden-FAQ</span>
                               <ArrowRight className="w-3.5 h-3.5 text-indigo-400 group-hover/link:translate-x-1 transition-transform duration-300" />
                             </Link>
 
-                            <p className="text-[11px] text-center text-indigo-300/60 font-body">
+                            <p className="text-[11px] text-center text-indigo-300/60 font-body min-h-[1.75rem] flex items-center justify-center">
                               {service.price === 0
-                                ? "100% unverbindlich • Persönliche Sprachnachricht von Ursula"
+                                ? "100% unverbindlich • Audio-Antwort direkt per WhatsApp"
                                 : service.price === 19
-                                ? "Deutung innerhalb 12–24h direkt per WhatsApp Sprachnachricht"
-                                : "Verbindliche Terminanfrage • Keine kostenlose Beratung im Chat"}
+                                ? "Audio-Deutung innerhalb 12–24h direkt per WhatsApp"
+                                : "Verbindliche Anfrage • 1:1 direkt mit Ursula Heinke"}
                             </p>
                           </div>
                         </div>

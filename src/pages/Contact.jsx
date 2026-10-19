@@ -199,23 +199,33 @@ export default function Contact() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-headline w-full h-14 text-base font-semibold rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-400 hover:to-blue-400 text-white shadow-lg shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 inline-flex items-center justify-center gap-2"
+                  className="font-headline w-full h-14 text-base font-semibold rounded-full bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-indigo-950/40 hover:shadow-indigo-900/30 transition-all duration-300 inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-indigo-300 mr-2"></div>
-                      Wird gesendet...
+                      Wird vorbereitet...
                     </>
                   ) : (
                     <>
                       <Send className="w-5 h-5 mr-2" />
-                      Nachricht senden
+                      Nachricht per E-Mail senden
                     </>
                   )}
                 </Button>
-                <p className="text-sm text-indigo-300/70 text-center">
-                  * Pflichtfelder. Deine Daten werden vertraulich behandelt.
-                </p>
+                <div className="text-center space-y-1">
+                  <a
+                    href={`mailto:Ursulaheinke@gmx.de?subject=${encodeURIComponent("Anfrage für Beratung – Ursula Heinke")}&body=${encodeURIComponent(
+                      `Name: ${formData.name}\nEmail: ${formData.email}\nTelefonnummer: ${formData.phone}\nNachricht: ${formData.message}`
+                    )}`}
+                    className="block text-xs text-indigo-300/70 hover:text-white underline transition-colors"
+                  >
+                    Oder direkt im E-Mail-Programm öffnen (Klick-Fallback)
+                  </a>
+                  <p className="text-xs text-indigo-300/60 text-center">
+                    * Pflichtfelder. Deine Daten werden vertraulich behandelt.
+                  </p>
+                </div>
               </form>
             </div>
           </motion.div>

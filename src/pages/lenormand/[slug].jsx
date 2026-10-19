@@ -7,6 +7,8 @@ import {
   getLenormandBySlug,
   getAllLenormandSlugs,
 } from "../../data/lenormandCards";
+import { getGemstoneForLenormand } from "../../data/cardGemstones";
+import CardGemstoneRecommendation from "../../components/common/CardGemstoneRecommendation";
 import { Button } from "../../components/ui/Button";
 import {
   MessageCircle,
@@ -49,16 +51,19 @@ export async function getStaticProps({ params }) {
       ? lenormandCards[currentIndex + 1]
       : lenormandCards[0];
 
+  const recommendedStone = getGemstoneForLenormand(params.slug);
+
   return {
     props: {
       card,
       prevCard: { name: prevCard.name, slug: prevCard.slug, number: prevCard.number },
       nextCard: { name: nextCard.name, slug: nextCard.slug, number: nextCard.number },
+      recommendedStone,
     },
   };
 }
 
-export default function LenormandCardDetail({ card, prevCard, nextCard }) {
+export default function LenormandCardDetail({ card, prevCard, nextCard, recommendedStone }) {
   if (!card) return null;
 
   const pageTitle = `${card.name}: Bedeutung im Lenormand (Liebe, Beruf & Schicksal) | Ursula Heinke`;
@@ -269,6 +274,9 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
               "{card.advice}"
             </p>
           </section>
+
+          {/* 6. Energetischer Begleiter / Passender Heilstein */}
+          <CardGemstoneRecommendation cardName={card.name} stone={recommendedStone} />
         </div>
 
         {/* Conversion Funnel Box */}

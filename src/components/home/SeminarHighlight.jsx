@@ -65,7 +65,7 @@ export default function SeminarHighlight() {
                   </div>
                   <div>
                     <h4 className="font-bold text-white">Wann?</h4>
-                    <p className="text-indigo-200">Sonntag, 7.11.2026<br/>13:00 - 16:00 Uhr</p>
+                    <p className="text-indigo-200">Samstag, 07.11.2026<br/>13:00 - 16:00 Uhr</p>
                   </div>
                 </div>
                 
@@ -100,7 +100,7 @@ export default function SeminarHighlight() {
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <a
                   href={`https://wa.me/4915901276286?text=${encodeURIComponent(
                     "Hallo Ursula, ich möchte gerne einen Platz für das Frauen-Retreat 'Herzenszeit' (129€) in Coburg reservieren."
@@ -113,6 +113,17 @@ export default function SeminarHighlight() {
                   <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
                   <span>Platz per WhatsApp sichern</span>
                 </a>
+
+                <Link
+                  href="/services/frauen-retreat-coburg"
+                  className="font-headline font-semibold w-full sm:w-auto px-6 py-4 text-base border border-pink-400/30 text-pink-200 hover:text-white hover:bg-white/10 hover:border-pink-300/60 rounded-full transition-all duration-300 inline-flex items-center justify-center gap-2 group text-center"
+                >
+                  <span>Details & Ablauf</span>
+                  <ArrowRight className="w-4 h-4 text-pink-300 group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
+              </div>
+
+              <div className="mt-4">
                 <span className="text-xs text-pink-200/80 inline-flex items-center gap-2">
                   <span>Nur 15 Plätze verfügbar</span>
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-pink-400 shadow-[0_0_6px_rgba(244,114,182,0.85)]"></span>

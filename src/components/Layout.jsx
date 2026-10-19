@@ -12,9 +12,9 @@ const location = { pathname: router.pathname };
   const navigation = [
     { name: "Startseite", href: "/", icon: Home },
     { name: "Coaching", href: createPageUrl("Services"), icon: Heart },
+    { name: "Shop", href: createPageUrl("Shop"), icon: ShoppingBag },
     { name: "Tarot", href: "/tarot", icon: Sparkles },
     { name: "Lenormand", href: "/lenormand", icon: Moon },
-    { name: "Shop", href: createPageUrl("Shop"), icon: ShoppingBag },
     { name: "Über mich", href: createPageUrl("About"), icon: User },
     { name: "Kontakt", href: createPageUrl("Contact"), icon: Mail },
   ];

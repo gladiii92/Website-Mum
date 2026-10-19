@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { createPageUrl, formatPrice } from "../../utils";
 import { Product } from "../../entities/Product";
-import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info, MessageCircle, Mail, Check } from "lucide-react";
+import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Sparkles, Play, Pause, Award, Shield, Info, MessageCircle, Mail, Check, Headphones } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { Card, CardContent } from "../../components/ui/Card";
@@ -13,7 +13,7 @@ import { Textarea } from "../../components/ui/Textarea";
 import { Label } from "../../components/ui/Label";
 import { useSwipeable } from "react-swipeable";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/Accordion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/Dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "../../components/ui/Dialog";
 
 // Erweiterte Translations für Mehrsprachigkeit (ähnlich Stone.jsx)
 const translations = {
@@ -470,14 +470,15 @@ export default function ProductDetail({ initialProduct }) {
         </Head>
       
 
-      <Button
-        variant="ghost"
-        className="mb-6 inline-flex items-center bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-400 hover:to-blue-400 text-white font-headline text-sm font-semibold rounded-full px-5 py-2.5 shadow-md transition-all"
-        onClick={() => router.push(createPageUrl("Shop"))}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        {t.back_to_collection}
-      </Button>
+      <div className="mb-8">
+        <Link
+          href="/shop"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-400/20 bg-slate-900/60 hover:bg-white/10 text-indigo-200 hover:text-white text-xs font-semibold font-headline transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+        >
+          <ArrowLeft className="h-3.5 w-3.5 text-indigo-400 group-hover:-translate-x-1 transition-transform" />
+          <span>{t.back_to_collection}</span>
+        </Link>
+      </div>
 
       {/* Media + Produktinfos */}
       <div className="grid lg:grid-cols-2 gap-12">
@@ -485,7 +486,7 @@ export default function ProductDetail({ initialProduct }) {
         <div className="space-y-4 w-full max-w-md mx-auto lg:max-w-lg">
           <div
             {...handlers}
-            className="relative aspect-square bg-gray-50 rounded-lg overflow-hidden group touch-pan-x media-container"
+            className="relative aspect-square bg-slate-900/80 border border-blue-400/20 rounded-2xl overflow-hidden group touch-pan-x media-container shadow-xl"
           >
             {allMedia[currentIndex].endsWith('.mp4') ? (
               <video
@@ -495,7 +496,7 @@ export default function ProductDetail({ initialProduct }) {
                 muted
                 loop
                 playsInline
-                preload="metadata" // spart Bandbreite
+                preload="metadata"
                 poster={thumbnails[currentIndex]}
                 className="w-full h-full object-cover"
               />
@@ -504,30 +505,34 @@ export default function ProductDetail({ initialProduct }) {
                 key={currentIndex}
                 src={allMedia[currentIndex]}
                 alt={product.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
             )}
 
             {/* Overlay bei Hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10"></div>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-950/20 pointer-events-none"></div>
 
             {/* Navigation Arrows */}
             {allMedia.length > 1 && (
               <>
                 <button
+                  type="button"
                   onClick={() =>
                     setCurrentIndex((prev) => (prev - 1 + allMedia.length) % allMedia.length)
                   }
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300"
+                  aria-label="Vorheriges Bild"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 bg-slate-950/80 hover:bg-slate-900 text-white border border-indigo-400/30 backdrop-blur-md rounded-full p-2.5 shadow-lg transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-5 h-5 text-indigo-200" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => setCurrentIndex((prev) => (prev + 1) % allMedia.length)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300"
+                  aria-label="Nächstes Bild"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-slate-950/80 hover:bg-slate-900 text-white border border-indigo-400/30 backdrop-blur-md rounded-full p-2.5 shadow-lg transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5 text-indigo-200" />
                 </button>
               </>
             )}
@@ -535,13 +540,17 @@ export default function ProductDetail({ initialProduct }) {
 
           {/* Thumbnails */}
           {allMedia.length > 1 && (
-            <div className="flex gap-2 overflow-x-auto mt-4 pb-2">
+            <div className="flex gap-2.5 overflow-x-auto mt-4 pb-2">
               {thumbnails.map((thumb, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                    index === currentIndex ? "border-gold-accent" : "border-gray-200 hover:border-gray-300"
+                  aria-label={`Bild ${index + 1} auswählen`}
+                  className={`relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    index === currentIndex
+                      ? "border-indigo-400 ring-2 ring-indigo-400/40 shadow-md"
+                      : "border-indigo-400/20 hover:border-indigo-400/50 opacity-70 hover:opacity-100"
                   }`}
                 >
                   <img
@@ -552,6 +561,25 @@ export default function ProductDetail({ initialProduct }) {
                   />
                 </button>
               ))}
+            </div>
+          )}
+
+          {/* Audio Preview (z. B. Geführte Meditation) */}
+          {product.audio_preview_url && (
+            <div className="p-4 bg-slate-900/80 border border-indigo-400/25 rounded-2xl shadow-lg space-y-2.5 mt-4">
+              <div className="flex items-center justify-between text-xs font-semibold text-indigo-200">
+                <span className="flex items-center gap-2 text-indigo-300">
+                  <Headphones className="w-4 h-4 text-indigo-400" />
+                  Kostenlose Audio-Hörprobe (15 Sek.)
+                </span>
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+                  15s Teaser
+                </span>
+              </div>
+              <audio controls controlsList="nodownload" className="w-full h-10 rounded-lg accent-indigo-500 bg-slate-800">
+                <source src={product.audio_preview_url} type="audio/mpeg" />
+                Ihr Browser unterstützt das Audio-Element leider nicht.
+              </audio>
             </div>
           )}
 
@@ -709,10 +737,7 @@ export default function ProductDetail({ initialProduct }) {
               <span>{product.focus}</span>
             </div>
             )}
-            <div className="font-headline text-3xl md:text-4xl font-bold text-white mb-6">
-              {formatPrice(product.price)}
-            </div>
-            <div dangerouslySetInnerHTML={{ __html: product.description }} className="font-body text-base text-indigo-100 leading-relaxed mb-6 space-y-3 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1" />
+            <div dangerouslySetInnerHTML={{ __html: product.description }} className="font-body text-base text-indigo-100 leading-relaxed mb-6 space-y-3 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1.5 [&_h4]:text-lg [&_h4]:font-bold [&_h4]:font-headline [&_h4]:text-white [&_h4]:mt-5 [&_h4]:mb-2 [&_h4]:tracking-tight" />
 
             {/* Action Buttons: WhatsApp & E-Mail */}
             <div className="p-5 bg-slate-900/60 border border-indigo-400/20 rounded-2xl space-y-3 mb-8 shadow-xl">
@@ -730,8 +755,16 @@ export default function ProductDetail({ initialProduct }) {
 
               <Button
                 variant="outline"
-                onClick={() => setIsInquiryOpen(true)}
-                className="w-full border border-indigo-400/30 hover:bg-white/10 text-indigo-200 hover:text-white font-headline text-base py-3.5 rounded-full flex items-center justify-center gap-2 transition-all"
+                onClick={() => {
+                  setIsInquiryOpen(true);
+                  if (!inquiryForm.message) {
+                    setInquiryForm((prev) => ({
+                      ...prev,
+                      message: `Hallo Ursula, ich interessiere mich für das Unikat "${product.name}" (${formatPrice(product.price)}). Bitte nimm mit mir Kontakt auf.`
+                    }));
+                  }
+                }}
+                className="w-full border border-indigo-400/30 hover:bg-white/10 text-indigo-200 hover:text-white font-headline text-base py-3.5 rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <Mail className="w-4 h-4 text-indigo-300" />
                 <span>Per E-Mail anfragen</span>
@@ -897,42 +930,52 @@ export default function ProductDetail({ initialProduct }) {
               </CardContent>
             </Card>
 
-            {/* Kontaktformular */}
+            {/* Kontaktformular Modal */}
             <Dialog open={isInquiryOpen} onOpenChange={setIsInquiryOpen}>
-              <DialogContent className="sm:max-w-md rounded-2xl p-6 shadow-2xl bg-slate-900 border border-indigo-400/30 text-white">
-                <DialogHeader className="mt-4 mb-2 text-center">
-                  <h3 className="font-headline text-xl font-bold text-white">
-                    {t.contact_form_title}
-                  </h3>
+              <DialogContent className="sm:max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl bg-slate-900/95 border border-indigo-400/30 text-white backdrop-blur-xl">
+                <DialogHeader className="mb-4 text-left">
+                  <DialogTitle className="text-xl sm:text-2xl font-bold font-headline text-white flex items-center gap-2.5">
+                    <Mail className="w-5 h-5 text-indigo-400 shrink-0" />
+                    <span>E-Mail-Anfrage zu {product.name}</span>
+                  </DialogTitle>
+                  <DialogDescription className="text-indigo-200/80 text-xs sm:text-sm mt-1">
+                    Sende Ursula deine unverbindliche Anfrage zu diesem Unikat ({formatPrice(product.price)}).
+                  </DialogDescription>
                 </DialogHeader>
 
                 {inquirySent ? (
-                  <p className="font-body text-sm text-emerald-400 text-center font-medium py-4">
-                    {t.inquiry_success}
-                  </p>
+                  <div className="text-center py-6 space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center mx-auto">
+                      <Check className="w-6 h-6" />
+                    </div>
+                    <p className="font-headline text-lg font-bold text-emerald-300">
+                      E-Mail-Entwurf wird geöffnet!
+                    </p>
+                    <p className="font-body text-xs text-indigo-200/80 leading-relaxed max-w-sm mx-auto">
+                      Dein Mailprogramm sollte sich in wenigen Sekunden öffnen. Falls nicht, klicke bitte unten auf den direkten E-Mail-Link.
+                    </p>
+                  </div>
                 ) : (
-                  <form
-                    onSubmit={handleInquirySubmit}
-                    className="space-y-4 mt-2"
-                  >
+                  <form onSubmit={handleInquirySubmit} className="space-y-4">
                     {/* Name */}
                     <div className="space-y-1.5">
                       <Label htmlFor="full_name" className="font-body text-xs font-semibold text-indigo-200">
-                        {t.full_name}
+                        {t.full_name} *
                       </Label>
                       <Input
                         id="full_name"
                         value={inquiryForm.full_name}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, full_name: e.target.value })}
                         required
-                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
+                        placeholder="Dein Vor- und Nachname"
+                        className="rounded-xl bg-slate-800/90 border border-indigo-400/30 text-white placeholder:text-indigo-300/40 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 px-4 py-2.5"
                       />
                     </div>
 
                     {/* Email */}
                     <div className="space-y-1.5">
                       <Label htmlFor="email" className="font-body text-xs font-semibold text-indigo-200">
-                        {t.email}
+                        {t.email} *
                       </Label>
                       <Input
                         id="email"
@@ -940,44 +983,78 @@ export default function ProductDetail({ initialProduct }) {
                         value={inquiryForm.email}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
                         required
-                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
+                        placeholder="deine.email@beispiel.de"
+                        className="rounded-xl bg-slate-800/90 border border-indigo-400/30 text-white placeholder:text-indigo-300/40 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 px-4 py-2.5"
                       />
                     </div>
 
                     {/* Phone */}
                     <div className="space-y-1.5">
                       <Label htmlFor="phone" className="font-body text-xs font-semibold text-indigo-200">
-                        {t.phone}
+                        {t.phone} (optional für schnellere Rückfragen)
                       </Label>
                       <Input
                         id="phone"
+                        type="tel"
                         value={inquiryForm.phone}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
-                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400"
+                        placeholder="z.B. +49 170 1234567"
+                        className="rounded-xl bg-slate-800/90 border border-indigo-400/30 text-white placeholder:text-indigo-300/40 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 px-4 py-2.5"
                       />
                     </div>
 
                     {/* Message */}
                     <div className="space-y-1.5">
                       <Label htmlFor="message" className="font-body text-xs font-semibold text-indigo-200">
-                        {t.message}
+                        {t.message} *
                       </Label>
                       <Textarea
                         id="message"
                         value={inquiryForm.message}
                         onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
                         required
-                        className="rounded-lg bg-slate-800/80 border-indigo-400/30 text-white focus:border-indigo-400 focus:ring-indigo-400 min-h-[100px]"
+                        rows={3}
+                        className="rounded-xl bg-slate-800/90 border border-indigo-400/30 text-white placeholder:text-indigo-300/40 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 px-4 py-2.5 min-h-[90px]"
                       />
                     </div>
 
-                    {/* Submit */}
-                    <Button
-                      type="submit"
-                      className="w-full rounded-full py-3.5 text-white font-headline font-semibold text-base shadow-lg transition bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500"
-                    >
-                      {t.send_inquiry}
-                    </Button>
+                    {/* Action buttons */}
+                    <div className="space-y-2.5 pt-2">
+                      <Button
+                        type="submit"
+                        className="w-full rounded-full py-3.5 text-white font-headline font-semibold text-base shadow-lg transition bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-600 hover:from-indigo-400 hover:via-purple-500 hover:to-indigo-500 cursor-pointer flex items-center justify-center gap-2"
+                      >
+                        <Mail className="w-4 h-4 text-indigo-200" />
+                        <span>Anfrage per E-Mail absenden</span>
+                      </Button>
+
+                      {/* Direct mailto fallback */}
+                      <a
+                        href={`mailto:Ursulaheinke@gmx.de?subject=${encodeURIComponent(
+                          `Anfrage zu ${product.name} (${formatPrice(product.price)})`
+                        )}&body=${encodeURIComponent(
+                          `Hallo Ursula,\n\nich interessiere mich für das Unikat "${product.name}" (${formatPrice(product.price)}).\n\nName: ${inquiryForm.full_name}\nE-Mail: ${inquiryForm.email}\nTelefon: ${inquiryForm.phone}\n\nNachricht:\n${inquiryForm.message || "Bitte kontaktiere mich."}`
+                        )}`}
+                        className="block text-center text-xs text-indigo-300/70 hover:text-white underline py-1 transition-colors"
+                      >
+                        Oder direkt im E-Mail-Programm öffnen (Klick-Fallback)
+                      </a>
+
+                      {/* Quick WhatsApp switcher */}
+                      <div className="pt-2 border-t border-indigo-400/15 text-center">
+                        <a
+                          href={`https://wa.me/4915901276286?text=${encodeURIComponent(
+                            `Hallo Ursula, ich habe dein Produkt "${product.name}" (${formatPrice(product.price)}) auf deiner Webseite gesehen und möchte es gerne anfragen.`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs text-emerald-300 hover:text-emerald-200 font-semibold transition-colors"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                          <span>Lieber schnelle Antwort via WhatsApp? Hier klicken</span>
+                        </a>
+                      </div>
+                    </div>
                   </form>
                 )}
               </DialogContent>

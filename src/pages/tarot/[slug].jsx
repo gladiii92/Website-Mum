@@ -2,6 +2,8 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { tarotCards } from "../../data/tarotCards";
+import { getGemstoneForTarot } from "../../data/cardGemstones";
+import CardGemstoneRecommendation from "../../components/common/CardGemstoneRecommendation";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { Card, CardContent } from "../../components/ui/Card";
@@ -42,16 +44,19 @@ export async function getStaticProps({ params }) {
   const prevCard = cardIndex > 0 ? tarotCards[cardIndex - 1] : tarotCards[tarotCards.length - 1];
   const nextCard = cardIndex < tarotCards.length - 1 ? tarotCards[cardIndex + 1] : tarotCards[0];
 
+  const recommendedStone = getGemstoneForTarot(params.slug);
+
   return {
     props: {
       card,
       prevCard: { name: prevCard.name, slug: prevCard.slug, roman: prevCard.roman },
-      nextCard: { name: nextCard.name, slug: nextCard.slug, roman: nextCard.roman }
+      nextCard: { name: nextCard.name, slug: nextCard.slug, roman: nextCard.roman },
+      recommendedStone
     }
   };
 }
 
-export default function TarotCardDetail({ card, prevCard, nextCard }) {
+export default function TarotCardDetail({ card, prevCard, nextCard, recommendedStone }) {
   if (!card) return null;
 
   const articleStructuredData = {
@@ -278,6 +283,9 @@ export default function TarotCardDetail({ card, prevCard, nextCard }) {
               "{card.advice}"
             </p>
           </section>
+
+          {/* 6. Energetischer Begleiter / Passender Heilstein */}
+          <CardGemstoneRecommendation cardName={card.name} stone={recommendedStone} />
         </div>
 
         {/* Conversion Funnel Box */}

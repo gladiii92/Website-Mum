@@ -5,3 +5,12 @@ build/
 .env
 .DS_Store
 .vscode/
+
+# Testing & CLI tools
+.playwright-cli/
+
+# Audio / Digital Goods Protection (prevent leaking full audio files)
+*.full.mp3
+*Meditation_Innerer_Frieden*
+public/audio/Between_Two_Breaths.mp3
+public/audio/Meditation_Innerer_Frieden.mp3

@@ -309,12 +309,19 @@ export default function LenormandCardDetail({ card, prevCard, nextCard }) {
             </a>
           </div>
 
-          <div className="pt-1">
+          <div className="pt-1 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/services/seelen-klarheits-kompass"
+              className="text-xs text-indigo-200 hover:text-white underline font-semibold transition-colors"
+            >
+              Details zum Seelen-Klarheits-Kompass (149 €) →
+            </Link>
+            <span className="text-indigo-400/40">•</span>
             <Link
               href="/services"
               className="text-xs text-indigo-300/80 hover:text-white underline transition-colors"
             >
-              Oder alle Coaching-Angebote & die 10-Wochen Ausbildung ansehen →
+              Alle Coaching-Angebote & Ausbildung ansehen →
             </Link>
           </div>
 

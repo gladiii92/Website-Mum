@@ -263,9 +263,11 @@ export default function Services() {
                         
                         <div className="p-6 sm:p-7 flex-1 flex flex-col items-center justify-between text-center">
                           <div className="w-full flex flex-col items-center">
-                            <h3 className="font-headline text-xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
-                              {service.title}
-                            </h3>
+                            <Link href={`/services/${service.slug}`} className="group/title block">
+                              <h3 className="font-headline text-xl font-bold text-white group-hover/title:text-blue-200 transition-colors duration-300 min-h-[3.5rem] flex items-center justify-center text-center leading-snug">
+                                {service.title}
+                              </h3>
+                            </Link>
 
                             <div className="my-2 text-center">
                               <span className="font-headline text-3xl font-bold tracking-tight text-white block">
@@ -329,6 +331,15 @@ export default function Services() {
                                   : "Termin per WhatsApp anfragen"}
                               </span>
                             </a>
+
+                            <Link
+                              href={`/services/${service.slug}`}
+                              className="font-headline font-semibold text-xs text-indigo-300 hover:text-white py-2 px-3 rounded-full border border-indigo-400/20 hover:border-indigo-400/50 hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-1.5 group/link"
+                            >
+                              <span>Details, Ablauf & Kunden-FAQ</span>
+                              <ArrowRight className="w-3.5 h-3.5 text-indigo-400 group-hover/link:translate-x-1 transition-transform duration-300" />
+                            </Link>
+
                             <p className="text-[11px] text-center text-indigo-300/60 font-body">
                               {service.price === 0
                                 ? "100% unverbindlich • Persönliche Sprachnachricht von Ursula"

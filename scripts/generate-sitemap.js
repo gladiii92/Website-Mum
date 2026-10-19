@@ -2,6 +2,7 @@ const fs = require('fs');
 const { tarotCards } = require('../src/data/tarotCards.js');
 const { lenormandCards } = require('../src/data/lenormandCards.js');
 const { Product } = require('../src/entities/Product.jsx');
+const { ServiceData } = require('../src/entities/Service.jsx');
 
 const staticPages = [
   { url: '/', priority: '1.0', changefreq: 'daily' },
@@ -56,9 +57,18 @@ for (const prod of Product) {
   xml += '  </url>\n';
 }
 
+xml += '\n  <!-- Coaching, Readings, Ausbildungen & Seminare (High-Intent SEO) -->\n';
+for (const service of ServiceData) {
+  xml += '  <url>\n';
+  xml += `    <loc>https://www.ursulaheinke.de/services/${service.slug}</loc>\n`;
+  xml += '    <changefreq>weekly</changefreq>\n';
+  xml += `    <priority>${['seelen-klarheits-kompass', 'ausbildung-kartenlegen', 'herzenspartner-check'].includes(service.slug) ? '0.95' : '0.9'}</priority>\n`;
+  xml += '  </url>\n';
+}
+
 xml += '</urlset>\n';
 
 fs.writeFileSync('./public/sitemap.xml', xml, 'utf8');
 fs.writeFileSync('./sitemap.xml', xml, 'utf8');
-console.log(`Sitemaps successfully generated! Total URLs: ${staticPages.length + tarotCards.length + lenormandCards.length + Product.length}`);
+console.log(`Sitemaps successfully generated! Total URLs: ${staticPages.length + tarotCards.length + lenormandCards.length + Product.length + ServiceData.length}`);
 

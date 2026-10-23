@@ -13,6 +13,8 @@ export default function HomeRedirect() {
     <>
       <Head>
         <meta httpEquiv="refresh" content="0; url=/" />
+        <link rel="canonical" href="https://www.ursulaheinke.de/" />
+        <meta name="robots" content="noindex, follow" />
         <title>Weiterleitung...</title>
       </Head>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">

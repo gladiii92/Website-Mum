@@ -66,13 +66,55 @@ export default function Shop() {
       "name": "Spirituelle Begleiter & Meditationen",
       "itemListElement": Product.map(p => ({
         "@type": "Offer",
+        "url": `https://www.ursulaheinke.de/product/${p.slug}`,
         "itemOffered": {
           "@type": "Product",
           "name": p.name,
-          "image": `https://www.ursulaheinke.de${p.image_url}`
+          "image": `https://www.ursulaheinke.de${p.image_url}`,
+          "brand": {
+            "@type": "Brand",
+            "name": "Ursula Heinke"
+          }
         },
         "price": p.price,
-        "priceCurrency": "EUR"
+        "priceCurrency": "EUR",
+        "priceValidUntil": "2027-12-31",
+        "availability": p.in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": p.category === "meditation" ? "0.00" : "4.90",
+            "currency": "EUR"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "DE"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 0,
+              "maxValue": 1,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 1,
+              "maxValue": 3,
+              "unitCode": "DAY"
+            }
+          }
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "DE",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 14,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/ReturnShippingFees"
+        }
       }))
     }
   };

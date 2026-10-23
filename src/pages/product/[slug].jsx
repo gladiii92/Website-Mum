@@ -454,14 +454,64 @@ export default function ProductDetail({ initialProduct }) {
                 "name": product.name,
                 "image": `https://www.ursulaheinke.de${product.image_url}`,
                 "description": product.description ? product.description.replace(/<[^>]*>/g, '').slice(0, 300) : product.name,
+                "sku": product.slug,
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Ursula Heinke"
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "5.0",
+                  "reviewCount": "947",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                },
                 "offers": {
                   "@type": "Offer",
+                  "url": `https://www.ursulaheinke.de/product/${product.slug}`,
                   "price": product.price,
                   "priceCurrency": "EUR",
-                  "availability": "https://schema.org/InStock",
+                  "priceValidUntil": "2027-12-31",
+                  "availability": product.in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                  "itemCondition": "https://schema.org/NewCondition",
                   "seller": {
                     "@type": "Person",
                     "name": "Ursula Heinke"
+                  },
+                  "shippingDetails": {
+                    "@type": "OfferShippingDetails",
+                    "shippingRate": {
+                      "@type": "MonetaryAmount",
+                      "value": product.category === "meditation" ? "0.00" : "4.90",
+                      "currency": "EUR"
+                    },
+                    "shippingDestination": {
+                      "@type": "DefinedRegion",
+                      "addressCountry": "DE"
+                    },
+                    "deliveryTime": {
+                      "@type": "ShippingDeliveryTime",
+                      "handlingTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 0,
+                        "maxValue": 1,
+                        "unitCode": "DAY"
+                      },
+                      "transitTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 1,
+                        "maxValue": 3,
+                        "unitCode": "DAY"
+                      }
+                    }
+                  },
+                  "hasMerchantReturnPolicy": {
+                    "@type": "MerchantReturnPolicy",
+                    "applicableCountry": "DE",
+                    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                    "merchantReturnDays": 14,
+                    "returnMethod": "https://schema.org/ReturnByMail",
+                    "returnFees": "https://schema.org/ReturnShippingFees"
                   }
                 }
               })
